@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13196"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
+            <connections>
+                <outlet property="delegate" destination="Voe-Tx-rLC" id="GzC-gU-4Uq"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Web_Driver_Manager" customModuleProvider="target">
+            <connections>
+                <outlet property="defaultMenuItem" destination="8n0-nR-8WC" id="tN2-Gu-8X4"/>
+                <outlet property="driverStatusMenuItem" destination="d6q-bn-6in" id="3rt-5m-YTY"/>
+                <outlet property="nvidiaMenuItem" destination="lBp-Ry-pEh" id="zqB-fp-yAD"/>
+                <outlet property="statusMenu" destination="FVg-r4-d2m" id="HAF-0j-Qtp"/>
+            </connections>
+        </customObject>
+        <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
+        <menu id="FVg-r4-d2m">
+            <items>
+                <menuItem title="Web drivers not loaded" enabled="NO" id="d6q-bn-6in">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="27s-Kb-0DA"/>
+                <menuItem title="NVIDIA Web Drivers" id="lBp-Ry-pEh">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="switchDriversClicked:" target="Voe-Tx-rLC" id="BCC-ie-yyB"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="macOS Default Drivers" id="8n0-nR-8WC">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="switchDriversClicked:" target="Voe-Tx-rLC" id="tkz-y5-jUW"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="SSE-vm-2vn"/>
+                <menuItem title="Quit" id="RMw-b1-ZFk">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="exitImmediately:" target="Voe-Tx-rLC" id="cwM-sw-xBW"/>
+                    </connections>
+                </menuItem>
+            </items>
+            <point key="canvasLocation" x="123" y="-207"/>
+        </menu>
+    </objects>
+</document>
