@@ -1,5 +1,5 @@
 /*
- * File: NvidiaNvram.swift
+ * File: Extensions.swift
  *
  * WebDriverManager © vulgo 2018
  *
@@ -19,24 +19,22 @@
 
 import Foundation
 
-class NvidiaNvram {
-        let nvram = Nvram()
-        let nvidiaValue = Data(bytes: [0x31, 0x0])
-        var isSet: Bool {
+extension Nvram {
+        var useNvidia: Bool {
                 get {
-                        if let result: Data = nvram.options.getDataValue(forProperty: "nvda_drv") {
-                                if result == nvidiaValue {
+                        if let result: Data = options.getDataValue(forProperty: "nvda_drv") {
+                                if result == Data(bytes: [0x31, 0x0]) {
                                         return true
                                 }
                         }
                         return false
                 }
                 /* set(newValue) {
-                        if newValue == true {
-                                let _ = nvram.options.setDataValue(forProperty: "nvda_drv", value: nvidiaValue)
-                        } else {
-                                nvram.deleteVariable(key: "nvda_drv")
-                        }
-                } */
+                 if newValue == true {
+                 let _ = options.setDataValue(forProperty: "nvda_drv", value: nvidiaValue)
+                 } else {
+                 deleteVariable(key: "nvda_drv")
+                 }
+                 } */
         }
 }

@@ -1,5 +1,5 @@
 /*
- * File: RegistryEntry.swift
+ * File: AppDelegate.swift
  *
  * WebDriverManager © vulgo 2018
  *
@@ -19,19 +19,80 @@
 
 import Cocoa
 
-@NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate  {
+@NSApplicationMain class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         
-        @IBOutlet var statusMenu: NSMenu!
-        @IBOutlet weak var defaultMenuItem: NSMenuItem!
-        @IBOutlet weak var nvidiaMenuItem: NSMenuItem!
+        @IBOutlet weak var statusMenu: NSMenu!
         @IBOutlet weak var driverStatusMenuItem: NSMenuItem!
-        let nvidiaNvram = NvidiaNvram()
-        let setNvramScript = NSAppleScript(source: "do shell script \"if nvram nvda_drv | grep nvda_drv; then nvram -d nvda_drv; else nvram nvda_drv=1%00; fi\" with administrator privileges")
-        var scriptError: NSDictionary?
+        @IBOutlet weak var nvidiaMenuItem: NSMenuItem!
+        @IBOutlet weak var defaultMenuItem: NSMenuItem!
+        
         let statusItem = NSStatusBar.system.statusItem(withLength:NSStatusItem.variableLength)
-        let accelerator = RegistryEntry.init(fromMatchingDictionary: IOServiceMatching("nvAccelerator"))
+        let nvAccelerator = RegistryEntry.init(fromMatchingDictionary: IOServiceMatching("nvAccelerator"))
+        var driverStatus: String?
+        let nvram = Nvram()
+        var nvramScriptError: NSDictionary?
+        var nvramScript: NSAppleScript?
         var didDisplayRestartAlert = false
+        
+        override init() {
+                super.init()
+                if let bundleId: String = nvAccelerator.getStringValue(forProperty: "CFBundleIdentifier") {
+                        if bundleId.uppercased().contains("WEB") {
+                                driverStatus = "\(bundleId)"
+                        } else {
+                                driverStatus = "Web Drivers Not Loaded"
+                        }
+                } else {
+                        driverStatus = "Web Drivers Not Loaded"
+                }
+                Log.log("Driver status: %{public}@", driverStatus ?? "Unavailable")
+                if let nvramScriptUrl = Bundle.main.url(forResource: "nvram", withExtension: "applescript") {
+                        nvramScript = NSAppleScript(contentsOf: nvramScriptUrl, error: &nvramScriptError)
+                } else {
+                        Log.log("Failed to get resource url for nvram script")
+                }
+        }
+        
+        func applicationDidFinishLaunching(_ aNotification: Notification) {
+                if let button = statusItem.button {
+                        button.image = NSImage(named:NSImage.Name("NVMenuIcon"))
+                }
+                statusItem.menu = statusMenu
+                statusMenu.delegate = self
+                if let showStatus: String = driverStatus {
+                        driverStatusMenuItem.title = showStatus
+                }
+                Log.log("Started")
+        }
+        
+        @IBAction func exitNow(_ sender: NSMenuItem) {
+                Log.log("Exiting")
+                exit(0)
+        }
+        
+        func menuWillOpen(_ menu: NSMenu) {
+                if nvram.useNvidia {
+                        nvidiaMenuItem.state = NSControl.StateValue.on
+                        defaultMenuItem.state = NSControl.StateValue.off
+                } else {
+                        nvidiaMenuItem.state = NSControl.StateValue.off
+                        defaultMenuItem.state = NSControl.StateValue.on
+                }
+        }
+        
+        @IBAction func switchDriversClicked(_ sender: NSMenuItem) {
+                Log.log("Setting nvda_drv nvram variable")
+                let result: NSAppleEventDescriptor? = nvramScript?.executeAndReturnError(&nvramScriptError)
+                if (result?.booleanValue)! {
+                        if !didDisplayRestartAlert {
+                                let _ = restartAlert()
+                                didDisplayRestartAlert = true
+                        }
+                        return
+                }
+                NSSound.beep()
+                Log.log("Failed to set nvda_drv NVRAM variable")
+        }
         
         func restartAlert() -> Bool {
                 let alert = NSAlert()
@@ -41,50 +102,4 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate  {
                 alert.addButton(withTitle: "OK")
                 return alert.runModal() == .alertFirstButtonReturn
         }
-        
-        func applicationDidFinishLaunching(_ aNotification: Notification) {
-                statusMenu.delegate = self
-                if let button = statusItem.button {
-                        button.image = NSImage(named:NSImage.Name("NVMenuIcon"))
-                }
-                statusItem.menu = statusMenu
-                if let bundleId: String = accelerator.getStringValue(forProperty: "CFBundleIdentifier") {
-                        if bundleId.uppercased().contains("WEB") {
-                                driverStatusMenuItem.title = "\(bundleId)"
-                                Log.log("NVIDIA Web Drivers are loaded")
-                        } else {
-                                driverStatusMenuItem.title = "Web drivers not loaded"
-                                Log.log("NVIDIA Web Drivers are not loaded")
-                        }
-                } else {
-                        driverStatusMenuItem.title = "Web drivers not loaded"
-                        Log.log("NVIDIA Web Drivers are not loaded")
-                }
-                Log.log("Started")
-        }
-        
-        func menuWillOpen(_ menu: NSMenu) {
-                if nvidiaNvram.isSet {
-                        nvidiaMenuItem.state = NSControl.StateValue.on
-                        defaultMenuItem.state = NSControl.StateValue.off
-                } else {
-                        nvidiaMenuItem.state = NSControl.StateValue.off
-                        defaultMenuItem.state = NSControl.StateValue.on
-                }
-        }
-        
-        @IBAction func exitImmediately(_ sender: NSMenuItem) {
-                Log.log("Exiting")
-                exit(0)
-        }
-        
-        @IBAction func switchDriversClicked(_ sender: NSMenuItem) {
-                Log.log("Setting nvda_drv nvram variable")
-                setNvramScript?.executeAndReturnError(&scriptError)
-                if !didDisplayRestartAlert {
-                        let _ = restartAlert()
-                        didDisplayRestartAlert = true
-                }
-        }
-        
 }
