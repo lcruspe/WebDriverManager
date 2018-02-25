@@ -32,7 +32,6 @@ import Cocoa
         let nvram = Nvram()
         var nvramScriptError: NSDictionary?
         var nvramScript: NSAppleScript?
-        var didDisplayRestartAlert = false
         
         override init() {
                 super.init()
@@ -73,9 +72,8 @@ import Cocoa
                 Log.log("Setting nvda_drv nvram variable")
                 let result: NSAppleEventDescriptor? = nvramScript?.executeAndReturnError(&nvramScriptError)
                 if (result?.booleanValue)! {
-                        if !didDisplayRestartAlert {
-                                let _ = restartAlert()
-                                didDisplayRestartAlert = true
+                        if Defaults.shared.showRestartAlert {
+                                restartAlert()
                         }
                         return
                 }
@@ -83,12 +81,16 @@ import Cocoa
                 Log.log("Failed to set nvda_drv NVRAM variable")
         }
         
-        func restartAlert() -> Bool {
+        func restartAlert() {
                 let alert = NSAlert()
                 alert.messageText = "Settings will be applied after you restart."
                 alert.informativeText = "Your bootloader may override the choice you make here."
                 alert.alertStyle = .informational
-                alert.addButton(withTitle: "OK")
-                return alert.runModal() == .alertFirstButtonReturn
+                alert.addButton(withTitle: "Close")
+                alert.showsSuppressionButton = true
+                alert.runModal()
+                if (alert.suppressionButton?.state == NSControl.StateValue.on) {
+                        Defaults.shared.showRestartAlert = false
+                }
         }
 }
