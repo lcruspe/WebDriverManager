@@ -58,6 +58,8 @@ import Cocoa
                         button.image = NSImage(named:NSImage.Name("NVMenuIcon"))
                 }
                 statusItem.menu = statusMenu
+                statusItem.isVisible = true
+                statusItem.behavior = NSStatusItem.Behavior.terminationOnRemoval
                 statusMenu.delegate = self
                 if let showStatus: String = driverStatus {
                         driverStatusMenuItem.title = showStatus
