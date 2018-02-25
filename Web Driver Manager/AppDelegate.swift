@@ -28,7 +28,7 @@ import Cocoa
         
         let statusItem = NSStatusBar.system.statusItem(withLength:NSStatusItem.variableLength)
         let nvAccelerator = RegistryEntry.init(fromMatchingDictionary: IOServiceMatching("nvAccelerator"))
-        var driverStatus: String?
+        var driverStatus: String = "Web drivers not loaded"
         let nvram = Nvram()
         var nvramScriptError: NSDictionary?
         var nvramScript: NSAppleScript?
@@ -36,16 +36,10 @@ import Cocoa
         
         override init() {
                 super.init()
-                if let bundleId: String = nvAccelerator.getStringValue(forProperty: "CFBundleIdentifier") {
-                        if bundleId.uppercased().contains("WEB") {
-                                driverStatus = "\(bundleId)"
-                        } else {
-                                driverStatus = "Web Drivers Not Loaded"
-                        }
-                } else {
-                        driverStatus = "Web Drivers Not Loaded"
+                if let bundleId: String = nvAccelerator.getStringValue(forProperty: "CFBundleIdentifier"), bundleId.uppercased().contains("WEB") {
+                        driverStatus = "\(bundleId)"
                 }
-                Log.log("Driver status: %{public}@", driverStatus ?? "Unavailable")
+                Log.log("%{public}@", driverStatus)
                 if let nvramScriptUrl = Bundle.main.url(forResource: "nvram", withExtension: "applescript") {
                         nvramScript = NSAppleScript(contentsOf: nvramScriptUrl, error: &nvramScriptError)
                 } else {
@@ -61,15 +55,8 @@ import Cocoa
                 statusItem.isVisible = true
                 statusItem.behavior = NSStatusItem.Behavior.terminationOnRemoval
                 statusMenu.delegate = self
-                if let showStatus: String = driverStatus {
-                        driverStatusMenuItem.title = showStatus
-                }
+                driverStatusMenuItem.title = driverStatus
                 Log.log("Started")
-        }
-        
-        @IBAction func exitNow(_ sender: NSMenuItem) {
-                Log.log("Exiting")
-                exit(0)
         }
         
         func menuWillOpen(_ menu: NSMenu) {

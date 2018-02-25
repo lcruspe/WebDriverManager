@@ -39,15 +39,8 @@
                         <action selector="switchDriversClicked:" target="Voe-Tx-rLC" id="tg5-oO-tmL"/>
                     </connections>
                 </menuItem>
-                <menuItem isSeparatorItem="YES" id="SSE-vm-2vn"/>
-                <menuItem title="Quit" id="RMw-b1-ZFk">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="exitNow:" target="Voe-Tx-rLC" id="cwM-sw-xBW"/>
-                    </connections>
-                </menuItem>
             </items>
-            <point key="canvasLocation" x="-262" y="-147"/>
+            <point key="canvasLocation" x="-286" y="-132"/>
         </menu>
     </objects>
 </document>
