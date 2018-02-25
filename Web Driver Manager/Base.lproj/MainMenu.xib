@@ -21,7 +21,7 @@
             </connections>
         </customObject>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
-        <menu id="FVg-r4-d2m">
+        <menu autoenablesItems="NO" id="FVg-r4-d2m">
             <items>
                 <menuItem title="Status: Unavailable" enabled="NO" id="d6q-bn-6in">
                     <modifierMask key="keyEquivalentModifierMask"/>
@@ -33,7 +33,7 @@
                         <action selector="switchDriversClicked:" target="Voe-Tx-rLC" id="hFo-nC-UmX"/>
                     </connections>
                 </menuItem>
-                <menuItem title="macOS Default" id="8n0-nR-8WC">
+                <menuItem title="macOS Drivers" id="8n0-nR-8WC">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="switchDriversClicked:" target="Voe-Tx-rLC" id="tg5-oO-tmL"/>

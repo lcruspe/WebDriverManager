@@ -25,13 +25,15 @@ import Cocoa
         @IBOutlet weak var driverStatusMenuItem: NSMenuItem!
         @IBOutlet weak var nvidiaMenuItem: NSMenuItem!
         @IBOutlet weak var defaultMenuItem: NSMenuItem!
-        
+
+        let notInstalledMessage = "Web drivers not installed"
+        var driverStatus: String = "Web drivers not loaded"
         let statusItem = NSStatusBar.system.statusItem(withLength:NSStatusItem.variableLength)
         let nvAccelerator = RegistryEntry.init(fromMatchingDictionary: IOServiceMatching("nvAccelerator"))
-        var driverStatus: String = "Web drivers not loaded"
         let nvram = Nvram()
         var nvramScriptError: NSDictionary?
         var nvramScript: NSAppleScript?
+        let fileManager = FileManager()
         
         override init() {
                 super.init()
@@ -54,11 +56,19 @@ import Cocoa
                 statusItem.isVisible = true
                 statusItem.behavior = NSStatusItem.Behavior.terminationOnRemoval
                 statusMenu.delegate = self
-                driverStatusMenuItem.title = driverStatus
                 Log.log("Started")
         }
         
         func menuWillOpen(_ menu: NSMenu) {
+                if fileManager.fileExists(atPath: "/Library/Extensions/NVDAStartupWeb.kext") {
+                        nvidiaMenuItem.isEnabled = true
+                        defaultMenuItem.isEnabled = true
+                        driverStatusMenuItem.title = driverStatus
+                } else {
+                        nvidiaMenuItem.isEnabled = false
+                        defaultMenuItem.isEnabled = false
+                        driverStatusMenuItem.title = notInstalledMessage
+                }
                 if nvram.useNvidia {
                         nvidiaMenuItem.state = NSControl.StateValue.on
                         defaultMenuItem.state = NSControl.StateValue.off
