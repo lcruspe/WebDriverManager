@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		4D09C74F2042B63600C82104 /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D09C74E2042B63600C82104 /* Defaults.swift */; };
+		4D17721C20453FE300C82104 /* WebDriverNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D17721B20453FE300C82104 /* WebDriverNotifications.swift */; };
+		4D17721E204544E900C82104 /* sysctl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D17721D204544E900C82104 /* sysctl.swift */; };
 		4D304423204090C400C82104 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D304422204090C400C82104 /* AppDelegate.swift */; };
 		4D304425204090C400C82104 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D304424204090C400C82104 /* Assets.xcassets */; };
 		4D304428204090C400C82104 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D304426204090C400C82104 /* MainMenu.xib */; };
@@ -21,6 +23,8 @@
 
 /* Begin PBXFileReference section */
 		4D09C74E2042B63600C82104 /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
+		4D17721B20453FE300C82104 /* WebDriverNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebDriverNotifications.swift; sourceTree = "<group>"; };
+		4D17721D204544E900C82104 /* sysctl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sysctl.swift; sourceTree = "<group>"; };
 		4D30441F204090C400C82104 /* Web Driver Manager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Web Driver Manager.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D304422204090C400C82104 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4D304424204090C400C82104 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -65,6 +69,7 @@
 			isa = PBXGroup;
 			children = (
 				4D304422204090C400C82104 /* AppDelegate.swift */,
+				4D17721B20453FE300C82104 /* WebDriverNotifications.swift */,
 				4D304424204090C400C82104 /* Assets.xcassets */,
 				4D8347A720420B5300C82104 /* Extensions.swift */,
 				4D304429204090C400C82104 /* Info.plist */,
@@ -75,6 +80,7 @@
 				4D304432204090F200C82104 /* RegistryEntry.swift */,
 				4D30442A204090C400C82104 /* Web_Driver_Manager.entitlements */,
 				4D09C74E2042B63600C82104 /* Defaults.swift */,
+				4D17721D204544E900C82104 /* sysctl.swift */,
 			);
 			path = "Web Driver Manager";
 			sourceTree = "<group>";
@@ -154,6 +160,8 @@
 				4D8347A820420B5300C82104 /* Extensions.swift in Sources */,
 				4D09C74F2042B63600C82104 /* Defaults.swift in Sources */,
 				4D304438204090F300C82104 /* Nvram.swift in Sources */,
+				4D17721E204544E900C82104 /* sysctl.swift in Sources */,
+				4D17721C20453FE300C82104 /* WebDriverNotifications.swift in Sources */,
 				4D8347AC204211D100C82104 /* nvram.applescript in Sources */,
 				4D304437204090F300C82104 /* RegistryEntry.swift in Sources */,
 				4D304435204090F300C82104 /* Log.swift in Sources */,

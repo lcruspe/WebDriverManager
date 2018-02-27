@@ -31,8 +31,23 @@ class Defaults {
         let userDefaults = UserDefaults.standard
         
         enum WebDriverManager {
-                static let initialized: String = "initialized"
-                static let showRestartAlert: String = "showRestartAlert"
+                case initialized
+                case showRestartAlert
+                case suppressVersion
+                case disableUpdateAlerts
+                
+                var key: String {
+                        switch self {
+                        case .initialized:
+                                return "initialized"
+                        case .showRestartAlert:
+                                return "showRestartAlert"
+                        case .suppressVersion:
+                                return "suppressUpdateAlerts"
+                        case .disableUpdateAlerts:
+                                return "disabledUpdateAlerts"
+                        }
+                }
         }
         
         private init() {
@@ -45,31 +60,51 @@ class Defaults {
         
         var initialized: Bool {
                 get {
-                        return userDefaults.bool(forKey: WebDriverManager.initialized)
+                        return userDefaults.bool(forKey: WebDriverManager.initialized.key)
                 }
                 set {
-                        userDefaults.set(newValue, forKey: WebDriverManager.initialized)
+                        userDefaults.set(newValue, forKey: WebDriverManager.initialized.key)
                 }
         }
         
         var showRestartAlert: Bool {
                 get {
-                        return userDefaults.bool(forKey: WebDriverManager.showRestartAlert)
+                        return userDefaults.bool(forKey: WebDriverManager.showRestartAlert.key)
                 }
                 set {
-                        userDefaults.set(newValue, forKey: WebDriverManager.showRestartAlert)
+                        userDefaults.set(newValue, forKey: WebDriverManager.showRestartAlert.key)
+                }
+        }
+        
+        var suppressUpdateAlerts: String {
+                get {
+                        return userDefaults.string(forKey: WebDriverManager.suppressVersion.key)!
+                }
+                set {
+                        userDefaults.set(newValue, forKey: WebDriverManager.suppressVersion.key)
+                }
+        }
+        
+        var disableUpdateAlerts: Bool {
+                get {
+                        return userDefaults.bool(forKey: WebDriverManager.disableUpdateAlerts.key)
+                }
+                set {
+                        userDefaults.set(newValue, forKey: WebDriverManager.disableUpdateAlerts.key)
                 }
         }
 
         private func registerFactoryDefaults() {
-                let factoryDefaults = [WebDriverManager.initialized : true, WebDriverManager.showRestartAlert : true]
+                let factoryDefaults = [WebDriverManager.initialized.key: true, WebDriverManager.showRestartAlert.key: true, WebDriverManager.suppressVersion.key: "", WebDriverManager.disableUpdateAlerts.key: false]
                         as [String : Any]
                 userDefaults.register(defaults: factoryDefaults)
         }
         
         func reset() {
-                userDefaults.removeObject(forKey: WebDriverManager.initialized)
-                userDefaults.removeObject(forKey: WebDriverManager.showRestartAlert)
+                userDefaults.removeObject(forKey: WebDriverManager.initialized.key)
+                userDefaults.removeObject(forKey: WebDriverManager.showRestartAlert.key)
+                userDefaults.removeObject(forKey: WebDriverManager.suppressVersion.key)
+                userDefaults.removeObject(forKey: WebDriverManager.disableUpdateAlerts.key)
                 registerFactoryDefaults()
         }
 }

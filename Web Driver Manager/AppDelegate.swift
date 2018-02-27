@@ -34,6 +34,7 @@ import Cocoa
         var nvramScriptError: NSDictionary?
         var nvramScript: NSAppleScript?
         let fileManager = FileManager()
+        let webDriverNotifications = WebDriverNotifications()
         
         override init() {
                 super.init()
@@ -56,7 +57,14 @@ import Cocoa
                 statusItem.isVisible = true
                 statusItem.behavior = NSStatusItem.Behavior.terminationOnRemoval
                 statusMenu.delegate = self
+                NSUserNotificationCenter.default.delegate = webDriverNotifications
                 Log.log("Started")
+                if !Defaults.shared.disableUpdateAlerts {
+                        let result = webDriverNotifications.checkForUpdates()
+                        Log.log("checkForUpdates returned %{public}@", result.description)
+                } else {
+                        Log.log("Update notifications have been disabled in user defaults")
+                }
         }
         
         func menuWillOpen(_ menu: NSMenu) {
