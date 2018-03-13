@@ -1,0 +1,24 @@
+
+/* Class = "NSMenuItem"; title = "Default macOS Graphics Driver"; ObjectID = "8n0-nR-8WC"; */
+"8n0-nR-8WC.title" = "Default macOS Graphics Driver";
+
+/* Class = "NSMenuItem"; title = "Quit Web Driver Manager"; ObjectID = "MAd-yk-Fz2"; */
+"MAd-yk-Fz2.title" = "Quit Web Driver Manager";
+
+/* Class = "NSMenuItem"; title = "Web Driver Manager"; ObjectID = "VGT-UL-p7l"; */
+"VGT-UL-p7l.title" = "Web Driver Manager";
+
+/* Class = "NSMenu"; title = "Notifications"; ObjectID = "ef9-hL-wiF"; */
+"ef9-hL-wiF.title" = "Notifications";
+
+/* Class = "NSMenuItem"; title = "Notifications"; ObjectID = "geg-WS-0Tl"; */
+"geg-WS-0Tl.title" = "Notifications";
+
+/* Class = "NSMenu"; title = "Web Driver Manager"; ObjectID = "kRS-lT-gOO"; */
+"kRS-lT-gOO.title" = "Web Driver Manager";
+
+/* Class = "NSMenuItem"; title = "NVIDIA Web Driver"; ObjectID = "lBp-Ry-pEh"; */
+"lBp-Ry-pEh.title" = "NVIDIA Web Driver";
+
+/* Class = "NSMenuItem"; title = "About Web Driver Manager"; ObjectID = "x6D-xp-qHF"; */
+"x6D-xp-qHF.title" = "About Web Driver Manager";

@@ -95,7 +95,7 @@ class Defaults {
         }
 
         private func registerFactoryDefaults() {
-                let factoryDefaults = [WebDriverManager.initialized.key: true, WebDriverManager.showRestartAlert.key: true, WebDriverManager.suppressVersion.key: "", WebDriverManager.disableUpdateAlerts.key: false]
+                let factoryDefaults = [WebDriverManager.initialized.key: true, WebDriverManager.showRestartAlert.key: true, WebDriverManager.suppressVersion.key: "", WebDriverManager.disableUpdateAlerts.key: true]
                         as [String : Any]
                 userDefaults.register(defaults: factoryDefaults)
         }

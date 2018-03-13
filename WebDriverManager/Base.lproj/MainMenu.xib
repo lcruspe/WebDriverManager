@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
+            <connections>
+                <outlet property="delegate" destination="Voe-Tx-rLC" id="GzC-gU-4Uq"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Web_Driver_Manager" customModuleProvider="target">
+            <connections>
+                <outlet property="aboutMenuItem" destination="x6D-xp-qHF" id="UoA-8f-0tB"/>
+                <outlet property="checkNowMenuItem" destination="CNc-jG-bOC" id="ots-mR-2hB"/>
+                <outlet property="driverStatusMenuItem" destination="d6q-bn-6in" id="eBR-5K-Hsi"/>
+                <outlet property="notificationsStatusMenuItem" destination="5Zv-wc-Q7x" id="6xw-Ek-QNZ"/>
+                <outlet property="quitMenuItem" destination="MAd-yk-Fz2" id="mdA-KF-nQD"/>
+                <outlet property="statusMenu" destination="FVg-r4-d2m" id="gbK-U7-H5Y"/>
+                <outlet property="toggleNotificationsMenuItem" destination="z7c-mr-eA2" id="PoX-9x-lDn"/>
+                <outlet property="useDefaultDriverMenuItem" destination="8n0-nR-8WC" id="DLy-eJ-fVD"/>
+                <outlet property="useNvidiaDriverMenuItem" destination="lBp-Ry-pEh" id="01W-dZ-EMq"/>
+            </connections>
+        </customObject>
+        <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
+        <menu autoenablesItems="NO" id="FVg-r4-d2m">
+            <items>
+                <menuItem enabled="NO" id="d6q-bn-6in">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="dkj-jM-Hl7"/>
+                <menuItem title="NVIDIA Web Driver" id="lBp-Ry-pEh">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="changeDriverMenuItemClicked:" target="Voe-Tx-rLC" id="hFo-nC-UmX"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Default macOS Graphics Driver" id="8n0-nR-8WC">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="changeDriverMenuItemClicked:" target="Voe-Tx-rLC" id="tg5-oO-tmL"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="27s-Kb-0DA"/>
+                <menuItem title="Notifications" id="geg-WS-0Tl">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Notifications" autoenablesItems="NO" id="ef9-hL-wiF">
+                        <items>
+                            <menuItem enabled="NO" id="5Zv-wc-Q7x">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem id="z7c-mr-eA2">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="toggleNotificationsMenuItemClicked:" target="Voe-Tx-rLC" id="Kww-5c-6E7"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="BmP-Lh-vwC"/>
+                            <menuItem id="CNc-jG-bOC">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="checkNowMenuItemClicked:" target="Voe-Tx-rLC" id="Byb-qU-2Dd"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="u4F-1e-CEo"/>
+                <menuItem title="Web Driver Manager" id="VGT-UL-p7l">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Web Driver Manager" autoenablesItems="NO" id="kRS-lT-gOO">
+                        <items>
+                            <menuItem title="About Web Driver Manager" id="x6D-xp-qHF">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="aboutMenuItemClicked:" target="Voe-Tx-rLC" id="vzz-mm-Izb"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="3fM-2B-Tpf"/>
+                            <menuItem title="Quit Web Driver Manager" id="MAd-yk-Fz2">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="quitMenuItemClicked:" target="Voe-Tx-rLC" id="cEd-Ho-xcX"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+            </items>
+            <point key="canvasLocation" x="-473" y="-296"/>
+        </menu>
+    </objects>
+</document>

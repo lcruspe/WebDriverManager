@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Window Controller-->
+        <scene sceneID="dOi-6X-tjr">
+            <objects>
+                <windowController storyboardIdentifier="aboutWindowController" showSeguePresentationStyle="single" id="Nb0-iy-xEI" sceneMemberID="viewController">
+                    <window key="window" title="About Web Driver Manager" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="jFa-BA-KAL" customClass="NSPanel">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" fullSizeContentView="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="459" y="314" width="315" height="168"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1058"/>
+                        <connections>
+                            <outlet property="delegate" destination="Nb0-iy-xEI" id="6Si-cl-DRS"/>
+                        </connections>
+                    </window>
+                    <connections>
+                        <segue destination="535-Ae-q8m" kind="relationship" relationship="window.shadowedContentViewController" id="kiE-wU-zVd"/>
+                    </connections>
+                </windowController>
+                <customObject id="l2O-7d-ptF" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="30" y="10"/>
+        </scene>
+        <!--About View Controller-->
+        <scene sceneID="J20-Hh-6ZV">
+            <objects>
+                <viewController storyboardIdentifier="about" id="535-Ae-q8m" customClass="AboutViewController" customModule="Web_Driver_Manager" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="R2g-Mr-Nf2">
+                        <rect key="frame" x="0.0" y="0.0" width="385" height="182"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JLz-Le-I8O">
+                                <rect key="frame" x="181" y="143" width="186" height="19"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Web Driver Manager" id="uzi-rI-dDH">
+                                    <font key="font" metaFont="system" size="15"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zNJ-Br-Rn3">
+                                <rect key="frame" x="20" y="0.0" width="132" height="183"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="AppIcon" id="weL-0a-sZ6"/>
+                            </imageView>
+                            <button focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cAE-Sn-mY4">
+                                <rect key="frame" x="274" y="13" width="97" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="85" id="Skl-Uu-q85"/>
+                                </constraints>
+                                <buttonCell key="cell" type="push" title="License" bezelStyle="rounded" alignment="center" borderStyle="border" focusRingType="none" imageScaling="proportionallyDown" inset="2" id="G1c-Er-742">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="licenseButtonPressed:" target="535-Ae-q8m" id="KUi-T3-DqU"/>
+                                </connections>
+                            </button>
+                            <button focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gJv-Ud-Jwu">
+                                <rect key="frame" x="177" y="13" width="97" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="85" id="Un8-vY-JpI"/>
+                                </constraints>
+                                <buttonCell key="cell" type="push" title="Source" bezelStyle="rounded" alignment="center" borderStyle="border" focusRingType="none" imageScaling="proportionallyDown" inset="2" id="mnS-o1-5Pr">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="sourceButtonPressed:" target="535-Ae-q8m" id="S8E-2c-ahi"/>
+                                </connections>
+                            </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ddb-1w-WIE">
+                                <rect key="frame" x="181" y="121" width="186" height="14"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" id="VOI-7i-c82">
+                                    <font key="font" metaFont="smallSystem"/>
+                                    <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="zNJ-Br-Rn3" secondAttribute="bottom" id="20V-wa-P3o"/>
+                            <constraint firstItem="ddb-1w-WIE" firstAttribute="trailing" secondItem="cAE-Sn-mY4" secondAttribute="trailing" id="5DB-x3-kYP"/>
+                            <constraint firstItem="JLz-Le-I8O" firstAttribute="trailing" secondItem="ddb-1w-WIE" secondAttribute="trailing" id="6qi-j3-q81"/>
+                            <constraint firstItem="JLz-Le-I8O" firstAttribute="leading" secondItem="zNJ-Br-Rn3" secondAttribute="trailing" constant="31" id="99C-F3-hWO"/>
+                            <constraint firstItem="zNJ-Br-Rn3" firstAttribute="centerY" secondItem="R2g-Mr-Nf2" secondAttribute="centerY" id="Lfc-bL-Ztb"/>
+                            <constraint firstAttribute="bottom" secondItem="gJv-Ud-Jwu" secondAttribute="bottom" constant="20" symbolic="YES" id="LuG-cS-WNL"/>
+                            <constraint firstItem="zNJ-Br-Rn3" firstAttribute="leading" secondItem="R2g-Mr-Nf2" secondAttribute="leading" constant="20" symbolic="YES" id="NL4-8A-Phz"/>
+                            <constraint firstItem="JLz-Le-I8O" firstAttribute="top" secondItem="R2g-Mr-Nf2" secondAttribute="top" constant="20" symbolic="YES" id="Poa-SE-E6B"/>
+                            <constraint firstItem="ddb-1w-WIE" firstAttribute="leading" secondItem="gJv-Ud-Jwu" secondAttribute="leading" id="Xu2-CB-cSZ"/>
+                            <constraint firstItem="ddb-1w-WIE" firstAttribute="top" secondItem="JLz-Le-I8O" secondAttribute="bottom" constant="8" symbolic="YES" id="rjQ-Jb-Rd4"/>
+                            <constraint firstItem="gJv-Ud-Jwu" firstAttribute="baseline" secondItem="cAE-Sn-mY4" secondAttribute="baseline" id="tQu-xm-lwH"/>
+                            <constraint firstItem="JLz-Le-I8O" firstAttribute="leading" secondItem="ddb-1w-WIE" secondAttribute="leading" id="tXn-Ex-lcU"/>
+                            <constraint firstItem="cAE-Sn-mY4" firstAttribute="leading" secondItem="gJv-Ud-Jwu" secondAttribute="trailing" constant="12" symbolic="YES" id="u4o-ug-aOE"/>
+                            <constraint firstAttribute="trailing" secondItem="JLz-Le-I8O" secondAttribute="trailing" constant="20" symbolic="YES" id="y8e-0V-W8l"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="versionTextField" destination="ddb-1w-WIE" id="1Ae-m9-H3b"/>
+                    </connections>
+                </viewController>
+                <customObject id="hSr-iB-ZND" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="491.5" y="10"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="AppIcon" width="128" height="128"/>
+    </resources>
+</document>

@@ -16,9 +16,11 @@
 		4D304435204090F300C82104 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D304430204090F200C82104 /* Log.swift */; };
 		4D304437204090F300C82104 /* RegistryEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D304432204090F200C82104 /* RegistryEntry.swift */; };
 		4D304438204090F300C82104 /* Nvram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D304433204090F300C82104 /* Nvram.swift */; };
-		4D8347A820420B5300C82104 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8347A720420B5300C82104 /* Extensions.swift */; };
+		4D555D642055381E00C82104 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4D555D632055381E00C82104 /* README.md */; };
+		4D6BC72F2058153100C82104 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D6BC7312058153100C82104 /* Main.storyboard */; };
 		4D8347AC204211D100C82104 /* nvram.applescript in Sources */ = {isa = PBXBuildFile; fileRef = 4D8347AB204211D100C82104 /* nvram.applescript */; };
 		4D8347AD204211E100C82104 /* nvram.applescript in Resources */ = {isa = PBXBuildFile; fileRef = 4D8347AB204211D100C82104 /* nvram.applescript */; };
+		4D8879272055DF4400C82104 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8879262055DF4400C82104 /* AboutViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,8 +36,12 @@
 		4D304430204090F200C82104 /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		4D304432204090F200C82104 /* RegistryEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistryEntry.swift; sourceTree = "<group>"; };
 		4D304433204090F300C82104 /* Nvram.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Nvram.swift; sourceTree = "<group>"; };
-		4D8347A720420B5300C82104 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		4D555D632055381E00C82104 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		4D6BC72E2058110400C82104 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MainMenu.strings; sourceTree = "<group>"; };
+		4D6BC7302058153100C82104 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		4D6BC7352058156300C82104 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		4D8347AB204211D100C82104 /* nvram.applescript */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.applescript; path = nvram.applescript; sourceTree = "<group>"; };
+		4D8879262055DF4400C82104 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,7 +58,8 @@
 		4D304416204090C400C82104 = {
 			isa = PBXGroup;
 			children = (
-				4D304421204090C400C82104 /* Web Driver Manager */,
+				4D555D632055381E00C82104 /* README.md */,
+				4D304421204090C400C82104 /* WebDriverManager */,
 				4D304420204090C400C82104 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -65,13 +72,12 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		4D304421204090C400C82104 /* Web Driver Manager */ = {
+		4D304421204090C400C82104 /* WebDriverManager */ = {
 			isa = PBXGroup;
 			children = (
 				4D304422204090C400C82104 /* AppDelegate.swift */,
 				4D17721B20453FE300C82104 /* WebDriverNotifications.swift */,
 				4D304424204090C400C82104 /* Assets.xcassets */,
-				4D8347A720420B5300C82104 /* Extensions.swift */,
 				4D304429204090C400C82104 /* Info.plist */,
 				4D304430204090F200C82104 /* Log.swift */,
 				4D304426204090C400C82104 /* MainMenu.xib */,
@@ -81,8 +87,10 @@
 				4D30442A204090C400C82104 /* Web_Driver_Manager.entitlements */,
 				4D09C74E2042B63600C82104 /* Defaults.swift */,
 				4D17721D204544E900C82104 /* sysctl.swift */,
+				4D6BC7312058153100C82104 /* Main.storyboard */,
+				4D8879262055DF4400C82104 /* AboutViewController.swift */,
 			);
-			path = "Web Driver Manager";
+			path = WebDriverManager;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -121,7 +129,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 4D30441A204090C400C82104 /* Build configuration list for PBXProject "Web Driver Manager" */;
+			buildConfigurationList = 4D30441A204090C400C82104 /* Build configuration list for PBXProject "WebDriverManager" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -145,7 +153,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D8347AD204211E100C82104 /* nvram.applescript in Resources */,
+				4D6BC72F2058153100C82104 /* Main.storyboard in Resources */,
 				4D304425204090C400C82104 /* Assets.xcassets in Resources */,
+				4D555D642055381E00C82104 /* README.md in Resources */,
 				4D304428204090C400C82104 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -157,7 +167,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4D8347A820420B5300C82104 /* Extensions.swift in Sources */,
 				4D09C74F2042B63600C82104 /* Defaults.swift in Sources */,
 				4D304438204090F300C82104 /* Nvram.swift in Sources */,
 				4D17721E204544E900C82104 /* sysctl.swift in Sources */,
@@ -165,6 +174,7 @@
 				4D8347AC204211D100C82104 /* nvram.applescript in Sources */,
 				4D304437204090F300C82104 /* RegistryEntry.swift in Sources */,
 				4D304435204090F300C82104 /* Log.swift in Sources */,
+				4D8879272055DF4400C82104 /* AboutViewController.swift in Sources */,
 				4D304423204090C400C82104 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -176,8 +186,18 @@
 			isa = PBXVariantGroup;
 			children = (
 				4D304427204090C400C82104 /* Base */,
+				4D6BC72E2058110400C82104 /* en */,
 			);
 			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		4D6BC7312058153100C82104 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4D6BC7302058153100C82104 /* Base */,
+				4D6BC7352058156300C82104 /* en */,
+			);
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -187,6 +207,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -244,6 +265,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -299,7 +321,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = "Web Driver Manager/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/WebDriverManager/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = org.vulgo.WebDriverManager;
@@ -318,7 +340,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = "";
-				INFOPLIST_FILE = "Web Driver Manager/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/WebDriverManager/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
 				PRODUCT_BUNDLE_IDENTIFIER = org.vulgo.WebDriverManager;
@@ -331,7 +353,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		4D30441A204090C400C82104 /* Build configuration list for PBXProject "Web Driver Manager" */ = {
+		4D30441A204090C400C82104 /* Build configuration list for PBXProject "WebDriverManager" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4D30442B204090C400C82104 /* Debug */,

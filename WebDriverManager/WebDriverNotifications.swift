@@ -19,23 +19,6 @@
 
 import Cocoa
 
-class WebDriverAlert: NSUserNotification {
-        
-        override init() {
-                super.init()
-        }
-        
-        convenience init(remoteVersion: String) {
-                self.init()
-                deliveryDate = NSDate(timeIntervalSinceNow: 1) as Date
-                title = "NVIDIA Web Driver"
-                informativeText = "\(remoteVersion) is available."
-                hasActionButton = true
-                actionButtonTitle = "Don't Show Again"
-                soundName = NSUserNotificationDefaultSoundName
-        }
-}
-
 class WebDriverNotifications: NSObject, NSUserNotificationCenterDelegate {
         
         let nvidiaUpdatesUrl = "/Library/Extensions/GeForceWeb.kext/Contents/Info.plist"
@@ -87,6 +70,16 @@ class WebDriverNotifications: NSObject, NSUserNotificationCenterDelegate {
                 super.init()
         }
         
+        func setup(notification: inout NSUserNotification, forVersion version: String) {
+                notification.deliveryDate = NSDate(timeIntervalSinceNow: 1) as Date
+                notification.title = NSLocalizedString("NVIDIA Web Driver", comment: "Notification title")
+                notification.informativeText = String(format: "%@ %@", version, NSLocalizedString("available", comment: "Notification message: ... available"))
+                notification.hasActionButton = true
+                notification.actionButtonTitle = NSLocalizedString("Don't Show Again", comment: "Notification action button")
+                notification.identifier = version
+                notification.soundName = NSUserNotificationDefaultSoundName
+        }
+        
         func userNotificationCenter(_ center: NSUserNotificationCenter, shouldPresent notification: NSUserNotification) -> Bool {
                 return true
         }
@@ -94,10 +87,12 @@ class WebDriverNotifications: NSObject, NSUserNotificationCenterDelegate {
         func userNotificationCenter(_ center: NSUserNotificationCenter, didActivate notification: NSUserNotification) {
                 switch (notification.activationType) {
                 case .actionButtonClicked:
-                        let components = notification.informativeText?.split(separator: " ").map(String.init)
-                        let versionToSuppress: String = components![0]
-                        Log.log("Suppressing alerts for version: %{public}@", versionToSuppress)
-                        Defaults.shared.suppressUpdateAlerts = versionToSuppress
+                        if let versionToSuppress = notification.identifier {
+                                Log.log("Suppressing alerts for version: %{public}@", versionToSuppress)
+                                Defaults.shared.suppressUpdateAlerts = versionToSuppress
+                        } else {
+                                Log.log("Notification identifier was nil, unable to suppress alerts")
+                        }
                 default:
                         break;
                 }
@@ -132,9 +127,11 @@ class WebDriverNotifications: NSObject, NSUserNotificationCenterDelegate {
                         return false
                 }
                 Log.log("Remote version available: %{public}@", remoteVersion!)
-                let webDriverAlert = WebDriverAlert(remoteVersion: remoteVersion!)
-                Log.log("Scheduling update notification")
+                var webDriverAlert = NSUserNotification()
+                setup(notification: &webDriverAlert, forVersion: remoteVersion!)
+                Log.log("Scheduling update notification, delivery date: %{public}@", webDriverAlert.deliveryDate?.description ?? "unknown")
                 NSUserNotificationCenter.default.scheduleNotification(webDriverAlert)
                 return true
         }
 }
+
