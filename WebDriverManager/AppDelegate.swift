@@ -61,6 +61,7 @@ import os.log
         var nvramScriptError: NSDictionary?
         var nvramScript: NSAppleScript?
         let fileManager = FileManager()
+        let cloverSettings = CloverSettings()
         let webDriverNotifications = WebDriverNotifications()
         let updateCheckQueue = DispatchQueue(label: "updateCheck", attributes: .concurrent)
         var updateCheckWorkItem: DispatchWorkItem?
@@ -72,7 +73,7 @@ import os.log
                         nvramScript = NSAppleScript(contentsOf: nvramScriptUrl, error: &nvramScriptError)
                 } else {
                         os_log("Failed to get resource url for nvram script")
-                }
+                } 
         }
 
         func applicationDidFinishLaunching(_ aNotification: Notification) {
