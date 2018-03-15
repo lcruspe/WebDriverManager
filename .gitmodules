@@ -1,0 +1,6 @@
+[submodule "clover-settings"]
+	path = clover-settings
+	url = https://github.com/vulgo/clover-settings.git
+[submodule "registry-entry"]
+	path = registry-entry
+	url = https://github.com/vulgo/registry-entry.git

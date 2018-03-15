@@ -8,13 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		4D09C74F2042B63600C82104 /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D09C74E2042B63600C82104 /* Defaults.swift */; };
+		4D163C51205A541500C82104 /* RegistryEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D163C4F205A541400C82104 /* RegistryEntry.swift */; };
+		4D163C57205A541F00C82104 /* CloverSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D163C55205A541F00C82104 /* CloverSettings.swift */; };
 		4D17721C20453FE300C82104 /* WebDriverNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D17721B20453FE300C82104 /* WebDriverNotifications.swift */; };
 		4D17721E204544E900C82104 /* sysctl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D17721D204544E900C82104 /* sysctl.swift */; };
 		4D304423204090C400C82104 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D304422204090C400C82104 /* AppDelegate.swift */; };
 		4D304425204090C400C82104 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D304424204090C400C82104 /* Assets.xcassets */; };
 		4D304428204090C400C82104 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D304426204090C400C82104 /* MainMenu.xib */; };
 		4D304435204090F300C82104 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D304430204090F200C82104 /* Log.swift */; };
-		4D304437204090F300C82104 /* RegistryEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D304432204090F200C82104 /* RegistryEntry.swift */; };
 		4D304438204090F300C82104 /* Nvram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D304433204090F300C82104 /* Nvram.swift */; };
 		4D555D642055381E00C82104 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4D555D632055381E00C82104 /* README.md */; };
 		4D6BC72F2058153100C82104 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D6BC7312058153100C82104 /* Main.storyboard */; };
@@ -25,6 +26,8 @@
 
 /* Begin PBXFileReference section */
 		4D09C74E2042B63600C82104 /* Defaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
+		4D163C4F205A541400C82104 /* RegistryEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistryEntry.swift; sourceTree = "<group>"; };
+		4D163C55205A541F00C82104 /* CloverSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloverSettings.swift; sourceTree = "<group>"; };
 		4D17721B20453FE300C82104 /* WebDriverNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebDriverNotifications.swift; sourceTree = "<group>"; };
 		4D17721D204544E900C82104 /* sysctl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sysctl.swift; sourceTree = "<group>"; };
 		4D30441F204090C400C82104 /* Web Driver Manager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Web Driver Manager.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -34,7 +37,6 @@
 		4D304429204090C400C82104 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4D30442A204090C400C82104 /* Web_Driver_Manager.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Web_Driver_Manager.entitlements; sourceTree = "<group>"; };
 		4D304430204090F200C82104 /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
-		4D304432204090F200C82104 /* RegistryEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistryEntry.swift; sourceTree = "<group>"; };
 		4D304433204090F300C82104 /* Nvram.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Nvram.swift; sourceTree = "<group>"; };
 		4D555D632055381E00C82104 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4D6BC72E2058110400C82104 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MainMenu.strings; sourceTree = "<group>"; };
@@ -55,9 +57,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4D163C4E205A541400C82104 /* registry-entry */ = {
+			isa = PBXGroup;
+			children = (
+				4D163C4F205A541400C82104 /* RegistryEntry.swift */,
+			);
+			path = "registry-entry";
+			sourceTree = "<group>";
+		};
+		4D163C53205A541F00C82104 /* clover-settings */ = {
+			isa = PBXGroup;
+			children = (
+				4D163C55205A541F00C82104 /* CloverSettings.swift */,
+			);
+			path = "clover-settings";
+			sourceTree = "<group>";
+		};
 		4D304416204090C400C82104 = {
 			isa = PBXGroup;
 			children = (
+				4D163C53205A541F00C82104 /* clover-settings */,
+				4D163C4E205A541400C82104 /* registry-entry */,
 				4D555D632055381E00C82104 /* README.md */,
 				4D304421204090C400C82104 /* WebDriverManager */,
 				4D304420204090C400C82104 /* Products */,
@@ -83,7 +103,6 @@
 				4D304426204090C400C82104 /* MainMenu.xib */,
 				4D8347AB204211D100C82104 /* nvram.applescript */,
 				4D304433204090F300C82104 /* Nvram.swift */,
-				4D304432204090F200C82104 /* RegistryEntry.swift */,
 				4D30442A204090C400C82104 /* Web_Driver_Manager.entitlements */,
 				4D09C74E2042B63600C82104 /* Defaults.swift */,
 				4D17721D204544E900C82104 /* sysctl.swift */,
@@ -168,14 +187,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D09C74F2042B63600C82104 /* Defaults.swift in Sources */,
+				4D163C57205A541F00C82104 /* CloverSettings.swift in Sources */,
 				4D304438204090F300C82104 /* Nvram.swift in Sources */,
 				4D17721E204544E900C82104 /* sysctl.swift in Sources */,
 				4D17721C20453FE300C82104 /* WebDriverNotifications.swift in Sources */,
 				4D8347AC204211D100C82104 /* nvram.applescript in Sources */,
-				4D304437204090F300C82104 /* RegistryEntry.swift in Sources */,
 				4D304435204090F300C82104 /* Log.swift in Sources */,
 				4D8879272055DF4400C82104 /* AboutViewController.swift in Sources */,
 				4D304423204090C400C82104 /* AppDelegate.swift in Sources */,
+				4D163C51205A541500C82104 /* RegistryEntry.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
