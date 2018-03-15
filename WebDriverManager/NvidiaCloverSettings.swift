@@ -61,6 +61,18 @@ class NvidiaCloverSettings: CloverSettings {
         private var _nvidiaWebIsEnabled: Bool = false
         private var _nvdaStartupPatchIsEnabled: Bool = false
         
+        func mountEfi() {
+                if let name = lastBsdName {
+                        _mount(bsdName: name)
+                }
+        }
+        
+        func unmountEfi() {
+                if let name = lastBsdName {
+                        _unmount(bsdName: name)
+                }
+        }
+        
         var nvidiaWebIsEnabled: Bool {
                 
                 get {

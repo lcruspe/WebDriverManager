@@ -36,6 +36,8 @@ import os.log
         let restartAlertMessage = NSLocalizedString("Settings will be applied after you restart.", comment: "Restart alert: message")
         let restartAlertInformativeText = NSLocalizedString("Your bootloader may override the choice you make here.", comment: "Restart alert: informative text")
         let restartAlertButtonTitle = NSLocalizedString("Close", comment: "Restart alert: button title")
+        let mountEFIItemTitle = NSLocalizedString("Mount EFI Partition", comment: "Main menu: Mount Clover/EFI")
+        let unmountEFIItemTitle = NSLocalizedString("Unmount EFI Partition", comment: "Main menu: Unmount Clover/EFI")
         
         var storyboard: NSStoryboard?
         var aboutWindowController: NSWindowController?
@@ -53,6 +55,7 @@ import os.log
         @IBOutlet weak var cloverSubMenuItem: NSMenuItem!
         @IBOutlet weak var nvdaStartupMenuItem: NSMenuItem!
         @IBOutlet weak var nvidiaWebMenuItem: NSMenuItem!
+        @IBOutlet weak var cloverPartitionMenuItem: NSMenuItem!
         
         var userWantsAlerts: Bool {
                 return !Defaults.shared.disableUpdateAlerts
@@ -141,6 +144,13 @@ import os.log
                         cloverSeparatorMenuItem.isHidden = true
                         cloverSubMenuItem.isHidden = true
                 }
+                if let url: URL = cloverSettings?.lastVolumeUrl {
+                        if fileManager.mountedVolumeURLs(includingResourceValuesForKeys: nil, options: FileManager.VolumeEnumerationOptions())?.contains(url) ?? false {
+                                cloverPartitionMenuItem.title = unmountEFIItemTitle
+                        } else {
+                                cloverPartitionMenuItem.title = mountEFIItemTitle
+                        }
+                }
         }
         
         @IBAction func changeDriverMenuItemClicked(_ sender: NSMenuItem) {
@@ -180,7 +190,15 @@ import os.log
                         cloverSettings!.nvidiaWebIsEnabled = true
                 }
         }
-
+        
+        @IBAction func cloverPartitionMenuItemClicked(_ sender: Any) {
+                if cloverPartitionMenuItem.title == mountEFIItemTitle {
+                        cloverSettings?.mountEfi()
+                } else {
+                        cloverSettings?.unmountEfi()
+                }
+        }
+        
         func cancelSuppressedVersion() {
                 if Defaults.shared.suppressUpdateAlerts != "" {
                         Defaults.shared.suppressUpdateAlerts = ""

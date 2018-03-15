@@ -16,6 +16,7 @@
             <connections>
                 <outlet property="aboutMenuItem" destination="x6D-xp-qHF" id="UoA-8f-0tB"/>
                 <outlet property="checkNowMenuItem" destination="CNc-jG-bOC" id="ots-mR-2hB"/>
+                <outlet property="cloverPartitionMenuItem" destination="70R-pl-3SH" id="ZS7-5M-pEi"/>
                 <outlet property="cloverSeparatorMenuItem" destination="u4F-1e-CEo" id="emk-zx-u1d"/>
                 <outlet property="cloverSubMenuItem" destination="G12-vs-qSw" id="Zx2-in-90j"/>
                 <outlet property="driverStatusMenuItem" destination="d6q-bn-6in" id="eBR-5K-Hsi"/>
@@ -73,9 +74,9 @@
                     </menu>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="u4F-1e-CEo"/>
-                <menuItem title="Clover Settings" id="G12-vs-qSw">
+                <menuItem title="Clover" id="G12-vs-qSw">
                     <modifierMask key="keyEquivalentModifierMask"/>
-                    <menu key="submenu" title="Clover Settings" autoenablesItems="NO" id="4lC-VH-hBx">
+                    <menu key="submenu" title="Clover" autoenablesItems="NO" id="4lC-VH-hBx">
                         <items>
                             <menuItem title="Kexts to Patch" enabled="NO" id="bFG-nf-4va">
                                 <modifierMask key="keyEquivalentModifierMask"/>
@@ -94,6 +95,13 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="nvidiaWebMenuItemClicked:" target="Voe-Tx-rLC" id="Qde-xW-7ZU"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="kcL-dD-Pwl"/>
+                            <menuItem id="70R-pl-3SH">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="cloverPartitionMenuItemClicked:" target="Voe-Tx-rLC" id="tM4-cU-kTu"/>
                                 </connections>
                             </menuItem>
                         </items>
