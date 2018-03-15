@@ -16,6 +16,8 @@
             <connections>
                 <outlet property="aboutMenuItem" destination="x6D-xp-qHF" id="UoA-8f-0tB"/>
                 <outlet property="checkNowMenuItem" destination="CNc-jG-bOC" id="ots-mR-2hB"/>
+                <outlet property="cloverSeparatorMenuItem" destination="u4F-1e-CEo" id="emk-zx-u1d"/>
+                <outlet property="cloverSubMenuItem" destination="G12-vs-qSw" id="Zx2-in-90j"/>
                 <outlet property="driverStatusMenuItem" destination="d6q-bn-6in" id="eBR-5K-Hsi"/>
                 <outlet property="notificationsStatusMenuItem" destination="5Zv-wc-Q7x" id="6xw-Ek-QNZ"/>
                 <outlet property="nvdaStartupMenuItem" destination="WST-Oi-0mS" id="Vyc-bR-8W2"/>

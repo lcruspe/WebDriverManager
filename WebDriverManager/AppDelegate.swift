@@ -52,6 +52,8 @@ import os.log
         @IBOutlet weak var toggleNotificationsMenuItem: NSMenuItem!
         @IBOutlet weak var aboutMenuItem: NSMenuItem!
         @IBOutlet weak var quitMenuItem: NSMenuItem!
+        @IBOutlet weak var cloverSeparatorMenuItem: NSMenuItem!
+        @IBOutlet weak var cloverSubMenuItem: NSMenuItem!
         @IBOutlet weak var nvdaStartupMenuItem: NSMenuItem!
         @IBOutlet weak var nvidiaWebMenuItem: NSMenuItem!
         
@@ -127,31 +129,38 @@ import os.log
                         notificationsStatusMenuItem.title = notificationsEnabledMenuItemTitle
                         toggleNotificationsMenuItem?.title = disableNotificationsMenuItemTitle
                 }
-                if let runtimeVariables = cloverSettings?.dictionary?["RtVariables"] as? NSDictionary {
-                        let nvidiaWeb: Bool? = runtimeVariables["NvidiaWeb"] as? Bool
-                        if nvidiaWeb != nil, nvidiaWeb! == true {
-                                nvidiaWebMenuItem.state = .on
-                        } else {
-                                nvidiaWebMenuItem.state = .off
+                if cloverSettings != nil {
+                        cloverSeparatorMenuItem.isHidden = false
+                        cloverSubMenuItem.isHidden = false
+                        if let runtimeVariables = cloverSettings?.dictionary?["RtVariables"] as? NSDictionary {
+                                let nvidiaWeb: Bool? = runtimeVariables["NvidiaWeb"] as? Bool
+                                if nvidiaWeb != nil, nvidiaWeb! == true {
+                                        nvidiaWebMenuItem.state = .on
+                                } else {
+                                        nvidiaWebMenuItem.state = .off
+                                }
                         }
-                }
-                var enabledPatchesIndicies = IndexSet()
-                if let kernelAndKextPatches = cloverSettings?.dictionary?["KernelAndKextPatches"] as? NSDictionary {
-                        if let kextsToPatch = kernelAndKextPatches["KextsToPatch"] as? NSArray {
-                                enabledPatchesIndicies = kextsToPatch.indexesOfObjects(options: [], passingTest: { (constraint, idx, stop) in
-                                        if let dict = constraint as? NSDictionary {
-                                                if (dict["Find"] as? Data == nvdaStartupFind && dict["Name"] as? String == "NVDAStartupWeb" && dict["Disabled"] as? Bool != Optional(Bool(true))) {
-                                                        return true
+                        var enabledPatchesIndicies = IndexSet()
+                        if let kernelAndKextPatches = cloverSettings?.dictionary?["KernelAndKextPatches"] as? NSDictionary {
+                                if let kextsToPatch = kernelAndKextPatches["KextsToPatch"] as? NSArray {
+                                        enabledPatchesIndicies = kextsToPatch.indexesOfObjects(options: [], passingTest: { (constraint, idx, stop) in
+                                                if let dict = constraint as? NSDictionary {
+                                                        if (dict["Find"] as? Data == nvdaStartupFind && dict["Name"] as? String == "NVDAStartupWeb" && dict["Disabled"] as? Bool != Optional(Bool(true))) {
+                                                                return true
+                                                        }
                                                 }
-                                        }
-                                        return false
-                                })
+                                                return false
+                                        })
+                                }
                         }
-                }
-                if enabledPatchesIndicies.count > 0 {
-                        nvdaStartupMenuItem.state = .on
+                        if enabledPatchesIndicies.count > 0 {
+                                nvdaStartupMenuItem.state = .on
+                        } else {
+                                nvdaStartupMenuItem.state = .off
+                        }
                 } else {
-                        nvdaStartupMenuItem.state = .off
+                        cloverSeparatorMenuItem.isHidden = true
+                        cloverSubMenuItem.isHidden = true
                 }
         }
         
