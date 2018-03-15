@@ -62,10 +62,13 @@ class NvidiaCloverSettings: CloverSettings {
         private var _nvdaStartupPatchIsEnabled: Bool = false
         
         var nvidiaWebIsEnabled: Bool {
+                
                 get {
                         return _nvidiaWebIsEnabled
                 }
+                
                 set {
+                        
                         if sync(leavingPartitionMounted: true) {
                                 
                                 if _nvidiaWebIsEnabled == newValue {
@@ -75,17 +78,12 @@ class NvidiaCloverSettings: CloverSettings {
                                 } else {
                                         
                                         if let runtimeVariables = dictionary?[Keys.RtVariables.string] as? NSMutableDictionary {
+                                                
                                                 switch newValue {
                                                 case true:
                                                         runtimeVariables[Keys.NvidiaWeb.string] = true
-                                                        if write() {
-                                                                _nvidiaWebIsEnabled = newValue
-                                                        }
                                                 case false:
                                                         runtimeVariables.removeObject(forKey: Keys.NvidiaWeb.string)
-                                                        if write() {
-                                                                _nvidiaWebIsEnabled = newValue
-                                                        }
                                                 }
                                                 
                                         } else if newValue == true {
@@ -93,9 +91,11 @@ class NvidiaCloverSettings: CloverSettings {
                                                 let runtimeVariables: [String : Any] = [Keys.NvidiaWeb.string : true]
                                                 dictionary?.setObject(runtimeVariables, forKey: Keys.RtVariables.string as NSCopying)
                                                 
-                                                if write() {
-                                                        _nvidiaWebIsEnabled = newValue
-                                                }
+
+                                        }
+                                        if write() {
+                                                os_log("NvidiaCloverSettings: Wrote NvidiaWeb=%{public}@", newValue.description)
+                                                _nvidiaWebIsEnabled = newValue
                                         }
                                 }
                         }
@@ -103,10 +103,13 @@ class NvidiaCloverSettings: CloverSettings {
         }
         
         var nvdaStartupPatchIsEnabled: Bool {
+                
                 get {
                         return _nvdaStartupPatchIsEnabled
                 }
+                
                 set {
+                        
                         if sync(leavingPartitionMounted: true) {
                                 
                                 if _nvdaStartupPatchIsEnabled == newValue {
@@ -117,22 +120,16 @@ class NvidiaCloverSettings: CloverSettings {
                                         
                                         var patch = startupWebPatch
                                         patch[Keys.Disabled.string] = !newValue
+                                        
                                         var kernelAndKextPatches: NSMutableDictionary?
                                         var kextsToPatch: NSMutableArray?
-                                        
-                                        if let dict = dictionary?[Keys.KernelAndKextPatches.string] as? NSMutableDictionary {
-                                                if let array = dict[Keys.KextsToPatch.string] as? NSMutableArray {
-                                                        kernelAndKextPatches = dict
+                                        if let _kernelAndKextPatches = dictionary?[Keys.KernelAndKextPatches.string] as? NSMutableDictionary {
+                                                if let array = _kernelAndKextPatches[Keys.KextsToPatch.string] as? NSMutableArray {
+                                                        kernelAndKextPatches = _kernelAndKextPatches
                                                         kextsToPatch = array
                                                 } else {
-                                                        kernelAndKextPatches = dict
-                                                        kextsToPatch = nil
+                                                        kernelAndKextPatches = _kernelAndKextPatches
                                                 }
-                                                
-                                        } else {
-                                                
-                                                kernelAndKextPatches = nil
-                                                kextsToPatch = nil
                                         }
                                         
                                         if kernelAndKextPatches == nil {
@@ -144,45 +141,42 @@ class NvidiaCloverSettings: CloverSettings {
                                                 kernelAndKextPatches?.addEntries(from: [Keys.KextsToPatch.string: kextsToPatch!])
                                                 dictionary?.addEntries(from: [Keys.KernelAndKextPatches.string: kernelAndKextPatches!])
                                                 
+                                        } else if kextsToPatch == nil {
+                                                
+                                                /* Add new KextsToPatch array to existing KernelAndKextPatches dict */
+                                                
+                                                kextsToPatch = NSMutableArray.init(objects: patch)
+                                                kernelAndKextPatches?.addEntries(from: [Keys.KextsToPatch.string: kextsToPatch!])
+                                                
                                         } else {
                                                 
-                                                if kextsToPatch == nil {
-                                                        
-                                                        /* Add new KextsToPatch array to existing KernelAndKextPatches dict */
-                                                        
-                                                        kextsToPatch = NSMutableArray.init(objects: patch)
-                                                        kernelAndKextPatches?.addEntries(from: [Keys.KextsToPatch.string: kextsToPatch!])
-                                                        
-                                                } else {
-                                                        
-                                                        /* Merge into existing, try to remove duplicates */
-                                                        
-                                                        let duplicates: IndexSet? = kextsToPatch?.indexesOfObjects(options: [], passingTest: { (constraint, idx, stop) in
-                                                                if let dict = constraint as? NSDictionary {
-                                                                        let test: String? = dict[Keys.Comment.string] as? String
-                                                                        if let commentString: String = test {
-                                                                                if commentString.contains("webdriver.sh: ") {
-                                                                                        return true
-                                                                                }
-                                                                        }
-                                                                        if (dict[Keys.Find.string] as? Data == patch[Keys.Find.string] as? Data && dict[Keys.Name.string] as? String == patch[Keys.Name.string] as? String) {
-                                                                                return true
-                                                                        }
+                                                /* Merge into existing, try to remove existing */
+                                                
+                                                let existing: IndexSet? = kextsToPatch?.indexesOfObjects(options: [], passingTest: { (constraint, idx, stop) in
+                                                        if let test = constraint as? NSDictionary {
+                                                                if (test[Keys.Comment.string] as? String ?? "")!.contains("webdriver.sh: ") {
+                                                                        return true
                                                                 }
-                                                                return false
-                                                        })
-                                                        
-                                                        if duplicates != nil {
-                                                                kextsToPatch?.removeObjects(at: duplicates!)
+                                                                let findMatch: Bool = test[Keys.Find.string] as? Data == patch[Keys.Find.string] as? Data
+                                                                let nameMatch: Bool = test[Keys.Name.string] as? String == patch[Keys.Name.string] as? String
+                                                                if findMatch && nameMatch {
+                                                                        return true
+                                                                }
                                                         }
-                                                        
-                                                        /* Add the patch */
-                                                        
-                                                        kextsToPatch?.add(patch)
+                                                        return false
+                                                })
+                                                
+                                                if existing != nil {
+                                                        kextsToPatch?.removeObjects(at: existing!)
                                                 }
+                                                
+                                                /* Add the patch */
+                                                
+                                                kextsToPatch?.add(patch)
                                         }
                                         
                                         if write() {
+                                                os_log("NvidiaCloverSettings: Wrote KextsToPatch->NVDAStartupWeb=%{public}@", newValue.description)
                                                 _nvdaStartupPatchIsEnabled = newValue
                                         }
                                         
@@ -197,6 +191,7 @@ class NvidiaCloverSettings: CloverSettings {
                 
                 let syncResult = super.sync(leavingPartitionMounted: leaveMounted)
                 if syncResult {
+                        
                         _nvidiaWebIsEnabled = false
                         _nvdaStartupPatchIsEnabled = false
                         
@@ -216,7 +211,10 @@ class NvidiaCloverSettings: CloverSettings {
                                 if let kextsToPatch = kernelAndKextPatches[Keys.KextsToPatch.string] as? NSArray {
                                         enabledPatchesIndicies = kextsToPatch.indexesOfObjects(options: [], passingTest: { (constraint, idx, stop) in
                                                 if let test = constraint as? NSDictionary {
-                                                        if (test[Keys.Find.string] as? Data == startupWebPatch[Keys.Find.string] as? Data && test[Keys.Name.string] as? String == startupWebPatch[Keys.Name.string] as? String && test[Keys.Disabled.string] as? Bool != Optional(Bool(true))) {
+                                                        let findMatch = test[Keys.Find.string] as? Data == startupWebPatch[Keys.Find.string] as? Data
+                                                        let nameMatch = test[Keys.Name.string] as? String == startupWebPatch[Keys.Name.string] as? String
+                                                        let patchEnabled = test[Keys.Disabled.string] as? Bool != Optional(Bool(true))
+                                                        if findMatch && nameMatch && patchEnabled {
                                                                 return true
                                                         }
                                                 }

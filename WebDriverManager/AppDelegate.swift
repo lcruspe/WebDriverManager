@@ -22,7 +22,7 @@ import os.log
 
 @NSApplicationMain class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         
-        static let versionString = "1.4"
+        static let versionString = "1.5"
         
         var driverStatus: String = NSLocalizedString("Driver status unavailable", comment: "Main menu: Driver status unavailable")
         let driverNotInstalledMenuItemTitle = NSLocalizedString("Web driver not installed", comment: "Main menu: Web driver not installed")
@@ -170,7 +170,6 @@ import os.log
                 }
         }
         
-        
         @IBAction func nvidiaWebMenuItemClicked(_ sender: NSMenuItem) {
                 if cloverSettings == nil {
                         return
@@ -181,8 +180,7 @@ import os.log
                         cloverSettings!.nvidiaWebIsEnabled = true
                 }
         }
-        
-        
+
         func cancelSuppressedVersion() {
                 if Defaults.shared.suppressUpdateAlerts != "" {
                         Defaults.shared.suppressUpdateAlerts = ""
@@ -273,6 +271,5 @@ import os.log
         @IBAction func quitMenuItemClicked(_ sender: NSMenuItem) {
                 os_log("Quit menu item clicked, exiting")
                 exit(0)
-        }
-        
+        }        
 }

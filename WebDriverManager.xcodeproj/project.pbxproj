@@ -95,19 +95,19 @@
 		4D304421204090C400C82104 /* WebDriverManager */ = {
 			isa = PBXGroup;
 			children = (
+				4D8879262055DF4400C82104 /* AboutViewController.swift */,
 				4D304422204090C400C82104 /* AppDelegate.swift */,
-				4D17721B20453FE300C82104 /* WebDriverNotifications.swift */,
 				4D304424204090C400C82104 /* Assets.xcassets */,
+				4D09C74E2042B63600C82104 /* Defaults.swift */,
 				4D304429204090C400C82104 /* Info.plist */,
+				4D6BC7312058153100C82104 /* Main.storyboard */,
 				4D304426204090C400C82104 /* MainMenu.xib */,
+				4D163C58205A8A9100C82104 /* NvidiaCloverSettings.swift */,
 				4D8347AB204211D100C82104 /* nvram.applescript */,
 				4D304433204090F300C82104 /* Nvram.swift */,
-				4D30442A204090C400C82104 /* Web_Driver_Manager.entitlements */,
-				4D09C74E2042B63600C82104 /* Defaults.swift */,
 				4D17721D204544E900C82104 /* sysctl.swift */,
-				4D6BC7312058153100C82104 /* Main.storyboard */,
-				4D8879262055DF4400C82104 /* AboutViewController.swift */,
-				4D163C58205A8A9100C82104 /* NvidiaCloverSettings.swift */,
+				4D30442A204090C400C82104 /* Web_Driver_Manager.entitlements */,
+				4D17721B20453FE300C82104 /* WebDriverNotifications.swift */,
 			);
 			path = WebDriverManager;
 			sourceTree = "<group>";
