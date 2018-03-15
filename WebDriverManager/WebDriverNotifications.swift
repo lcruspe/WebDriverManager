@@ -18,6 +18,7 @@
  */
 
 import Cocoa
+import os.log
 
 class WebDriverNotifications: NSObject, NSUserNotificationCenterDelegate {
         
@@ -34,7 +35,7 @@ class WebDriverNotifications: NSObject, NSUserNotificationCenterDelegate {
         
         var localVersion: String? {
                 get {
-                        Log.log("Updates URL: %{public}@", nvidiaUpdatesUrl)
+                        os_log("Updates URL: %{public}@", nvidiaUpdatesUrl)
                         let infoPlistUrl = URL.init(fileURLWithPath: nvidiaUpdatesUrl)
                         guard let info = NSDictionary.init(contentsOf: infoPlistUrl) else {
                                 return nil
@@ -46,7 +47,7 @@ class WebDriverNotifications: NSObject, NSUserNotificationCenterDelegate {
                         guard components.count == 3 else {
                                 return nil
                         }
-                        Log.log("Local version: %{public}@", components[2])
+                        os_log("Local version: %{public}@", components[2])
                         return components[2]
                 }
         }
@@ -88,10 +89,10 @@ class WebDriverNotifications: NSObject, NSUserNotificationCenterDelegate {
                 switch (notification.activationType) {
                 case .actionButtonClicked:
                         if let versionToSuppress = notification.identifier {
-                                Log.log("Suppressing alerts for version: %{public}@", versionToSuppress)
+                                os_log("Suppressing alerts for version: %{public}@", versionToSuppress)
                                 Defaults.shared.suppressUpdateAlerts = versionToSuppress
                         } else {
-                                Log.log("Notification identifier was nil, unable to suppress alerts")
+                                os_log("Notification identifier was nil, unable to suppress alerts")
                         }
                 default:
                         break;
@@ -100,7 +101,7 @@ class WebDriverNotifications: NSObject, NSUserNotificationCenterDelegate {
         
         func checkForUpdates() -> Bool {
                 guard updates != nil else {
-                        Log.log("Couldn't get updates data from NVIDIA")
+                        os_log("Couldn't get updates data from NVIDIA")
                         return false
                 }
                 for update in updates! {
@@ -115,21 +116,21 @@ class WebDriverNotifications: NSObject, NSUserNotificationCenterDelegate {
                         remoteVersion = update["version"] as? String
                 }
                 guard remoteVersion != nil else {
-                        Log.log("Remote version is nil")
+                        os_log("Remote version is nil")
                         return false
                 }
                 guard remoteVersion != localVersion else {
-                        Log.log("Remote version %{public}@ is already installed", remoteVersion!)
+                        os_log("Remote version %{public}@ is already installed", remoteVersion!)
                         return false
                 }
                 guard remoteVersion != Defaults.shared.suppressUpdateAlerts else {
-                        Log.log("Alerts for %{public}@ have been suppressed in user defaults", remoteVersion!)
+                        os_log("Alerts for %{public}@ have been suppressed in user defaults", remoteVersion!)
                         return false
                 }
-                Log.log("Remote version available: %{public}@", remoteVersion!)
+                os_log("Remote version available: %{public}@", remoteVersion!)
                 var webDriverAlert = NSUserNotification()
                 setup(notification: &webDriverAlert, forVersion: remoteVersion!)
-                Log.log("Scheduling update notification, delivery date: %{public}@", webDriverAlert.deliveryDate?.description ?? "unknown")
+                os_log("Scheduling update notification, delivery date: %{public}@", webDriverAlert.deliveryDate?.description ?? "unknown")
                 NSUserNotificationCenter.default.scheduleNotification(webDriverAlert)
                 return true
         }

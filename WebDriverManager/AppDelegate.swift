@@ -18,6 +18,7 @@
  */
 
 import Cocoa
+import os.log
 
 @NSApplicationMain class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         
@@ -70,7 +71,7 @@ import Cocoa
                 if let nvramScriptUrl = Bundle.main.url(forResource: "nvram", withExtension: "applescript") {
                         nvramScript = NSAppleScript(contentsOf: nvramScriptUrl, error: &nvramScriptError)
                 } else {
-                        Log.log("Failed to get resource url for nvram script")
+                        os_log("Failed to get resource url for nvram script")
                 }
         }
 
@@ -83,7 +84,7 @@ import Cocoa
                 statusItem.menu = statusMenu
                 statusMenu.delegate = self
                 NSUserNotificationCenter.default.delegate = webDriverNotifications
-                Log.log("Started")
+                os_log("Started")
                 updateCheckQueue.async {
                         self.updateCheckDidFinish(result: self.beginUpdateCheck())
                 }
@@ -126,7 +127,7 @@ import Cocoa
                 if sender.state == NSControl.StateValue.on {
                         return
                 }
-                Log.log("Setting nvda_drv nvram variable")
+                os_log("Setting nvda_drv nvram variable")
                 let result: NSAppleEventDescriptor? = nvramScript?.executeAndReturnError(&nvramScriptError)
                 if (result?.booleanValue)! {
                         if Defaults.shared.showRestartAlert {
@@ -135,13 +136,13 @@ import Cocoa
                         return
                 }
                 NSSound.beep()
-                Log.log("Failed to set nvda_drv NVRAM variable")
+                os_log("Failed to set nvda_drv NVRAM variable")
         }
         
         func cancelSuppressedVersion() {
                 if Defaults.shared.suppressUpdateAlerts != "" {
                         Defaults.shared.suppressUpdateAlerts = ""
-                        Log.log("Cancelling suppressUpdateAlerts")
+                        os_log("Cancelling suppressUpdateAlerts")
                 }
         }
         
@@ -156,13 +157,13 @@ import Cocoa
                 if Defaults.shared.disableUpdateAlerts {
                         cancelSuppressedVersion()
                         Defaults.shared.disableUpdateAlerts = false
-                        Log.log("Automatic update notifications enabled")
+                        os_log("Automatic update notifications enabled")
                         updateCheckQueue.async {
                                 self.updateCheckDidFinish(result: self.beginUpdateCheck(overrideDefaults: true))
                         }
                 } else {
                         Defaults.shared.disableUpdateAlerts = true
-                        Log.log("Automatic update notifications disabled")
+                        os_log("Automatic update notifications disabled")
                 }
         }
         
@@ -173,17 +174,17 @@ import Cocoa
                 checkNowMenuItem.title = checkInProgressMenuItemTitle
                 if userWantsAlerts || overrideDefaults {
                         if !userWantsAlerts && overrideDefaults {
-                                Log.log("Overriding notifications disabled user default")
+                                os_log("Overriding notifications disabled user default")
                         }
                         return webDriverNotifications.checkForUpdates()
                 } else {
-                        Log.log("Update notifications are disabled in user defaults")
+                        os_log("Update notifications are disabled in user defaults")
                         return false
                 }
         }
         
         func updateCheckDidFinish(result: Bool) {
-                Log.log("updateCheck returned %{public}@", result.description)
+                os_log("updateCheck returned %{public}@", result.description)
                 checkNowMenuItem.isEnabled = true
                 toggleNotificationsMenuItem.isEnabled = true
                 checkNowMenuItem.title = checkNowMenuItemTitle
@@ -224,7 +225,7 @@ import Cocoa
         }
         
         @IBAction func quitMenuItemClicked(_ sender: NSMenuItem) {
-                Log.log("Quit menu item clicked, exiting")
+                os_log("Quit menu item clicked, exiting")
                 exit(0)
         }
         
