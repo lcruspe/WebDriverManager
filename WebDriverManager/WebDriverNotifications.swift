@@ -28,43 +28,37 @@ class WebDriverNotifications: NSObject, NSUserNotificationCenterDelegate {
         var remoteVersion: String?
         
         var build: String? {
-                get {
-                        return sysctl(byName: "kern.osversion")
-                }
+                return sysctl(byName: "kern.osversion")
         }
         
         var localVersion: String? {
-                get {
-                        os_log("Updates URL: %{public}@", nvidiaUpdatesUrl)
-                        let infoPlistUrl = URL.init(fileURLWithPath: nvidiaUpdatesUrl)
-                        guard let info = NSDictionary.init(contentsOf: infoPlistUrl) else {
-                                return nil
-                        }
-                        guard let infoString = info["CFBundleGetInfoString"] as? String else {
-                                return nil
-                        }
-                        let components = infoString.split(separator: " ").map(String.init)
-                        guard components.count == 3 else {
-                                return nil
-                        }
-                        os_log("Local version: %{public}@", components[2])
-                        return components[2]
+                os_log("Updates URL: %{public}@", nvidiaUpdatesUrl)
+                let infoPlistUrl = URL.init(fileURLWithPath: nvidiaUpdatesUrl)
+                guard let info = NSDictionary.init(contentsOf: infoPlistUrl) else {
+                        return nil
                 }
+                guard let infoString = info["CFBundleGetInfoString"] as? String else {
+                        return nil
+                }
+                let components = infoString.split(separator: " ").map(String.init)
+                guard components.count == 3 else {
+                        return nil
+                }
+                os_log("Local version: %{public}@", components[2])
+                return components[2]
         }
         
         var updates: Array<AnyObject>? {
-                get {
-                        guard let updatesURL = URL.init(string: "https://gfestage.nvidia.com/mac-update") else {
-                                return nil
-                        }
-                        guard let downloaded = NSDictionary.init(contentsOf: updatesURL) else {
-                                return nil
-                        }
-                        guard let array = downloaded["updates"] as? NSArray else {
-                                return nil
-                        }
-                        return array as Array<AnyObject>
+                guard let updatesURL = URL.init(string: "https://gfestage.nvidia.com/mac-update") else {
+                        return nil
                 }
+                guard let downloaded = NSDictionary.init(contentsOf: updatesURL) else {
+                        return nil
+                }
+                guard let array = downloaded["updates"] as? NSArray else {
+                        return nil
+                }
+                return array as Array<AnyObject>
         }
         
         override init() {

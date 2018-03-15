@@ -24,9 +24,6 @@ import os.log
         
         static let versionString = "1.4"
         
-        let nvdaStartupFind = Data.init(bytes: [0x4e, 0x56, 0x44, 0x41, 0x52, 0x65, 0x71, 0x75, 0x69, 0x72, 0x65, 0x64, 0x4f, 0x53, 0x00])
-        let nvdaStartupReplace = Data.init(bytes: [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
-        
         var driverStatus: String = NSLocalizedString("Driver status unavailable", comment: "Main menu: Driver status unavailable")
         let driverNotInstalledMenuItemTitle = NSLocalizedString("Web driver not installed", comment: "Main menu: Web driver not installed")
         let driverNotInUseMenuItemTitle = NSLocalizedString("Web driver not in use", comment: "Main menu: Web driver not in use")
@@ -58,9 +55,7 @@ import os.log
         @IBOutlet weak var nvidiaWebMenuItem: NSMenuItem!
         
         var userWantsAlerts: Bool {
-                get {
-                        return !Defaults.shared.disableUpdateAlerts
-                }
+                return !Defaults.shared.disableUpdateAlerts
         }
         let statusItem = NSStatusBar.system.statusItem(withLength:NSStatusItem.variableLength)
         let nvAccelerator = RegistryEntry.init(fromMatchingDictionary: IOServiceMatching("nvAccelerator"))
@@ -68,12 +63,12 @@ import os.log
         var nvramScriptError: NSDictionary?
         var nvramScript: NSAppleScript?
         let fileManager = FileManager()
-        let cloverSettings = CloverSettings()
+        let cloverSettings = NvidiaCloverSettings()
         let webDriverNotifications = WebDriverNotifications()
         let updateCheckQueue = DispatchQueue(label: "updateCheck", attributes: .concurrent)
         var updateCheckWorkItem: DispatchWorkItem?
         var updateCheckInterval: Double = 21600
-
+        
         override init() {
                 super.init()
                 if let nvramScriptUrl = Bundle.main.url(forResource: "nvram", withExtension: "applescript") {
@@ -82,7 +77,7 @@ import os.log
                         os_log("Failed to get resource url for nvram script")
                 }
         }
-
+        
         func applicationDidFinishLaunching(_ aNotification: Notification) {
                 if let button = statusItem.button {
                         button.image = NSImage(named:NSImage.Name("NVMenuIcon"))
@@ -132,28 +127,12 @@ import os.log
                 if cloverSettings != nil {
                         cloverSeparatorMenuItem.isHidden = false
                         cloverSubMenuItem.isHidden = false
-                        if let runtimeVariables = cloverSettings?.dictionary?["RtVariables"] as? NSDictionary {
-                                let nvidiaWeb: Bool? = runtimeVariables["NvidiaWeb"] as? Bool
-                                if nvidiaWeb != nil, nvidiaWeb! == true {
-                                        nvidiaWebMenuItem.state = .on
-                                } else {
-                                        nvidiaWebMenuItem.state = .off
-                                }
+                        if cloverSettings!.nvidiaWebIsEnabled {
+                                nvidiaWebMenuItem.state = .on
+                        } else {
+                                nvidiaWebMenuItem.state = .off
                         }
-                        var enabledPatchesIndicies = IndexSet()
-                        if let kernelAndKextPatches = cloverSettings?.dictionary?["KernelAndKextPatches"] as? NSDictionary {
-                                if let kextsToPatch = kernelAndKextPatches["KextsToPatch"] as? NSArray {
-                                        enabledPatchesIndicies = kextsToPatch.indexesOfObjects(options: [], passingTest: { (constraint, idx, stop) in
-                                                if let dict = constraint as? NSDictionary {
-                                                        if (dict["Find"] as? Data == nvdaStartupFind && dict["Name"] as? String == "NVDAStartupWeb" && dict["Disabled"] as? Bool != Optional(Bool(true))) {
-                                                                return true
-                                                        }
-                                                }
-                                                return false
-                                        })
-                                }
-                        }
-                        if enabledPatchesIndicies.count > 0 {
+                        if cloverSettings!.nvdaStartupPatchIsEnabled {
                                 nvdaStartupMenuItem.state = .on
                         } else {
                                 nvdaStartupMenuItem.state = .off
@@ -179,6 +158,30 @@ import os.log
                 NSSound.beep()
                 os_log("Failed to set nvda_drv NVRAM variable")
         }
+        
+        @IBAction func nvdaStartupWebMenuItemClicked(_ sender: NSMenuItem) {
+                if cloverSettings == nil {
+                        return
+                }
+                if sender.state == .on {
+                        cloverSettings!.nvdaStartupPatchIsEnabled = false
+                } else {
+                        cloverSettings!.nvdaStartupPatchIsEnabled = true
+                }
+        }
+        
+        
+        @IBAction func nvidiaWebMenuItemClicked(_ sender: NSMenuItem) {
+                if cloverSettings == nil {
+                        return
+                }
+                if sender.state == .on {
+                        cloverSettings!.nvidiaWebIsEnabled = false
+                } else {
+                        cloverSettings!.nvidiaWebIsEnabled = true
+                }
+        }
+        
         
         func cancelSuppressedVersion() {
                 if Defaults.shared.suppressUpdateAlerts != "" {
@@ -207,6 +210,8 @@ import os.log
                         os_log("Automatic update notifications disabled")
                 }
         }
+        
+        
         
         func beginUpdateCheck(overrideDefaults: Bool = false) -> Bool {
                 updateCheckWorkItem?.cancel()
