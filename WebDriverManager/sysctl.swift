@@ -19,11 +19,11 @@
 
 import Foundation
 
-func sysctl(name: String) -> String? {
+func sysctl(byName: String) -> String? {
         let bufferSize = 256
         var buffer = Array<CChar>(repeating: 0, count: bufferSize)
         var size = size_t(buffer.count)
-        let result: Int32 = sysctlbyname(name, &buffer, &size, nil, 0)
+        let result: Int32 = sysctlbyname(byName, &buffer, &size, nil, 0)
         if result != 0 {
                 return nil
         } else {

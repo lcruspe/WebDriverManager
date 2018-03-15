@@ -29,7 +29,7 @@ class WebDriverNotifications: NSObject, NSUserNotificationCenterDelegate {
         
         var build: String? {
                 get {
-                        return sysctl(name: "kern.osversion")
+                        return sysctl(byName: "kern.osversion")
                 }
         }
         
