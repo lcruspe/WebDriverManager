@@ -24,6 +24,9 @@ import os.log
         
         static let versionString = "1.4"
         
+        let nvdaStartupFind = Data.init(bytes: [0x4e, 0x56, 0x44, 0x41, 0x52, 0x65, 0x71, 0x75, 0x69, 0x72, 0x65, 0x64, 0x4f, 0x53, 0x00])
+        let nvdaStartupReplace = Data.init(bytes: [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00])
+        
         var driverStatus: String = NSLocalizedString("Driver status unavailable", comment: "Main menu: Driver status unavailable")
         let driverNotInstalledMenuItemTitle = NSLocalizedString("Web driver not installed", comment: "Main menu: Web driver not installed")
         let driverNotInUseMenuItemTitle = NSLocalizedString("Web driver not in use", comment: "Main menu: Web driver not in use")
@@ -49,6 +52,8 @@ import os.log
         @IBOutlet weak var toggleNotificationsMenuItem: NSMenuItem!
         @IBOutlet weak var aboutMenuItem: NSMenuItem!
         @IBOutlet weak var quitMenuItem: NSMenuItem!
+        @IBOutlet weak var nvdaStartupMenuItem: NSMenuItem!
+        @IBOutlet weak var nvidiaWebMenuItem: NSMenuItem!
         
         var userWantsAlerts: Bool {
                 get {
@@ -73,7 +78,7 @@ import os.log
                         nvramScript = NSAppleScript(contentsOf: nvramScriptUrl, error: &nvramScriptError)
                 } else {
                         os_log("Failed to get resource url for nvram script")
-                } 
+                }
         }
 
         func applicationDidFinishLaunching(_ aNotification: Notification) {
@@ -109,11 +114,11 @@ import os.log
                         driverStatusMenuItem.title = driverNotInstalledMenuItemTitle
                 }
                 if nvram.useNvidia {
-                        useNvidiaDriverMenuItem.state = NSControl.StateValue.on
-                        useDefaultDriverMenuItem.state = NSControl.StateValue.off
+                        useNvidiaDriverMenuItem.state = .on
+                        useDefaultDriverMenuItem.state = .off
                 } else {
-                        useNvidiaDriverMenuItem.state = NSControl.StateValue.off
-                        useDefaultDriverMenuItem.state = NSControl.StateValue.on
+                        useNvidiaDriverMenuItem.state = .off
+                        useDefaultDriverMenuItem.state = .on
                 }
                 if Defaults.shared.disableUpdateAlerts {
                         notificationsStatusMenuItem.title = notificationsDisabledMenuItemTitle
@@ -122,10 +127,36 @@ import os.log
                         notificationsStatusMenuItem.title = notificationsEnabledMenuItemTitle
                         toggleNotificationsMenuItem?.title = disableNotificationsMenuItemTitle
                 }
+                if let runtimeVariables = cloverSettings?.dictionary?["RtVariables"] as? NSDictionary {
+                        let nvidiaWeb: Bool? = runtimeVariables["NvidiaWeb"] as? Bool
+                        if nvidiaWeb != nil, nvidiaWeb! == true {
+                                nvidiaWebMenuItem.state = .on
+                        } else {
+                                nvidiaWebMenuItem.state = .off
+                        }
+                }
+                var enabledPatchesIndicies = IndexSet()
+                if let kernelAndKextPatches = cloverSettings?.dictionary?["KernelAndKextPatches"] as? NSDictionary {
+                        if let kextsToPatch = kernelAndKextPatches["KextsToPatch"] as? NSArray {
+                                enabledPatchesIndicies = kextsToPatch.indexesOfObjects(options: [], passingTest: { (constraint, idx, stop) in
+                                        if let dict = constraint as? NSDictionary {
+                                                if (dict["Find"] as? Data == nvdaStartupFind && dict["Name"] as? String == "NVDAStartupWeb" && dict["Disabled"] as? Bool != Optional(Bool(true))) {
+                                                        return true
+                                                }
+                                        }
+                                        return false
+                                })
+                        }
+                }
+                if enabledPatchesIndicies.count > 0 {
+                        nvdaStartupMenuItem.state = .on
+                } else {
+                        nvdaStartupMenuItem.state = .off
+                }
         }
         
         @IBAction func changeDriverMenuItemClicked(_ sender: NSMenuItem) {
-                if sender.state == NSControl.StateValue.on {
+                if sender.state == .on {
                         return
                 }
                 os_log("Setting nvda_drv nvram variable")
@@ -205,15 +236,15 @@ import os.log
                 alert.addButton(withTitle: restartAlertButtonTitle)
                 alert.showsSuppressionButton = true
                 alert.runModal()
-                if (alert.suppressionButton?.state == NSControl.StateValue.on) {
+                if (alert.suppressionButton?.state == .on) {
                         Defaults.shared.showRestartAlert = false
                 }
         }
         
         func showWindowInFront(_ window: NSWindow) {
-                window.level = NSWindow.Level.floating
+                window.level = .floating
                 window.makeKeyAndOrderFront(self)
-                window.level = NSWindow.Level.normal
+                window.level = .normal
         }
         
         @IBAction func aboutMenuItemClicked(_ sender: NSMenuItem) {

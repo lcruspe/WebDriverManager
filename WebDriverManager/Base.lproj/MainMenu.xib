@@ -18,6 +18,8 @@
                 <outlet property="checkNowMenuItem" destination="CNc-jG-bOC" id="ots-mR-2hB"/>
                 <outlet property="driverStatusMenuItem" destination="d6q-bn-6in" id="eBR-5K-Hsi"/>
                 <outlet property="notificationsStatusMenuItem" destination="5Zv-wc-Q7x" id="6xw-Ek-QNZ"/>
+                <outlet property="nvdaStartupMenuItem" destination="WST-Oi-0mS" id="Vyc-bR-8W2"/>
+                <outlet property="nvidiaWebMenuItem" destination="f4s-yx-WDp" id="EzE-CD-WhC"/>
                 <outlet property="quitMenuItem" destination="MAd-yk-Fz2" id="mdA-KF-nQD"/>
                 <outlet property="statusMenu" destination="FVg-r4-d2m" id="gbK-U7-H5Y"/>
                 <outlet property="toggleNotificationsMenuItem" destination="z7c-mr-eA2" id="PoX-9x-lDn"/>
@@ -76,14 +78,14 @@
                             <menuItem title="Kexts to Patch" enabled="NO" id="bFG-nf-4va">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                             </menuItem>
-                            <menuItem title="NVDAStartupWeb" state="on" id="WST-Oi-0mS">
+                            <menuItem title="NVDAStartupWeb" id="WST-Oi-0mS">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="z01-XJ-NeA"/>
                             <menuItem title="Runtime Variables" enabled="NO" id="WlW-PX-0wr">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                             </menuItem>
-                            <menuItem title="NvidiaWeb" state="on" id="f4s-yx-WDp">
+                            <menuItem title="NvidiaWeb" id="f4s-yx-WDp">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                             </menuItem>
                         </items>
