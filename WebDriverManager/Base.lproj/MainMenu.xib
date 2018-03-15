@@ -44,7 +44,7 @@
                         <action selector="changeDriverMenuItemClicked:" target="Voe-Tx-rLC" id="tg5-oO-tmL"/>
                     </connections>
                 </menuItem>
-                <menuItem isSeparatorItem="YES" id="27s-Kb-0DA"/>
+                <menuItem isSeparatorItem="YES" id="p0L-mW-g6u"/>
                 <menuItem title="Notifications" id="geg-WS-0Tl">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Notifications" autoenablesItems="NO" id="ef9-hL-wiF">
@@ -69,6 +69,27 @@
                     </menu>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="u4F-1e-CEo"/>
+                <menuItem title="Clover Settings" id="G12-vs-qSw">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Clover Settings" autoenablesItems="NO" id="4lC-VH-hBx">
+                        <items>
+                            <menuItem title="Kexts to Patch" enabled="NO" id="bFG-nf-4va">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem title="NVDAStartupWeb" state="on" id="WST-Oi-0mS">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="z01-XJ-NeA"/>
+                            <menuItem title="Runtime Variables" enabled="NO" id="WlW-PX-0wr">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem title="NvidiaWeb" state="on" id="f4s-yx-WDp">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="27s-Kb-0DA"/>
                 <menuItem title="Web Driver Manager" id="VGT-UL-p7l">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Web Driver Manager" autoenablesItems="NO" id="kRS-lT-gOO">
