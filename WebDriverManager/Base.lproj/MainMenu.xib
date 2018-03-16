@@ -17,13 +17,13 @@
                 <outlet property="aboutMenuItem" destination="x6D-xp-qHF" id="UoA-8f-0tB"/>
                 <outlet property="checkNowMenuItem" destination="CNc-jG-bOC" id="ots-mR-2hB"/>
                 <outlet property="cloverPartitionMenuItem" destination="70R-pl-3SH" id="ZS7-5M-pEi"/>
-                <outlet property="cloverSeparatorMenuItem" destination="u4F-1e-CEo" id="emk-zx-u1d"/>
                 <outlet property="cloverSubMenuItem" destination="G12-vs-qSw" id="Zx2-in-90j"/>
                 <outlet property="driverStatusMenuItem" destination="d6q-bn-6in" id="eBR-5K-Hsi"/>
                 <outlet property="notificationsStatusMenuItem" destination="5Zv-wc-Q7x" id="6xw-Ek-QNZ"/>
                 <outlet property="nvdaStartupMenuItem" destination="WST-Oi-0mS" id="Vyc-bR-8W2"/>
                 <outlet property="nvidiaWebMenuItem" destination="f4s-yx-WDp" id="EzE-CD-WhC"/>
                 <outlet property="quitMenuItem" destination="MAd-yk-Fz2" id="mdA-KF-nQD"/>
+                <outlet property="showPackageDropMenuItem" destination="taC-Qi-Szq" id="hul-U8-Phv"/>
                 <outlet property="statusMenu" destination="FVg-r4-d2m" id="gbK-U7-H5Y"/>
                 <outlet property="toggleNotificationsMenuItem" destination="z7c-mr-eA2" id="PoX-9x-lDn"/>
                 <outlet property="useDefaultDriverMenuItem" destination="8n0-nR-8WC" id="DLy-eJ-fVD"/>
@@ -73,10 +73,9 @@
                         </items>
                     </menu>
                 </menuItem>
-                <menuItem isSeparatorItem="YES" id="u4F-1e-CEo"/>
-                <menuItem title="Clover" id="G12-vs-qSw">
+                <menuItem title="Clover Settings" id="G12-vs-qSw">
                     <modifierMask key="keyEquivalentModifierMask"/>
-                    <menu key="submenu" title="Clover" autoenablesItems="NO" id="4lC-VH-hBx">
+                    <menu key="submenu" title="Clover Settings" autoenablesItems="NO" id="4lC-VH-hBx">
                         <items>
                             <menuItem title="Kexts to Patch" enabled="NO" id="bFG-nf-4va">
                                 <modifierMask key="keyEquivalentModifierMask"/>
@@ -106,6 +105,12 @@
                             </menuItem>
                         </items>
                     </menu>
+                </menuItem>
+                <menuItem title="Show Package Installer" id="taC-Qi-Szq">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="packageDropMenuItemClicked:" target="Voe-Tx-rLC" id="lUE-nh-0oG"/>
+                    </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="27s-Kb-0DA"/>
                 <menuItem title="Web Driver Manager" id="VGT-UL-p7l">

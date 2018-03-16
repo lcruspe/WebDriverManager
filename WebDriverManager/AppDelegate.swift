@@ -24,6 +24,19 @@ import os.log
         
         static let versionString = "1.5"
         
+        var packager = Packager()
+        var packageUrl: URL? {
+                didSet {
+                        os_log("PackagerViewController: new url %{public}@", packageUrl?.absoluteString ?? "nil")
+                        if let url: URL = packageUrl {
+                                packageDropController?.close()
+                                showPackageDropMenuItem.isEnabled = false
+                                packager.installPackage(atUrl: url)
+                        }
+                        packageUrl = nil
+                }
+        }
+        
         var driverStatus: String = NSLocalizedString("Driver status unavailable", comment: "Main menu: Driver status unavailable")
         let driverNotInstalledMenuItemTitle = NSLocalizedString("Web driver not installed", comment: "Main menu: Web driver not installed")
         let driverNotInUseMenuItemTitle = NSLocalizedString("Web driver not in use", comment: "Main menu: Web driver not in use")
@@ -41,6 +54,7 @@ import os.log
         
         var storyboard: NSStoryboard?
         var aboutWindowController: NSWindowController?
+        var packageDropController: NSWindowController?
         
         @IBOutlet weak var statusMenu: NSMenu!
         @IBOutlet weak var driverStatusMenuItem: NSMenuItem!
@@ -51,11 +65,11 @@ import os.log
         @IBOutlet weak var toggleNotificationsMenuItem: NSMenuItem!
         @IBOutlet weak var aboutMenuItem: NSMenuItem!
         @IBOutlet weak var quitMenuItem: NSMenuItem!
-        @IBOutlet weak var cloverSeparatorMenuItem: NSMenuItem!
         @IBOutlet weak var cloverSubMenuItem: NSMenuItem!
         @IBOutlet weak var nvdaStartupMenuItem: NSMenuItem!
         @IBOutlet weak var nvidiaWebMenuItem: NSMenuItem!
         @IBOutlet weak var cloverPartitionMenuItem: NSMenuItem!
+        @IBOutlet weak var showPackageDropMenuItem: NSMenuItem!
         
         var userWantsAlerts: Bool {
                 return !Defaults.shared.disableUpdateAlerts
@@ -96,6 +110,7 @@ import os.log
                 }
                 storyboard = NSStoryboard(name: NSStoryboard.Name(rawValue: "Main"), bundle: nil)
                 aboutWindowController = storyboard?.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "aboutWindowController")) as? NSWindowController
+                packageDropController = storyboard?.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "packagerWindowController")) as? NSWindowController
         }
         
         func menuWillOpen(_ menu: NSMenu) {
@@ -128,7 +143,6 @@ import os.log
                         toggleNotificationsMenuItem?.title = disableNotificationsMenuItemTitle
                 }
                 if cloverSettings != nil {
-                        cloverSeparatorMenuItem.isHidden = false
                         cloverSubMenuItem.isHidden = false
                         if cloverSettings!.nvidiaWebIsEnabled {
                                 nvidiaWebMenuItem.state = .on
@@ -141,7 +155,6 @@ import os.log
                                 nvdaStartupMenuItem.state = .off
                         }
                 } else {
-                        cloverSeparatorMenuItem.isHidden = true
                         cloverSubMenuItem.isHidden = true
                 }
                 if let url: URL = cloverSettings?.lastVolumeUrl {
@@ -227,8 +240,6 @@ import os.log
                 }
         }
         
-        
-        
         func beginUpdateCheck(overrideDefaults: Bool = false) -> Bool {
                 updateCheckWorkItem?.cancel()
                 checkNowMenuItem.isEnabled = false
@@ -271,18 +282,29 @@ import os.log
                 }
         }
         
-        func showWindowInFront(_ window: NSWindow) {
-                window.level = .floating
-                window.makeKeyAndOrderFront(self)
-                window.level = .normal
-        }
-        
         @IBAction func aboutMenuItemClicked(_ sender: NSMenuItem) {
                 if let window = aboutWindowController?.window {
                         if !window.isVisible {
                                 window.center()
                         }
-                        showWindowInFront(window)
+                        window.level = .floating
+                        window.makeKeyAndOrderFront(self)
+                        window.level = .normal
+                }
+        }
+        
+        @IBAction func packageDropMenuItemClicked(_ sender: NSMenuItem) {
+                if let window = packageDropController?.window {
+                        window.appearance = NSAppearance.init(named: NSAppearance.Name.vibrantLight)
+                        window.standardWindowButton(.miniaturizeButton)?.isHidden = true
+                        window.standardWindowButton(.zoomButton)?.isHidden = true
+                        if !window.isVisible {
+                                let originX = (NSScreen.main?.visibleFrame.origin.x)! + (NSScreen.main?.visibleFrame.size.width)! - window.frame.size.width - 48.0
+                                let originY = (NSScreen.main?.visibleFrame.origin.y)! + (NSScreen.main?.visibleFrame.size.height)! - window.frame.size.height - 48.0
+                                window.setFrameOrigin(NSPoint(x: originX, y: originY))
+                        }
+                        window.level = .floating
+                        window.makeKeyAndOrderFront(self)
                 }
         }
         

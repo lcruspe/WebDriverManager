@@ -25,7 +25,55 @@
                 </windowController>
                 <customObject id="l2O-7d-ptF" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="30" y="10"/>
+            <point key="canvasLocation" x="-29" y="76"/>
+        </scene>
+        <!--Window Controller-->
+        <scene sceneID="Nb1-Pw-jGM">
+            <objects>
+                <windowController storyboardIdentifier="packagerWindowController" id="IFi-ca-qdJ" sceneMemberID="viewController">
+                    <window key="window" title="Packager" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="Olw-CZ-aad" customClass="NSPanel">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" fullSizeContentView="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="407" y="409" width="212" height="197"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1058"/>
+                        <connections>
+                            <outlet property="delegate" destination="IFi-ca-qdJ" id="zqS-Xw-jVY"/>
+                        </connections>
+                    </window>
+                    <connections>
+                        <segue destination="WGk-Wf-ZeV" kind="relationship" relationship="window.shadowedContentViewController" id="GyW-Wh-d0e"/>
+                    </connections>
+                </windowController>
+                <customObject id="tye-7D-NOy" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-30" y="205"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="dYp-PH-BvA">
+            <objects>
+                <viewController id="WGk-Wf-ZeV" sceneMemberID="viewController">
+                    <view key="view" id="aJf-TJ-7UO" customClass="PackageDropView" customModule="Web_Driver_Manager" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nav-fC-Eb3">
+                                <rect key="frame" x="12" y="62" width="177" height="75"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="center" title="Drop an NVIDIA Installer Package Here" id="ijk-ut-U3N">
+                                    <font key="font" metaFont="system" size="21"/>
+                                    <color key="textColor" name="secondaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                        <connections>
+                            <outlet property="dropLabelTextField" destination="nav-fC-Eb3" id="PBl-VM-Pyy"/>
+                        </connections>
+                    </view>
+                </viewController>
+                <customObject id="gqw-ch-2Ia" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="470" y="279"/>
         </scene>
         <!--About View Controller-->
         <scene sceneID="J20-Hh-6ZV">
