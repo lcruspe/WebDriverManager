@@ -51,9 +51,11 @@ import os.log
         let restartAlertButtonTitle = NSLocalizedString("Close", comment: "Restart alert: button title")
         let mountEFIItemTitle = NSLocalizedString("Mount EFI Partition", comment: "Main menu: Mount Clover/EFI")
         let unmountEFIItemTitle = NSLocalizedString("Unmount EFI Partition", comment: "Main menu: Unmount Clover/EFI")
+        let openInBrowserMenuItemTitle = NSLocalizedString("Open % in Browser", comment: "Main menu: Open in browser replacing % with title from defaults")
         
         var storyboard: NSStoryboard?
         var aboutWindowController: NSWindowController?
+        var preferencesWindowController: NSWindowController?
         var packageDropController: NSWindowController?
         
         @IBOutlet weak var statusMenu: NSMenu!
@@ -70,6 +72,9 @@ import os.log
         @IBOutlet weak var nvidiaWebMenuItem: NSMenuItem!
         @IBOutlet weak var cloverPartitionMenuItem: NSMenuItem!
         @IBOutlet weak var showPackageDropMenuItem: NSMenuItem!
+        @IBOutlet weak var preferencesMenuItem: NSMenuItem!
+        @IBOutlet weak var openInBrowserSeparator: NSMenuItem!
+        @IBOutlet weak var openInBrowserMenuItem: NSMenuItem!
         
         var userWantsAlerts: Bool {
                 return !Defaults.shared.disableUpdateAlerts
@@ -84,7 +89,20 @@ import os.log
         let webDriverNotifications = WebDriverNotifications()
         let updateCheckQueue = DispatchQueue(label: "updateCheck", attributes: .concurrent)
         var updateCheckWorkItem: DispatchWorkItem?
-        var updateCheckInterval: Double = 21600
+        var updateCheckInterval: Double {
+                get {
+                        let hoursAfterCheck = Defaults.shared.hoursAfterCheck
+                        var seconds: Double
+                        if Set(1...48).contains(hoursAfterCheck) {
+                                seconds = Double(hoursAfterCheck) * 3600.0
+                        } else {
+                                os_log("Invalid value for hoursAfterCheck, using 6 hours")
+                                seconds = 21600.0
+                        }
+                        os_log("Next check for updates after %{public}@ seconds", seconds.description)
+                        return seconds
+                }
+        }
         
         override init() {
                 super.init()
@@ -111,6 +129,7 @@ import os.log
                 storyboard = NSStoryboard(name: NSStoryboard.Name(rawValue: "Main"), bundle: nil)
                 aboutWindowController = storyboard?.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "aboutWindowController")) as? NSWindowController
                 packageDropController = storyboard?.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "packagerWindowController")) as? NSWindowController
+                preferencesWindowController = storyboard?.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "preferencesWindowController")) as? NSWindowController
         }
         
         func menuWillOpen(_ menu: NSMenu) {
@@ -142,7 +161,7 @@ import os.log
                         notificationsStatusMenuItem.title = notificationsEnabledMenuItemTitle
                         toggleNotificationsMenuItem?.title = disableNotificationsMenuItemTitle
                 }
-                if cloverSettings != nil {
+                if cloverSettings != nil && !Defaults.shared.hideCloverSettings {
                         cloverSubMenuItem.isHidden = false
                         if cloverSettings!.nvidiaWebIsEnabled {
                                 nvidiaWebMenuItem.state = .on
@@ -163,6 +182,19 @@ import os.log
                         } else {
                                 cloverPartitionMenuItem.title = mountEFIItemTitle
                         }
+                }
+                if Defaults.shared.hidePackageDrop {
+                        showPackageDropMenuItem.isHidden = true
+                } else {
+                        showPackageDropMenuItem.isHidden = false
+                }
+                if Defaults.shared.hideOpenInBrowser {
+                        openInBrowserSeparator.isHidden = true
+                        openInBrowserMenuItem.isHidden = true
+                } else {
+                        openInBrowserMenuItem.title = openInBrowserMenuItemTitle.replacingOccurrences(of: "%", with: Defaults.shared.openInBrowserTitle)
+                        openInBrowserSeparator.isHidden = false
+                        openInBrowserMenuItem.isHidden = false
                 }
         }
         
@@ -283,10 +315,12 @@ import os.log
         }
         
         @IBAction func aboutMenuItemClicked(_ sender: NSMenuItem) {
+                NSApp.activate(ignoringOtherApps: true)
                 if let window = aboutWindowController?.window {
                         if !window.isVisible {
                                 window.center()
                         }
+                        window.isMovableByWindowBackground = true
                         window.level = .floating
                         window.makeKeyAndOrderFront(self)
                         window.level = .normal
@@ -298,6 +332,7 @@ import os.log
                         window.appearance = NSAppearance.init(named: NSAppearance.Name.vibrantLight)
                         window.standardWindowButton(.miniaturizeButton)?.isHidden = true
                         window.standardWindowButton(.zoomButton)?.isHidden = true
+                        window.isMovableByWindowBackground = true
                         if !window.isVisible {
                                 let originX = (NSScreen.main?.visibleFrame.origin.x)! + (NSScreen.main?.visibleFrame.size.width)! - window.frame.size.width - 48.0
                                 let originY = (NSScreen.main?.visibleFrame.origin.y)! + (NSScreen.main?.visibleFrame.size.height)! - window.frame.size.height - 48.0
@@ -305,6 +340,26 @@ import os.log
                         }
                         window.level = .floating
                         window.makeKeyAndOrderFront(self)
+                }
+        }
+        
+        @IBAction func openInBrowserMenuItemClicked(_ sender: NSMenuItem) {
+                if let url = URL.init(string: Defaults.shared.openInBrowserUrl) {
+                        NSWorkspace.shared.open(url)
+                } else {
+                        os_log("Failed to create URL for opening in browser")
+                }
+        }
+        
+        @IBAction func preferencesMenuItemClicked(_ sender: NSMenuItem) {
+                NSApp.activate(ignoringOtherApps: true)
+                if let window = preferencesWindowController?.window {
+                        if !window.isVisible {
+                                window.center()
+                        }
+                        window.level = .floating
+                        window.makeKeyAndOrderFront(self)
+                        window.level = .normal
                 }
         }
         

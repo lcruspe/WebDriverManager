@@ -17,6 +17,7 @@
 		4D304425204090C400C82104 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D304424204090C400C82104 /* Assets.xcassets */; };
 		4D304428204090C400C82104 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D304426204090C400C82104 /* MainMenu.xib */; };
 		4D304438204090F300C82104 /* Nvram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D304433204090F300C82104 /* Nvram.swift */; };
+		4D49F93F205D011300C82104 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D49F93E205D011300C82104 /* PreferencesViewController.swift */; };
 		4D555D642055381E00C82104 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4D555D632055381E00C82104 /* README.md */; };
 		4D6BC72F2058153100C82104 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D6BC7312058153100C82104 /* Main.storyboard */; };
 		4D827091205C21BC00C82104 /* Liberator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D827090205C21BC00C82104 /* Liberator.swift */; };
@@ -54,6 +55,7 @@
 		4D304429204090C400C82104 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4D30442A204090C400C82104 /* Web_Driver_Manager.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Web_Driver_Manager.entitlements; sourceTree = "<group>"; };
 		4D304433204090F300C82104 /* Nvram.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Nvram.swift; sourceTree = "<group>"; };
+		4D49F93E205D011300C82104 /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		4D555D632055381E00C82104 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		4D6BC72E2058110400C82104 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MainMenu.strings; sourceTree = "<group>"; };
 		4D6BC7302058153100C82104 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -132,6 +134,7 @@
 				4D17721D204544E900C82104 /* sysctl.swift */,
 				4D30442A204090C400C82104 /* Web_Driver_Manager.entitlements */,
 				4D17721B20453FE300C82104 /* WebDriverNotifications.swift */,
+				4D49F93E205D011300C82104 /* PreferencesViewController.swift */,
 			);
 			path = WebDriverManager;
 			sourceTree = "<group>";
@@ -217,6 +220,7 @@
 				4D163C59205A8A9100C82104 /* NvidiaCloverSettings.swift in Sources */,
 				4D304438204090F300C82104 /* Nvram.swift in Sources */,
 				4D827091205C21BC00C82104 /* Liberator.swift in Sources */,
+				4D49F93F205D011300C82104 /* PreferencesViewController.swift in Sources */,
 				4D17721E204544E900C82104 /* sysctl.swift in Sources */,
 				4D17721C20453FE300C82104 /* WebDriverNotifications.swift in Sources */,
 				4D8347AC204211D100C82104 /* nvram.applescript in Sources */,
@@ -373,11 +377,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = "";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Frameworks",
-					"$(PROJECT_DIR)",
-				);
 				INFOPLIST_FILE = "$(SRCROOT)/WebDriverManager/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
@@ -400,11 +399,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = "";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Frameworks",
-					"$(PROJECT_DIR)",
-				);
 				INFOPLIST_FILE = "$(SRCROOT)/WebDriverManager/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;

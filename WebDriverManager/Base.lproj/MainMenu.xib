@@ -22,6 +22,9 @@
                 <outlet property="notificationsStatusMenuItem" destination="5Zv-wc-Q7x" id="6xw-Ek-QNZ"/>
                 <outlet property="nvdaStartupMenuItem" destination="WST-Oi-0mS" id="Vyc-bR-8W2"/>
                 <outlet property="nvidiaWebMenuItem" destination="f4s-yx-WDp" id="EzE-CD-WhC"/>
+                <outlet property="openInBrowserMenuItem" destination="IVX-Ks-Xry" id="8Xs-NA-aRM"/>
+                <outlet property="openInBrowserSeparator" destination="27s-Kb-0DA" id="dyh-eR-35b"/>
+                <outlet property="preferencesMenuItem" destination="Kxa-9u-PYf" id="nLY-uc-4fb"/>
                 <outlet property="quitMenuItem" destination="MAd-yk-Fz2" id="mdA-KF-nQD"/>
                 <outlet property="showPackageDropMenuItem" destination="taC-Qi-Szq" id="hul-U8-Phv"/>
                 <outlet property="statusMenu" destination="FVg-r4-d2m" id="gbK-U7-H5Y"/>
@@ -113,6 +116,13 @@
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="27s-Kb-0DA"/>
+                <menuItem title="Open % in Browser" id="IVX-Ks-Xry">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="openInBrowserMenuItemClicked:" target="Voe-Tx-rLC" id="Fh3-S9-J63"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="sdZ-23-Xjx"/>
                 <menuItem title="Web Driver Manager" id="VGT-UL-p7l">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Web Driver Manager" autoenablesItems="NO" id="kRS-lT-gOO">
@@ -124,8 +134,13 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="3fM-2B-Tpf"/>
-                            <menuItem title="Quit Web Driver Manager" id="MAd-yk-Fz2">
-                                <modifierMask key="keyEquivalentModifierMask"/>
+                            <menuItem title="Preferences..." keyEquivalent="," id="Kxa-9u-PYf">
+                                <connections>
+                                    <action selector="preferencesMenuItemClicked:" target="Voe-Tx-rLC" id="nFL-Qy-uS7"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="Jwb-8N-ktr"/>
+                            <menuItem title="Quit Web Driver Manager" keyEquivalent="q" id="MAd-yk-Fz2">
                                 <connections>
                                     <action selector="quitMenuItemClicked:" target="Voe-Tx-rLC" id="cEd-Ho-xcX"/>
                                 </connections>
