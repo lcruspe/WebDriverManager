@@ -38,7 +38,8 @@ class Packager {
         @discardableResult func extract(archive: String, destinationDirectory directory: String) -> Int32 {
                 let task = Process()
                 task.launchPath = "/usr/bin/xar"
-                task.arguments = ["-xf", archive, "-C", directory]
+                task.currentDirectoryPath = directory
+                task.arguments = ["-xf", archive]
                 task.launch()
                 task.waitUntilExit()
                 return (task.terminationStatus)
@@ -46,8 +47,9 @@ class Packager {
         
         @discardableResult func archive(sourceDirectory directory: String, destination: String, files: [String]) -> Int32 {
                 let task = Process()
-                task.launchPath = "/usr/local/bin/xar-mackyle"
-                task.arguments = ["-cf", destination, "-C", "\(directory)"] + files
+                task.launchPath = "/usr/bin/xar"
+                task.currentDirectoryPath = directory
+                task.arguments = ["-cf", destination] + files
                 task.launch()
                 task.waitUntilExit()
                 return (task.terminationStatus)
