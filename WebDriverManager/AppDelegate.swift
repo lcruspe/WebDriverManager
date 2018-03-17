@@ -22,7 +22,7 @@ import os.log
 
 @NSApplicationMain class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         
-        static let versionString = "1.5"
+        static let versionString = "1.6"
         
         var packager = Packager()
         var packageUrl: URL? {
