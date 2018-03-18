@@ -106,8 +106,8 @@ class Packager {
                         os_log("Package or other file type not found")
                         return false
                 }
-                let fileList: String? = list(archive: url.path)
-                if !fileList!.contains(nvidiaIdentifier) {
+                let fileList: String = list(archive: url.path) ?? ""
+                if !fileList.contains(nvidiaIdentifier) {
                         NSSound.beep()
                         os_log("NVIDIA driver package not detected")
                         return false
