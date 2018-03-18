@@ -17,6 +17,12 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#if DEBUG
+let debug = true
+#else
+let debug = false
+#endif
+
 import Cocoa
 import os.log
 
@@ -29,7 +35,6 @@ import os.log
                 didSet {
                         os_log("PackagerViewController: new url %{public}@", packageUrl?.absoluteString ?? "nil")
                         if let url: URL = packageUrl {
-                                packageDropController?.close()
                                 showPackageDropMenuItem.isEnabled = false
                                 packager.installPackage(atUrl: url)
                         }

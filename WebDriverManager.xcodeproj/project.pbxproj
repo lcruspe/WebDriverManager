@@ -26,6 +26,7 @@
 		4D8347AD204211E100C82104 /* nvram.applescript in Resources */ = {isa = PBXBuildFile; fileRef = 4D8347AB204211D100C82104 /* nvram.applescript */; };
 		4D8879272055DF4400C82104 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8879262055DF4400C82104 /* AboutViewController.swift */; };
 		4DA515A4205BB17D00C82104 /* PackageDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA515A3205BB17D00C82104 /* PackageDropView.swift */; };
+		4DA7AACF205E660200C82104 /* Welcome.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 4DA7AACE205E660200C82104 /* Welcome.rtf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -66,6 +67,7 @@
 		4D8347AB204211D100C82104 /* nvram.applescript */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.applescript; path = nvram.applescript; sourceTree = "<group>"; };
 		4D8879262055DF4400C82104 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		4DA515A3205BB17D00C82104 /* PackageDropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageDropView.swift; sourceTree = "<group>"; };
+		4DA7AACE205E660200C82104 /* Welcome.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Welcome.rtf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +119,7 @@
 		4D304421204090C400C82104 /* WebDriverManager */ = {
 			isa = PBXGroup;
 			children = (
+				4DA7AACE205E660200C82104 /* Welcome.rtf */,
 				4D8879262055DF4400C82104 /* AboutViewController.swift */,
 				4D304422204090C400C82104 /* AppDelegate.swift */,
 				4D304424204090C400C82104 /* Assets.xcassets */,
@@ -203,6 +206,7 @@
 				4D8347AD204211E100C82104 /* nvram.applescript in Resources */,
 				4D6BC72F2058153100C82104 /* Main.storyboard in Resources */,
 				4D304425204090C400C82104 /* Assets.xcassets in Resources */,
+				4DA7AACF205E660200C82104 /* Welcome.rtf in Resources */,
 				4D555D642055381E00C82104 /* README.md in Resources */,
 				4D304428204090C400C82104 /* MainMenu.xib in Resources */,
 			);

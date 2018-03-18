@@ -25,14 +25,23 @@ class Packager {
         let fileManager = FileManager()
         let packagerQueue = DispatchQueue(label: "packager", attributes: .concurrent)
         var packagerWorkItem: DispatchWorkItem?
+        let nvidiaIdentifier = "NVWebDrivers"
         
-        @discardableResult func list(archive: String) -> Int32 {
+        @discardableResult func list(archive: String) -> String? {
                 let task = Process()
                 task.launchPath = "/usr/bin/xar"
                 task.arguments = ["-tf", archive]
+                let stdout = Pipe()
+                task.standardOutput = stdout
+                if !debug {
+                        task.standardError = Pipe()
+                }
                 task.launch()
                 task.waitUntilExit()
-                return (task.terminationStatus)
+                if let string = NSString.init(data: stdout.fileHandleForReading.readDataToEndOfFile(), encoding: String.Encoding.utf8.rawValue) {
+                        return string as String
+                }
+                return nil
         }
         
         @discardableResult func extract(archive: String, destinationDirectory directory: String) -> Int32 {
@@ -40,6 +49,10 @@ class Packager {
                 task.launchPath = "/usr/bin/xar"
                 task.currentDirectoryPath = directory
                 task.arguments = ["-xf", archive]
+                if !debug {
+                        task.standardOutput = Pipe()
+                        task.standardError = Pipe()
+                }
                 task.launch()
                 task.waitUntilExit()
                 return (task.terminationStatus)
@@ -50,6 +63,10 @@ class Packager {
                 task.launchPath = "/usr/bin/xar"
                 task.currentDirectoryPath = directory
                 task.arguments = ["-cf", destination] + files
+                if !debug {
+                        task.standardOutput = Pipe()
+                        task.standardError = Pipe()
+                }
                 task.launch()
                 task.waitUntilExit()
                 return (task.terminationStatus)
@@ -59,6 +76,10 @@ class Packager {
                 let task = Process()
                 task.launchPath = "/usr/bin/open"
                 task.arguments = ["-b", "com.apple.installer", "--args", package]
+                if !debug {
+                        task.standardOutput = Pipe()
+                        task.standardError = Pipe()
+                }
                 task.launch()
                 task.waitUntilExit()
                 return (task.terminationStatus)
@@ -81,20 +102,26 @@ class Packager {
                 let uuid = NSUUID().uuidString
                 let temp = "\(base)\(uuid)"
                 let extracted = "\(temp)/tmp"
-                print(extracted)
                 if !fileManager.fileExists(atPath: url.path) {
                         os_log("Package or other file type not found")
                         return false
                 }
-                guard list(archive: url.path) == 0 else {
-                        os_log("Not a xar archive")
+                let fileList: String? = list(archive: url.path)
+                if !fileList!.contains(nvidiaIdentifier) {
+                        NSSound.beep()
+                        os_log("NVIDIA driver package not detected")
                         return false
                 }
-                
+                /* Close package drop window */
+                if let appDelegate = NSApp.delegate as? AppDelegate {
+                        appDelegate.packageDropController?.close()
+                }
                 do {
                         try fileManager.removeItem(atPath: temp)
                 } catch {
-                        os_log("Nothing to remove")
+                        if debug {
+                                os_log("Nothing to remove")
+                        }
                 }
                 do {
                         try fileManager.createDirectory(atPath: extracted, withIntermediateDirectories: true, attributes: nil)
@@ -102,7 +129,9 @@ class Packager {
                         os_log("Failed to create temporary directory")
                         return false
                 }
-                os_log("Extracting to %{public}@", extracted)
+                if debug {
+                        os_log("Extracting to %{public}@", extracted)
+                }
                 if extract(archive: url.path, destinationDirectory: extracted) != 0 {
                         os_log("Failed to extract package")
                         return false
@@ -115,6 +144,19 @@ class Packager {
                 if Liberator(URL.init(fileURLWithPath: distribution)) == nil {
                         os_log("PackagerViewController: Failed to patch Distribution")
                         return false
+                }
+                if let welcome = Bundle.main.url(forResource: "Welcome", withExtension: "rtf") {
+                        let existing = URL.init(fileURLWithPath: "\(extracted)/Resources/en.lproj/Welcome.rtf")
+                        if fileManager.fileExists(atPath: existing.path) {
+                                do {
+                                        try fileManager.removeItem(at: existing)
+                                } catch {
+                                }
+                                do {
+                                        try fileManager.copyItem(at: welcome, to: existing)
+                                } catch {
+                                }
+                        }
                 }
                 let subpaths = fileManager.subpaths(atPath: extracted)
                 guard subpaths != nil else {
@@ -130,7 +172,7 @@ class Packager {
                                         name = item
                                 }
                                 if !item.uppercased().contains("PREFPANE") {
-                                        os_log("Adding %{public}@ to file list", item)
+                                        os_log("Adding %{public}@ to xar file list", item)
                                         files.append(item)
                                 }
                         }
@@ -138,25 +180,44 @@ class Packager {
                         os_log("Failed to get contents of directory for archiving")
                         return false
                 }
-                let output = "\(temp)/\(name)"
-                if archive(sourceDirectory: "\(extracted)", destination: output, files: files) != 0 {
+                let outputPackagePath = "\(base)/\(name)"
+                if archive(sourceDirectory: "\(extracted)", destination: outputPackagePath, files: files) != 0 {
                         os_log("Failed to archive package")
                         return false
                 }
                 if let desktop = fileManager.urls(for: .desktopDirectory, in: .userDomainMask).first?.appendingPathComponent(name) {
                         do {
-                                try fileManager.copyItem(at: URL.init(fileURLWithPath: output), to: desktop)
+                                try fileManager.removeItem(at: desktop)
+                        } catch {
+                                if debug {
+                                        os_log("Nothing to remove")
+                                }
+                        }
+                        do {
+                                try fileManager.copyItem(at: URL.init(fileURLWithPath: outputPackagePath), to: desktop)
                         } catch {
                                 os_log("Failed to make a copy of driver package on the desktop")
                         }
                 }
-                os_log("Will attempt to launch GUI installer for %{public}@", output)
-                
-                if install(package: output) == 0 {
-                        return true
+                if debug {
+                        os_log("Will attempt to launch GUI installer for %{public}@", outputPackagePath)
+                } else {
+                        os_log("Will attempt to launch GUI installer")
+                }
+                var result: Bool
+                if install(package: outputPackagePath) == 0 {
+                        os_log("Open command completed with success")
+                        result = true
                 } else {
                         os_log("Open command returned a non-zero exit status")
-                        return false
+                        result = false
                 }
+                let tempUrl = URL.init(fileURLWithPath: temp)
+                do {
+                        try fileManager.removeItem(at: tempUrl)
+                } catch {
+                        os_log("Failed to remove temporary directory")
+                }
+                return result
         }
 }

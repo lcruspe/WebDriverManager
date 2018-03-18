@@ -17,12 +17,6 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#if DEBUG
-let debug = true
-#else
-let debug = false
-#endif
-
 import Foundation
 
 class Defaults {
