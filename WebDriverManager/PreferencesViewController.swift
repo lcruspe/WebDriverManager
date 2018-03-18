@@ -81,10 +81,20 @@ class PreferencesViewController: NSViewController {
         }
         
         @IBAction func openInBrowserUrlTextFieldDidEndEditing(_ sender: NSTextField) {
-                let string = openInBrowserUrlTextField.stringValue
-                if URL.init(string: string) != nil {
-                        Defaults.shared.openInBrowserUrl = string
+                var string = openInBrowserUrlTextField.stringValue
+                if let url = URL.init(string: string) {
+                        if let scheme = url.scheme {
+                                if scheme == "http" || scheme == "https" {
+                                        Defaults.shared.openInBrowserUrl = string
+                                        return
+                                }
+                        } else {
+                                string = "https://\(string)"
+                                Defaults.shared.openInBrowserUrl = string
+                                return
+                        }
                 }
+                openInBrowserUrlTextField.stringValue = Defaults.shared.openInBrowserUrl
         }
         
         @IBAction func openInBrowserTitleTextFieldDidEndEditing(_ sender: NSTextField) {

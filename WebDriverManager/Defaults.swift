@@ -158,7 +158,7 @@ class Defaults {
         }
 
         private func registerFactoryDefaults() {
-                let factoryDefaults = [WebDriverManager.initialized.key: true, WebDriverManager.showRestartAlert.key: true, WebDriverManager.suppressVersion.key: "", WebDriverManager.disableUpdateAlerts.key: true, WebDriverManager.hideCloverSettings.key: false, WebDriverManager.hidePackageDrop.key: false, WebDriverManager.hideOpenInBrowser.key: false, WebDriverManager.openInBrowserUrl.key: "https://www.tonymacx86.com/nvidia-drivers/", WebDriverManager.openInBrowserTitle.key: "Nvidia Drivers", WebDriverManager.hoursAfterCheck.key: 6]
+                let factoryDefaults = [WebDriverManager.initialized.key: true, WebDriverManager.showRestartAlert.key: true, WebDriverManager.suppressVersion.key: "", WebDriverManager.disableUpdateAlerts.key: true, WebDriverManager.hideCloverSettings.key: false, WebDriverManager.hidePackageDrop.key: false, WebDriverManager.hideOpenInBrowser.key: false, WebDriverManager.openInBrowserUrl.key: "https://www.tonymacx86.com/nvidia-drivers", WebDriverManager.openInBrowserTitle.key: "Nvidia Drivers", WebDriverManager.hoursAfterCheck.key: 6]
                         as [String : Any]
                 userDefaults.register(defaults: factoryDefaults)
         }
