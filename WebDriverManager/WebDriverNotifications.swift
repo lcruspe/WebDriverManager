@@ -67,12 +67,22 @@ class WebDriverNotifications: NSObject, NSUserNotificationCenterDelegate {
         
         func setup(notification: inout NSUserNotification, forVersion version: String) {
                 notification.deliveryDate = NSDate(timeIntervalSinceNow: 1) as Date
-                notification.title = NSLocalizedString("NVIDIA Web Driver", comment: "Notification title")
+                notification.title = NSLocalizedString("NVIDIA Web Driver", comment: "Update available notification title")
                 notification.informativeText = String(format: "%@ %@", version, NSLocalizedString("available", comment: "Notification message: ... available"))
                 notification.hasActionButton = true
+                notification.setValue(1, forKey: "_showsButtons")
                 notification.actionButtonTitle = NSLocalizedString("Don't Show Again", comment: "Notification action button")
                 notification.identifier = version
                 notification.soundName = NSUserNotificationDefaultSoundName
+        }
+        
+        func setupNotAvailable(notification: inout NSUserNotification, message: String) {
+                notification.deliveryDate = NSDate(timeIntervalSinceNow: 1) as Date
+                notification.title = NSLocalizedString("Web Driver Manager", comment: "No update notification title")
+                notification.informativeText = message
+                notification.hasActionButton = false
+                notification.setValue(0, forKey: "_showsButtons")
+                notification.soundName = nil
         }
         
         func userNotificationCenter(_ center: NSUserNotificationCenter, shouldPresent notification: NSUserNotification) -> Bool {
@@ -93,7 +103,7 @@ class WebDriverNotifications: NSObject, NSUserNotificationCenterDelegate {
                 }
         }
         
-        func checkForUpdates() -> Bool {
+        func checkForUpdates(userCheck: Bool = false) -> Bool {
                 guard updates != nil else {
                         os_log("Couldn't get updates data from NVIDIA")
                         return false
@@ -111,10 +121,26 @@ class WebDriverNotifications: NSObject, NSUserNotificationCenterDelegate {
                 }
                 guard remoteVersion != nil else {
                         os_log("Remote version is nil")
+                        if userCheck {
+                                var webDriverAlert = NSUserNotification()
+                                if let build = build?.uppercased() {
+                                        setupNotAvailable(notification: &webDriverAlert, message: "No update available for \(build)")
+                                } else {
+                                        setupNotAvailable(notification: &webDriverAlert, message: "No update available")
+                                }
+                                os_log("Scheduling no update notification, delivery date: %{public}@", webDriverAlert.deliveryDate?.description ?? "unknown")
+                                NSUserNotificationCenter.default.scheduleNotification(webDriverAlert)
+                        }
                         return false
                 }
                 guard remoteVersion != localVersion else {
                         os_log("Remote version %{public}@ is already installed", remoteVersion!)
+                        if userCheck {
+                                var webDriverAlert = NSUserNotification()
+                                setupNotAvailable(notification: &webDriverAlert, message: "\(remoteVersion!) already installed")
+                                os_log("Scheduling no update notification, delivery date: %{public}@", webDriverAlert.deliveryDate?.description ?? "unknown")
+                                NSUserNotificationCenter.default.scheduleNotification(webDriverAlert)
+                        }
                         return false
                 }
                 guard remoteVersion != Defaults.shared.suppressUpdateAlerts else {

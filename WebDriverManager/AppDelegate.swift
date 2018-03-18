@@ -28,7 +28,7 @@ import os.log
 
 @NSApplicationMain class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         
-        static let versionString = "1.6"
+        static let versionString = "1.8"
         
         var packager = Packager()
         var packageUrl: URL? {
@@ -42,7 +42,7 @@ import os.log
                 }
         }
         
-        var driverStatus: String = NSLocalizedString("Driver status unavailable", comment: "Main menu: Driver status unavailable")
+        var driverStatus = NSLocalizedString("Driver status unavailable", comment: "Main menu: Driver status unavailable")
         let driverNotInstalledMenuItemTitle = NSLocalizedString("Web driver not installed", comment: "Main menu: Web driver not installed")
         let driverNotInUseMenuItemTitle = NSLocalizedString("Web driver not in use", comment: "Main menu: Web driver not in use")
         let checkNowMenuItemTitle = NSLocalizedString("Check Now", comment: "Main menu: Check Now")
@@ -259,7 +259,7 @@ import os.log
         @IBAction func checkNowMenuItemClicked(_ sender: NSMenuItem) {
                 cancelSuppressedVersion()
                 updateCheckQueue.async {
-                        self.updateCheckDidFinish(result: self.beginUpdateCheck(overrideDefaults: true))
+                        self.updateCheckDidFinish(result: self.beginUpdateCheck(overrideDefaults: true, userCheck: true))
                 }
         }
         
@@ -277,7 +277,7 @@ import os.log
                 }
         }
         
-        func beginUpdateCheck(overrideDefaults: Bool = false) -> Bool {
+        func beginUpdateCheck(overrideDefaults: Bool = false, userCheck: Bool = false) -> Bool {
                 updateCheckWorkItem?.cancel()
                 checkNowMenuItem.isEnabled = false
                 toggleNotificationsMenuItem.isEnabled = false
@@ -286,7 +286,7 @@ import os.log
                         if !userWantsAlerts && overrideDefaults {
                                 os_log("Overriding notifications disabled user default")
                         }
-                        return webDriverNotifications.checkForUpdates()
+                        return webDriverNotifications.checkForUpdates(userCheck: userCheck)
                 } else {
                         os_log("Update notifications are disabled in user defaults")
                         return false
