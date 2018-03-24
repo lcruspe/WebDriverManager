@@ -28,7 +28,13 @@ import os.log
 
 @NSApplicationMain class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         
-        static let versionString = "1.8"
+        static let versionString = "1.9"
+        
+        var csrActiveConfig: UInt32 = 0xFFFF
+        let unsignedKexts: UInt32 = 1 << 0
+        let unrestrictedFilesystem: UInt32 = 1 << 1
+        var fsAllowed: Bool = false
+        var kextAllowed: Bool = false
         
         var packager = Packager()
         var packageUrl: URL? {
@@ -80,6 +86,9 @@ import os.log
         @IBOutlet weak var preferencesMenuItem: NSMenuItem!
         @IBOutlet weak var openInBrowserSeparator: NSMenuItem!
         @IBOutlet weak var openInBrowserMenuItem: NSMenuItem!
+        @IBOutlet weak var driverDoctorMenuItem: NSMenuItem!
+        @IBOutlet weak var csrActiveConfigMenuItem: NSMenuItem!
+        @IBOutlet weak var unstageGpuBundlesMenuItem: NSMenuItem!
         
         var userWantsAlerts: Bool {
                 return !Defaults.shared.disableUpdateAlerts
@@ -87,8 +96,10 @@ import os.log
         let statusItem = NSStatusBar.system.statusItem(withLength:NSStatusItem.variableLength)
         let nvAccelerator = RegistryEntry.init(fromMatchingDictionary: IOServiceMatching("nvAccelerator"))
         let nvram = Nvram()
-        var nvramScriptError: NSDictionary?
+        var appleScriptError: NSDictionary?
         var nvramScript: NSAppleScript?
+        var unstageScript: NSAppleScript?
+        var touchScript: NSAppleScript?
         let fileManager = FileManager()
         let cloverSettings = NvidiaCloverSettings()
         let webDriverNotifications = WebDriverNotifications()
@@ -112,10 +123,23 @@ import os.log
         override init() {
                 super.init()
                 if let nvramScriptUrl = Bundle.main.url(forResource: "nvram", withExtension: "applescript") {
-                        nvramScript = NSAppleScript(contentsOf: nvramScriptUrl, error: &nvramScriptError)
+                        nvramScript = NSAppleScript(contentsOf: nvramScriptUrl, error: &appleScriptError)
                 } else {
                         os_log("Failed to get resource url for nvram script")
                 }
+                if let unstageScriptUrl = Bundle.main.url(forResource: "unstage", withExtension: "applescript") {
+                        unstageScript = NSAppleScript(contentsOf: unstageScriptUrl, error: &appleScriptError)
+                } else {
+                        os_log("Failed to get resource url for unstage script")
+                }
+                if let touchScriptUrl = Bundle.main.url(forResource: "touch", withExtension: "applescript") {
+                        touchScript = NSAppleScript(contentsOf: touchScriptUrl, error: &appleScriptError)
+                } else {
+                        os_log("Failed to get resource url for touch script")
+                }
+                let _ = csr_get_active_config(&csrActiveConfig)
+                kextAllowed = !(csr_check(unsignedKexts) != 0)
+                fsAllowed = !(csr_check(unrestrictedFilesystem) != 0)
         }
         
         func applicationDidFinishLaunching(_ aNotification: Notification) {
@@ -201,6 +225,17 @@ import os.log
                         openInBrowserSeparator.isHidden = false
                         openInBrowserMenuItem.isHidden = false
                 }
+                if Defaults.shared.hideDriverDoctor {
+                        driverDoctorMenuItem.isHidden = true
+                } else {
+                        driverDoctorMenuItem.isHidden = false
+                }
+                csrActiveConfigMenuItem.title = "CSR Active Config: \(String(format: "0x%X", csrActiveConfig))"
+                if fsAllowed {
+                        unstageGpuBundlesMenuItem.isEnabled = true
+                } else {
+                        unstageGpuBundlesMenuItem.isEnabled = false
+                }
         }
         
         @IBAction func changeDriverMenuItemClicked(_ sender: NSMenuItem) {
@@ -208,7 +243,7 @@ import os.log
                         return
                 }
                 os_log("Setting nvda_drv nvram variable")
-                let result: NSAppleEventDescriptor? = nvramScript?.executeAndReturnError(&nvramScriptError)
+                let result: NSAppleEventDescriptor? = nvramScript?.executeAndReturnError(&appleScriptError)
                 if (result?.booleanValue)! {
                         if Defaults.shared.showRestartAlert {
                                 makeAndShowRestartAlert()
@@ -354,6 +389,26 @@ import os.log
                 } else {
                         os_log("Failed to create URL for opening in browser")
                 }
+        }
+        
+        @IBAction func unstageGpuBundlesMenuItemClicked(_ sender: NSMenuItem) {
+                let result: NSAppleEventDescriptor? = unstageScript?.executeAndReturnError(&appleScriptError)
+                if (result?.booleanValue)! {
+                        os_log("Unstage script finished")
+                        return
+                }
+                NSSound.beep()
+                os_log("Error running unstage script")
+        }
+        
+        @IBAction func touchExtensionsMenuItemClicked(_ sender: NSMenuItem) {
+                let result: NSAppleEventDescriptor? = touchScript?.executeAndReturnError(&appleScriptError)
+                if (result?.booleanValue)! {
+                        os_log("Touch script finished")
+                        return
+                }
+                NSSound.beep()
+                os_log("Error running touch script")
         }
         
         @IBAction func preferencesMenuItemClicked(_ sender: NSMenuItem) {

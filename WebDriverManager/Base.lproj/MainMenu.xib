@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
     </dependencies>
     <objects>
@@ -18,6 +17,8 @@
                 <outlet property="checkNowMenuItem" destination="CNc-jG-bOC" id="ots-mR-2hB"/>
                 <outlet property="cloverPartitionMenuItem" destination="70R-pl-3SH" id="ZS7-5M-pEi"/>
                 <outlet property="cloverSubMenuItem" destination="G12-vs-qSw" id="Zx2-in-90j"/>
+                <outlet property="csrActiveConfigMenuItem" destination="p3K-hL-gP4" id="2aA-m9-gnF"/>
+                <outlet property="driverDoctorMenuItem" destination="Rsp-0c-Bj4" id="tJA-BL-IRM"/>
                 <outlet property="driverStatusMenuItem" destination="d6q-bn-6in" id="eBR-5K-Hsi"/>
                 <outlet property="notificationsStatusMenuItem" destination="5Zv-wc-Q7x" id="6xw-Ek-QNZ"/>
                 <outlet property="nvdaStartupMenuItem" destination="WST-Oi-0mS" id="Vyc-bR-8W2"/>
@@ -29,6 +30,7 @@
                 <outlet property="showPackageDropMenuItem" destination="taC-Qi-Szq" id="hul-U8-Phv"/>
                 <outlet property="statusMenu" destination="FVg-r4-d2m" id="gbK-U7-H5Y"/>
                 <outlet property="toggleNotificationsMenuItem" destination="z7c-mr-eA2" id="PoX-9x-lDn"/>
+                <outlet property="unstageGpuBundlesMenuItem" destination="3dM-4y-E8V" id="Axb-8d-BnH"/>
                 <outlet property="useDefaultDriverMenuItem" destination="8n0-nR-8WC" id="DLy-eJ-fVD"/>
                 <outlet property="useNvidiaDriverMenuItem" destination="lBp-Ry-pEh" id="01W-dZ-EMq"/>
             </connections>
@@ -114,6 +116,29 @@
                     <connections>
                         <action selector="packageDropMenuItemClicked:" target="Voe-Tx-rLC" id="lUE-nh-0oG"/>
                     </connections>
+                </menuItem>
+                <menuItem title="Driver Doctor" id="Rsp-0c-Bj4">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Driver Doctor" autoenablesItems="NO" id="irr-dK-O0A">
+                        <items>
+                            <menuItem enabled="NO" id="p3K-hL-gP4">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="TFm-nc-AlV"/>
+                            <menuItem title="Unstage GPU Bundles" enabled="NO" id="3dM-4y-E8V">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="unstageGpuBundlesMenuItemClicked:" target="Voe-Tx-rLC" id="hqs-jW-XzZ"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Touch Extensions Directory" id="8PR-cl-B7X">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="touchExtensionsMenuItemClicked:" target="Voe-Tx-rLC" id="gNi-j5-jzj"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="27s-Kb-0DA"/>
                 <menuItem title="Open % in Browser" id="IVX-Ks-Xry">

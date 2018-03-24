@@ -32,6 +32,7 @@ class Defaults {
                 case hideCloverSettings
                 case hidePackageDrop
                 case hideOpenInBrowser
+                case hideDriverDoctor
                 case openInBrowserUrl
                 case openInBrowserTitle
                 case hoursAfterCheck
@@ -52,6 +53,8 @@ class Defaults {
                                 return "hidePackageDrop"
                         case .hideOpenInBrowser:
                                 return "hideOpenInBrowser"
+                        case .hideDriverDoctor:
+                                return "hideDriverDoctor"
                         case .openInBrowserUrl:
                                 return "openInBrowserUrl"
                         case .openInBrowserTitle:
@@ -133,6 +136,15 @@ class Defaults {
                 }
         }
         
+        var hideDriverDoctor: Bool {
+                get {
+                        return userDefaults.bool(forKey: WebDriverManager.hideDriverDoctor.key)
+                }
+                set {
+                        userDefaults.set(newValue, forKey: WebDriverManager.hideDriverDoctor.key)
+                }
+        }
+        
         var openInBrowserUrl: String {
                 get {
                         return userDefaults.string(forKey: WebDriverManager.openInBrowserUrl.key) ?? ""
@@ -158,7 +170,7 @@ class Defaults {
         }
 
         private func registerFactoryDefaults() {
-                let factoryDefaults = [WebDriverManager.initialized.key: true, WebDriverManager.showRestartAlert.key: true, WebDriverManager.suppressVersion.key: "", WebDriverManager.disableUpdateAlerts.key: true, WebDriverManager.hideCloverSettings.key: false, WebDriverManager.hidePackageDrop.key: false, WebDriverManager.hideOpenInBrowser.key: false, WebDriverManager.openInBrowserUrl.key: "https://www.tonymacx86.com/nvidia-drivers", WebDriverManager.openInBrowserTitle.key: "Nvidia Drivers", WebDriverManager.hoursAfterCheck.key: 6]
+                let factoryDefaults = [WebDriverManager.initialized.key: true, WebDriverManager.showRestartAlert.key: true, WebDriverManager.suppressVersion.key: "", WebDriverManager.disableUpdateAlerts.key: true, WebDriverManager.hideCloverSettings.key: true, WebDriverManager.hidePackageDrop.key: true, WebDriverManager.hideOpenInBrowser.key: true, WebDriverManager.hideDriverDoctor.key: true, WebDriverManager.openInBrowserUrl.key: "https://vulgo.github.io/nvidia-drivers", WebDriverManager.openInBrowserTitle.key: "Nvidia Drivers", WebDriverManager.hoursAfterCheck.key: 6]
                         as [String : Any]
                 userDefaults.register(defaults: factoryDefaults)
         }
@@ -171,6 +183,7 @@ class Defaults {
                 userDefaults.removeObject(forKey: WebDriverManager.hideCloverSettings.key)
                 userDefaults.removeObject(forKey: WebDriverManager.hidePackageDrop.key)
                 userDefaults.removeObject(forKey: WebDriverManager.hideOpenInBrowser.key)
+                userDefaults.removeObject(forKey: WebDriverManager.hideDriverDoctor.key)
                 userDefaults.removeObject(forKey: WebDriverManager.openInBrowserUrl.key)
                 userDefaults.removeObject(forKey: WebDriverManager.openInBrowserTitle.key)
                 userDefaults.removeObject(forKey: WebDriverManager.hoursAfterCheck.key)

@@ -27,6 +27,10 @@
 		4D8879272055DF4400C82104 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8879262055DF4400C82104 /* AboutViewController.swift */; };
 		4DA515A4205BB17D00C82104 /* PackageDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA515A3205BB17D00C82104 /* PackageDropView.swift */; };
 		4DA7AACF205E660200C82104 /* Welcome.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 4DA7AACE205E660200C82104 /* Welcome.rtf */; };
+		4DD5F6BA20666EB600C82104 /* unstage.applescript in Sources */ = {isa = PBXBuildFile; fileRef = 4DD5F6B920666EB600C82104 /* unstage.applescript */; };
+		4DD5F6BB20666F4800C82104 /* unstage.applescript in Resources */ = {isa = PBXBuildFile; fileRef = 4DD5F6B920666EB600C82104 /* unstage.applescript */; };
+		4DD5F6BD206670D300C82104 /* touch.applescript in Sources */ = {isa = PBXBuildFile; fileRef = 4DD5F6BC206670D300C82104 /* touch.applescript */; };
+		4DD5F6BE2066718000C82104 /* touch.applescript in Resources */ = {isa = PBXBuildFile; fileRef = 4DD5F6BC206670D300C82104 /* touch.applescript */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -68,6 +72,8 @@
 		4D8879262055DF4400C82104 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		4DA515A3205BB17D00C82104 /* PackageDropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageDropView.swift; sourceTree = "<group>"; };
 		4DA7AACE205E660200C82104 /* Welcome.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Welcome.rtf; sourceTree = "<group>"; };
+		4DD5F6B920666EB600C82104 /* unstage.applescript */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.applescript; path = unstage.applescript; sourceTree = "<group>"; };
+		4DD5F6BC206670D300C82104 /* touch.applescript */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.applescript; path = touch.applescript; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +137,8 @@
 				4D304426204090C400C82104 /* MainMenu.xib */,
 				4D163C58205A8A9100C82104 /* NvidiaCloverSettings.swift */,
 				4D8347AB204211D100C82104 /* nvram.applescript */,
+				4DD5F6B920666EB600C82104 /* unstage.applescript */,
+				4DD5F6BC206670D300C82104 /* touch.applescript */,
 				4D304433204090F300C82104 /* Nvram.swift */,
 				4DA515A3205BB17D00C82104 /* PackageDropView.swift */,
 				4D8270C9205C728800C82104 /* Packager.swift */,
@@ -209,6 +217,8 @@
 				4DA7AACF205E660200C82104 /* Welcome.rtf in Resources */,
 				4D555D642055381E00C82104 /* README.md in Resources */,
 				4D304428204090C400C82104 /* MainMenu.xib in Resources */,
+				4DD5F6BB20666F4800C82104 /* unstage.applescript in Resources */,
+				4DD5F6BE2066718000C82104 /* touch.applescript in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -222,6 +232,7 @@
 				4D09C74F2042B63600C82104 /* Defaults.swift in Sources */,
 				4D163C57205A541F00C82104 /* CloverSettings.swift in Sources */,
 				4D163C59205A8A9100C82104 /* NvidiaCloverSettings.swift in Sources */,
+				4DD5F6BA20666EB600C82104 /* unstage.applescript in Sources */,
 				4D304438204090F300C82104 /* Nvram.swift in Sources */,
 				4D827091205C21BC00C82104 /* Liberator.swift in Sources */,
 				4D49F93F205D011300C82104 /* PreferencesViewController.swift in Sources */,
@@ -233,6 +244,7 @@
 				4D304423204090C400C82104 /* AppDelegate.swift in Sources */,
 				4D163C51205A541500C82104 /* RegistryEntry.swift in Sources */,
 				4D8270CA205C728800C82104 /* Packager.swift in Sources */,
+				4DD5F6BD206670D300C82104 /* touch.applescript in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

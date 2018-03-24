@@ -24,6 +24,7 @@ class PreferencesViewController: NSViewController {
         @IBOutlet weak var hideCloverSettingsButton: NSButton!
         @IBOutlet weak var hidePackageDropButton: NSButton!
         @IBOutlet weak var hideOpenInBrowserButton: NSButton!
+        @IBOutlet weak var hideDriverDoctorButton: NSButton!
         @IBOutlet weak var openInBrowserUrlTextField: NSTextField!
         @IBOutlet weak var openInBrowserTitleTextField: NSTextField!
         
@@ -47,6 +48,11 @@ class PreferencesViewController: NSViewController {
                         hideOpenInBrowserButton.state = .off
                         openInBrowserUrlTextField.isEnabled = true
                         openInBrowserTitleTextField.isEnabled = true
+                }
+                if Defaults.shared.hideDriverDoctor {
+                        hideDriverDoctorButton.state = .on
+                } else {
+                        hideDriverDoctorButton.state = .off
                 }
                 openInBrowserUrlTextField.stringValue = Defaults.shared.openInBrowserUrl
                 openInBrowserTitleTextField.stringValue = Defaults.shared.openInBrowserTitle
@@ -79,6 +85,15 @@ class PreferencesViewController: NSViewController {
                         openInBrowserTitleTextField.isEnabled = true
                 }
         }
+        
+        @IBAction func hideDriverDoctorButtonPressed(_ sender: NSButton) {
+                if sender.state == .on {
+                        Defaults.shared.hideDriverDoctor = true
+                } else {
+                        Defaults.shared.hideDriverDoctor = false
+                }
+        }
+        
         
         @IBAction func openInBrowserUrlTextFieldDidEndEditing(_ sender: NSTextField) {
                 var string = openInBrowserUrlTextField.stringValue

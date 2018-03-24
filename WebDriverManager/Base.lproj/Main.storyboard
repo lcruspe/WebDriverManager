@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
-        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
         <capability name="system font weights other than Regular or Bold" minToolsVersion="7.0"/>
@@ -183,11 +182,11 @@
             <objects>
                 <viewController id="ujv-C2-0AP" customClass="PreferencesViewController" customModule="Web_Driver_Manager" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="iZR-Om-zLY">
-                        <rect key="frame" x="0.0" y="0.0" width="573" height="177"/>
+                        <rect key="frame" x="0.0" y="0.0" width="573" height="202"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fWW-sk-Uyf">
-                                <rect key="frame" x="18" y="140" width="119" height="17"/>
+                                <rect key="frame" x="18" y="165" width="119" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Hide These Items:" id="42z-Cj-Aiq">
                                     <font key="font" metaFont="systemSemibold" size="13"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -195,7 +194,7 @@
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1Uo-Ks-OfB">
-                                <rect key="frame" x="232" y="115" width="125" height="18"/>
+                                <rect key="frame" x="232" y="140" width="125" height="18"/>
                                 <buttonCell key="cell" type="check" title="Package Installer" bezelStyle="regularSquare" imagePosition="left" inset="2" id="ykA-eZ-2Y8">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -205,7 +204,7 @@
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EWu-z6-Mha">
-                                <rect key="frame" x="232" y="139" width="115" height="18"/>
+                                <rect key="frame" x="232" y="164" width="115" height="18"/>
                                 <buttonCell key="cell" type="check" title="Clover Settings" bezelStyle="regularSquare" imagePosition="left" inset="2" id="snu-sq-wbC">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -215,13 +214,23 @@
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aqo-Xq-IF2">
-                                <rect key="frame" x="232" y="91" width="122" height="18"/>
+                                <rect key="frame" x="232" y="116" width="122" height="18"/>
                                 <buttonCell key="cell" type="check" title="Open in Browser" bezelStyle="regularSquare" imagePosition="left" inset="2" id="jhU-96-pIf">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <connections>
                                     <action selector="hideOpenInBrowserButtonPressed:" target="ujv-C2-0AP" id="QIa-Na-jrW"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="LT5-Vp-7Wn">
+                                <rect key="frame" x="232" y="92" width="104" height="18"/>
+                                <buttonCell key="cell" type="check" title="Driver Doctor" bezelStyle="regularSquare" imagePosition="left" inset="2" id="Yrd-jB-zax">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="hideDriverDoctorButtonPressed:" target="ujv-C2-0AP" id="EUp-f4-pn9"/>
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rga-AY-5BF">
@@ -272,31 +281,34 @@
                             </textField>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="fWW-sk-Uyf" firstAttribute="baseline" secondItem="EWu-z6-Mha" secondAttribute="baseline" id="0Db-qy-FM3"/>
-                            <constraint firstItem="fWW-sk-Uyf" firstAttribute="top" secondItem="iZR-Om-zLY" secondAttribute="top" constant="20" symbolic="YES" id="8cK-A9-M35"/>
-                            <constraint firstItem="vgg-wl-XvS" firstAttribute="leading" secondItem="2x6-Qx-mox" secondAttribute="trailing" constant="8" symbolic="YES" id="ACb-Rc-6Cp"/>
-                            <constraint firstItem="EWu-z6-Mha" firstAttribute="leading" secondItem="1Uo-Ks-OfB" secondAttribute="leading" id="EEI-pm-4LM"/>
-                            <constraint firstItem="1Uo-Ks-OfB" firstAttribute="top" secondItem="EWu-z6-Mha" secondAttribute="bottom" constant="10" id="Gr7-m4-x4l"/>
-                            <constraint firstItem="zsE-36-6FA" firstAttribute="leading" secondItem="vgg-wl-XvS" secondAttribute="leading" id="Itd-Tt-2sH"/>
-                            <constraint firstAttribute="trailing" secondItem="zsE-36-6FA" secondAttribute="trailing" constant="20" symbolic="YES" id="PMC-6o-V0s"/>
-                            <constraint firstItem="2x6-Qx-mox" firstAttribute="centerY" secondItem="vgg-wl-XvS" secondAttribute="centerY" id="W6r-Fp-Zr5"/>
-                            <constraint firstItem="rga-AY-5BF" firstAttribute="baseline" secondItem="v12-Rz-7nN" secondAttribute="baseline" id="Yd2-en-Xdj"/>
-                            <constraint firstItem="v12-Rz-7nN" firstAttribute="leading" secondItem="rga-AY-5BF" secondAttribute="trailing" constant="71" id="ZkU-HU-xYP"/>
-                            <constraint firstItem="v12-Rz-7nN" firstAttribute="centerY" secondItem="zsE-36-6FA" secondAttribute="centerY" id="aAA-al-jnh"/>
-                            <constraint firstItem="aqo-Xq-IF2" firstAttribute="top" secondItem="1Uo-Ks-OfB" secondAttribute="bottom" constant="10" id="b4h-g7-TdX"/>
-                            <constraint firstItem="vgg-wl-XvS" firstAttribute="top" secondItem="zsE-36-6FA" secondAttribute="bottom" constant="8" id="cdc-pg-8BZ"/>
-                            <constraint firstItem="aqo-Xq-IF2" firstAttribute="leading" secondItem="zsE-36-6FA" secondAttribute="leading" id="dgm-Vf-Nfg"/>
-                            <constraint firstAttribute="bottom" secondItem="vgg-wl-XvS" secondAttribute="bottom" constant="20" symbolic="YES" id="esS-Vl-9K7"/>
-                            <constraint firstItem="fWW-sk-Uyf" firstAttribute="leading" secondItem="rga-AY-5BF" secondAttribute="leading" id="k2z-X7-X9T"/>
-                            <constraint firstItem="zsE-36-6FA" firstAttribute="leading" secondItem="v12-Rz-7nN" secondAttribute="trailing" constant="8" symbolic="YES" id="kVU-25-x7H"/>
-                            <constraint firstItem="rga-AY-5BF" firstAttribute="leading" secondItem="2x6-Qx-mox" secondAttribute="leading" id="lxz-PI-bAW"/>
-                            <constraint firstItem="zsE-36-6FA" firstAttribute="trailing" secondItem="vgg-wl-XvS" secondAttribute="trailing" id="owh-h5-61Q"/>
-                            <constraint firstItem="fWW-sk-Uyf" firstAttribute="leading" secondItem="iZR-Om-zLY" secondAttribute="leading" constant="20" symbolic="YES" id="ucm-JE-wzr"/>
-                            <constraint firstItem="1Uo-Ks-OfB" firstAttribute="leading" secondItem="aqo-Xq-IF2" secondAttribute="leading" id="xkR-N7-xXG"/>
+                            <constraint firstItem="fWW-sk-Uyf" firstAttribute="leading" secondItem="iZR-Om-zLY" secondAttribute="leading" constant="20" symbolic="YES" id="0Zy-ka-fP3"/>
+                            <constraint firstAttribute="trailing" secondItem="zsE-36-6FA" secondAttribute="trailing" constant="20" symbolic="YES" id="9mo-D7-QZs"/>
+                            <constraint firstItem="vgg-wl-XvS" firstAttribute="leading" secondItem="2x6-Qx-mox" secondAttribute="trailing" constant="8" symbolic="YES" id="E1j-hB-j2e"/>
+                            <constraint firstItem="fWW-sk-Uyf" firstAttribute="leading" secondItem="rga-AY-5BF" secondAttribute="leading" id="Ikd-TY-MzL"/>
+                            <constraint firstItem="1Uo-Ks-OfB" firstAttribute="leading" secondItem="aqo-Xq-IF2" secondAttribute="leading" id="KTs-lq-e5z"/>
+                            <constraint firstItem="rga-AY-5BF" firstAttribute="leading" secondItem="2x6-Qx-mox" secondAttribute="leading" id="KaR-Fb-h4h"/>
+                            <constraint firstItem="rga-AY-5BF" firstAttribute="baseline" secondItem="v12-Rz-7nN" secondAttribute="baseline" id="Oeu-qC-GPw"/>
+                            <constraint firstItem="2x6-Qx-mox" firstAttribute="centerY" secondItem="vgg-wl-XvS" secondAttribute="centerY" id="Ps3-Uq-cWx"/>
+                            <constraint firstItem="LT5-Vp-7Wn" firstAttribute="top" secondItem="aqo-Xq-IF2" secondAttribute="bottom" constant="10" id="TmO-ce-xpK"/>
+                            <constraint firstItem="1Uo-Ks-OfB" firstAttribute="top" secondItem="EWu-z6-Mha" secondAttribute="bottom" constant="10" id="XIz-nU-O88"/>
+                            <constraint firstItem="fWW-sk-Uyf" firstAttribute="baseline" secondItem="EWu-z6-Mha" secondAttribute="baseline" id="Z7a-j8-QoG"/>
+                            <constraint firstItem="zsE-36-6FA" firstAttribute="trailing" secondItem="vgg-wl-XvS" secondAttribute="trailing" id="bAp-Wv-8Nd"/>
+                            <constraint firstItem="LT5-Vp-7Wn" firstAttribute="centerY" secondItem="iZR-Om-zLY" secondAttribute="centerY" id="bQq-hm-GeI"/>
+                            <constraint firstItem="fWW-sk-Uyf" firstAttribute="top" secondItem="iZR-Om-zLY" secondAttribute="top" constant="20" symbolic="YES" id="cZW-Ql-QKI"/>
+                            <constraint firstItem="vgg-wl-XvS" firstAttribute="top" secondItem="zsE-36-6FA" secondAttribute="bottom" constant="8" id="f0n-CT-Atp"/>
+                            <constraint firstItem="zsE-36-6FA" firstAttribute="leading" secondItem="vgg-wl-XvS" secondAttribute="leading" id="iWg-uk-Lgr"/>
+                            <constraint firstItem="LT5-Vp-7Wn" firstAttribute="leading" secondItem="zsE-36-6FA" secondAttribute="leading" id="jZq-dz-MTk"/>
+                            <constraint firstItem="v12-Rz-7nN" firstAttribute="centerY" secondItem="zsE-36-6FA" secondAttribute="centerY" id="nN4-wQ-uCc"/>
+                            <constraint firstItem="EWu-z6-Mha" firstAttribute="leading" secondItem="1Uo-Ks-OfB" secondAttribute="leading" id="neZ-Kv-Riv"/>
+                            <constraint firstItem="v12-Rz-7nN" firstAttribute="leading" secondItem="rga-AY-5BF" secondAttribute="trailing" constant="71" id="rLU-KS-Qzo"/>
+                            <constraint firstItem="zsE-36-6FA" firstAttribute="leading" secondItem="v12-Rz-7nN" secondAttribute="trailing" constant="8" symbolic="YES" id="wEv-kA-tGh"/>
+                            <constraint firstAttribute="bottom" secondItem="vgg-wl-XvS" secondAttribute="bottom" constant="20" symbolic="YES" id="woG-VB-i4R"/>
+                            <constraint firstItem="aqo-Xq-IF2" firstAttribute="leading" secondItem="LT5-Vp-7Wn" secondAttribute="leading" id="zzD-kt-p38"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="hideCloverSettingsButton" destination="EWu-z6-Mha" id="whC-kM-e3z"/>
+                        <outlet property="hideDriverDoctorButton" destination="LT5-Vp-7Wn" id="wT6-Zk-Tz3"/>
                         <outlet property="hideOpenInBrowserButton" destination="aqo-Xq-IF2" id="jge-cc-gtm"/>
                         <outlet property="hidePackageDropButton" destination="1Uo-Ks-OfB" id="b36-P1-GHe"/>
                         <outlet property="openInBrowserTitleTextField" destination="vgg-wl-XvS" id="hvp-9g-BjT"/>
@@ -305,7 +317,7 @@
                 </viewController>
                 <customObject id="5JY-31-zfU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="837.5" y="257.5"/>
+            <point key="canvasLocation" x="837.5" y="270"/>
         </scene>
     </scenes>
     <resources>
