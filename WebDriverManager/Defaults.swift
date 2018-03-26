@@ -170,8 +170,12 @@ class Defaults {
         }
 
         private func registerFactoryDefaults() {
-                let factoryDefaults = [WebDriverManager.initialized.key: true, WebDriverManager.showRestartAlert.key: true, WebDriverManager.suppressVersion.key: "", WebDriverManager.disableUpdateAlerts.key: true, WebDriverManager.hideCloverSettings.key: true, WebDriverManager.hidePackageDrop.key: true, WebDriverManager.hideOpenInBrowser.key: true, WebDriverManager.hideDriverDoctor.key: true, WebDriverManager.openInBrowserUrl.key: "https://vulgo.github.io/nvidia-drivers", WebDriverManager.openInBrowserTitle.key: "Nvidia Drivers", WebDriverManager.hoursAfterCheck.key: 6]
-                        as [String : Any]
+                var factoryDefaults: [String : Any] = [:]
+                if debug {
+                        factoryDefaults = [WebDriverManager.initialized.key: true, WebDriverManager.showRestartAlert.key: true, WebDriverManager.suppressVersion.key: "", WebDriverManager.disableUpdateAlerts.key: true, WebDriverManager.hideCloverSettings.key: false, WebDriverManager.hidePackageDrop.key: false, WebDriverManager.hideOpenInBrowser.key: false, WebDriverManager.hideDriverDoctor.key: false, WebDriverManager.openInBrowserUrl.key: "https://vulgo.github.io/nvidia-drivers", WebDriverManager.openInBrowserTitle.key: "Nvidia Drivers", WebDriverManager.hoursAfterCheck.key: 6]
+                } else {
+                factoryDefaults = [WebDriverManager.initialized.key: true, WebDriverManager.showRestartAlert.key: true, WebDriverManager.suppressVersion.key: "", WebDriverManager.disableUpdateAlerts.key: true, WebDriverManager.hideCloverSettings.key: true, WebDriverManager.hidePackageDrop.key: true, WebDriverManager.hideOpenInBrowser.key: true, WebDriverManager.hideDriverDoctor.key: true, WebDriverManager.openInBrowserUrl.key: "https://vulgo.github.io/nvidia-drivers", WebDriverManager.openInBrowserTitle.key: "Nvidia Drivers", WebDriverManager.hoursAfterCheck.key: 6]
+                }
                 userDefaults.register(defaults: factoryDefaults)
         }
         

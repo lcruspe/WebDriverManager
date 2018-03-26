@@ -28,7 +28,7 @@ import os.log
 
 @NSApplicationMain class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         
-        static let versionString = "1.9"
+        static let versionString = "1.10"
         
         var csrActiveConfig: UInt32 = 0xFFFF
         let unsignedKexts: UInt32 = 1 << 0
