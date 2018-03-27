@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
     </dependencies>
     <objects>
@@ -92,7 +93,7 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="z01-XJ-NeA"/>
-                            <menuItem title="Runtime Variables" enabled="NO" id="WlW-PX-0wr">
+                            <menuItem title="System Parameters" enabled="NO" id="WlW-PX-0wr">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                             </menuItem>
                             <menuItem title="NvidiaWeb" id="f4s-yx-WDp">

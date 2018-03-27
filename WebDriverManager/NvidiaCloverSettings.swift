@@ -32,6 +32,7 @@ class NvidiaCloverSettings: CloverSettings {
                 case Disabled
                 case NvidiaWeb
                 case RtVariables
+                case SystemParameters
                 var string: String {
                         switch self {
                         case .KernelAndKextPatches:
@@ -52,6 +53,8 @@ class NvidiaCloverSettings: CloverSettings {
                                 return "NvidiaWeb"
                         case .RtVariables:
                                 return "RtVariables"
+                        case .SystemParameters:
+                                return "SystemParameters"
                         }
                 }
         }
@@ -89,19 +92,19 @@ class NvidiaCloverSettings: CloverSettings {
                                         
                                 } else {
                                         
-                                        if let runtimeVariables = dictionary?[Keys.RtVariables.string] as? NSMutableDictionary {
+                                        if let systemParameters = dictionary?[Keys.SystemParameters.string] as? NSMutableDictionary {
                                                 
                                                 switch newValue {
                                                 case true:
-                                                        runtimeVariables[Keys.NvidiaWeb.string] = true
+                                                        systemParameters[Keys.NvidiaWeb.string] = true
                                                 case false:
-                                                        runtimeVariables.removeObject(forKey: Keys.NvidiaWeb.string)
+                                                        systemParameters.removeObject(forKey: Keys.NvidiaWeb.string)
                                                 }
                                                 
                                         } else if newValue == true {
                                                 
-                                                let runtimeVariables: [String : Any] = [Keys.NvidiaWeb.string : true]
-                                                dictionary?.setObject(runtimeVariables, forKey: Keys.RtVariables.string as NSCopying)
+                                                let systemParameters: [String : Any] = [Keys.NvidiaWeb.string : true]
+                                                dictionary?.setObject(systemParameters, forKey: Keys.SystemParameters.string as NSCopying)
                                                 
 
                                         }
@@ -209,8 +212,8 @@ class NvidiaCloverSettings: CloverSettings {
                         
                         /* sync _nvidiaWebIsEnabled */
                         
-                        if let runtimeVariables = dictionary?[Keys.RtVariables.string] as? NSDictionary {
-                                let nvidiaWeb: Bool? = runtimeVariables[Keys.NvidiaWeb.string] as? Bool
+                        if let systemParameters = dictionary?[Keys.SystemParameters.string] as? NSDictionary {
+                                let nvidiaWeb: Bool? = systemParameters[Keys.NvidiaWeb.string] as? Bool
                                 if nvidiaWeb != nil, nvidiaWeb! == true {
                                         _nvidiaWebIsEnabled = true
                                 }
