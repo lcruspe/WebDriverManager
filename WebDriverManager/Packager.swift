@@ -178,6 +178,20 @@ class Packager {
                         }
                 }
                 
+                if let background = Bundle.main.url(forResource: "background", withExtension: "png") {
+                        let existing = URL.init(fileURLWithPath: "\(extracted)/Resources/background.png")
+                        if fileManager.fileExists(atPath: existing.path) {
+                                do {
+                                        try fileManager.removeItem(at: existing)
+                                } catch {
+                                }
+                                do {
+                                        try fileManager.copyItem(at: background, to: existing)
+                                } catch {
+                                }
+                        }
+                }
+                
                 buildComponent(sourceDirectory: extracted, name: name)
                 if fileManager.fileExists(atPath: "\(temp)/\(name)") {
                         os_log("Packager: New drivers component exists")

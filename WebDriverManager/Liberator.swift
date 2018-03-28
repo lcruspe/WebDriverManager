@@ -110,7 +110,7 @@ class Liberator {
                 xml += "<installer-gui-script minSpecVersion=\"2\">"
                 xml += "<title>\(title!)</title>"
                 xml += "<options customize=\"never\" allow-external-scripts=\"false\" rootVolumeOnly=\"true\"/>"
-                xml += "<background file=\"background.png\" scaling=\"none\" alignment=\"bottomleft\"/>"
+                xml += "<background file=\"background.png\" scaling=\"none\" alignment=\"center\"/>"
                 xml += "<welcome file=\"Welcome.rtf\"/>"
                 xml += "<choices-outline>"
                 xml += "<line choice=\"manual\"/>"
