@@ -13,6 +13,8 @@
 		4D163C59205A8A9100C82104 /* NvidiaCloverSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D163C58205A8A9100C82104 /* NvidiaCloverSettings.swift */; };
 		4D17721C20453FE300C82104 /* WebDriverNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D17721B20453FE300C82104 /* WebDriverNotifications.swift */; };
 		4D17721E204544E900C82104 /* sysctl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D17721D204544E900C82104 /* sysctl.swift */; };
+		4D29BA30206BA21D00C82104 /* component.sh in Resources */ = {isa = PBXBuildFile; fileRef = 4D29BA2F206BA21C00C82104 /* component.sh */; };
+		4D29BA32206BA22700C82104 /* product.sh in Resources */ = {isa = PBXBuildFile; fileRef = 4D29BA31206BA22700C82104 /* product.sh */; };
 		4D304423204090C400C82104 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D304422204090C400C82104 /* AppDelegate.swift */; };
 		4D304425204090C400C82104 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D304424204090C400C82104 /* Assets.xcassets */; };
 		4D304428204090C400C82104 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D304426204090C400C82104 /* MainMenu.xib */; };
@@ -53,6 +55,8 @@
 		4D163C58205A8A9100C82104 /* NvidiaCloverSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NvidiaCloverSettings.swift; sourceTree = "<group>"; };
 		4D17721B20453FE300C82104 /* WebDriverNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebDriverNotifications.swift; sourceTree = "<group>"; };
 		4D17721D204544E900C82104 /* sysctl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sysctl.swift; sourceTree = "<group>"; };
+		4D29BA2F206BA21C00C82104 /* component.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = component.sh; sourceTree = "<group>"; };
+		4D29BA31206BA22700C82104 /* product.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = product.sh; sourceTree = "<group>"; };
 		4D30441F204090C400C82104 /* Web Driver Manager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Web Driver Manager.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D304422204090C400C82104 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4D304424204090C400C82104 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -125,6 +129,8 @@
 		4D304421204090C400C82104 /* WebDriverManager */ = {
 			isa = PBXGroup;
 			children = (
+				4D29BA31206BA22700C82104 /* product.sh */,
+				4D29BA2F206BA21C00C82104 /* component.sh */,
 				4DA7AACE205E660200C82104 /* Welcome.rtf */,
 				4D8879262055DF4400C82104 /* AboutViewController.swift */,
 				4D304422204090C400C82104 /* AppDelegate.swift */,
@@ -213,6 +219,8 @@
 			files = (
 				4D8347AD204211E100C82104 /* nvram.applescript in Resources */,
 				4D6BC72F2058153100C82104 /* Main.storyboard in Resources */,
+				4D29BA32206BA22700C82104 /* product.sh in Resources */,
+				4D29BA30206BA21D00C82104 /* component.sh in Resources */,
 				4D304425204090C400C82104 /* Assets.xcassets in Resources */,
 				4DA7AACF205E660200C82104 /* Welcome.rtf in Resources */,
 				4D555D642055381E00C82104 /* README.md in Resources */,

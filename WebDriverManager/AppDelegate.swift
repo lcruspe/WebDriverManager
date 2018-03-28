@@ -42,7 +42,7 @@ import os.log
                         os_log("PackagerViewController: new url %{public}@", packageUrl?.absoluteString ?? "nil")
                         if let url: URL = packageUrl {
                                 showPackageDropMenuItem.isEnabled = false
-                                packager.installPackage(atUrl: url)
+                                packager.start(atUrl: url)
                         }
                         packageUrl = nil
                 }

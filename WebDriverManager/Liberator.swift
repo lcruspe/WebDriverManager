@@ -21,121 +21,124 @@ import Foundation
 import os.log
 
 class Liberator {
-        
-        var status: Int?
+
+        let distribution: URL
         let fileManager = FileManager()
         
-        init?(_ url: URL) {
-                let result: Int = liberate(url: url)
-                status = result
-                if result < 0 {
-                        return nil
-                }
-        }
-        
-        deinit {
-                if let status = status {
-                        os_log("Liberator: deinit with status %{public}@", String(status))
-                } else {
-                        os_log("Liberator: deinit with status nil")
-                }
+        init(_ url: URL) {
+                distribution = url
         }
 
-        private func liberate(url: URL) -> Int {
+        func liberate() -> (String, String)? {
                 
-                var status = 0
                 var prefPaneId = "NVPrefPane"
                 
-                if !fileManager.fileExists(atPath: url.path) {
+                if !fileManager.fileExists(atPath: distribution.path) {
                         os_log("Liberator: XML document not found")
-                        return -1
+                        return nil
                 }
                 
                 var document: XMLDocument?
                 do {
-                        document = try XMLDocument.init(contentsOf: url, options: XMLNode.Options.documentTidyXML)
+                        document = try XMLDocument.init(contentsOf: distribution, options: XMLNode.Options.documentTidyXML)
                 } catch {
                         os_log("Liberator: error parsing XML document")
-                        return -1
+                        return nil
                 }
                 
                 if document == nil {
                         os_log("Liberator: XML document should no longer be nil")
-                        return -1
+                        return nil
                 }
                 
                 var xml: String = ""
                 var objects: [Any] = []
                 
-                func append(_ objects: [Any]) {
-                        if objects.count == 0 {
-                                os_log("Liberator: append was called on an empty array")
-                        }
-                        for object in objects {
-                                if let e = object as? XMLElement {
-                                        xml += e.canonicalXMLStringPreservingComments(false)
-                                }
-                        }
-                }
-                
-                func query(_ query: String) {
+                func xQueryResult(_ query: String) -> Any? {
                         do {
                                 objects = try document!.objects(forXQuery: query)
-                                if query == "//choice" {
-                                        if let e = objects[0] as? XMLElement {
-                                                var pp: Int?
-                                                if let childNodes = e.children {
-                                                        for i in 0..<childNodes.count {
-                                                                let xml = childNodes[i].canonicalXMLStringPreservingComments(false)
-                                                                if xml.contains("id=\"\(prefPaneId)\"") {
-                                                                        pp = i
-                                                                        break
-                                                                }
-                                                        }
-                                                }
-                                                if pp == nil {
-                                                        pp = 1
-                                                }
-                                                e.removeChild(at: pp!)
-                                                append([e])
-                                        }
-                                } else {
-                                        append(objects)
+                                if objects.count > 0 {
+                                        return objects[0]
                                 }
+                                return nil
                         } catch {
-                                os_log("Liberator: xquery error (%{public}@)", query)
-                                status = 67
+                                return nil
                         }
                 }
                 
-                xml += "<?xml version=\"1.0\" encoding=\"UTF-8\"?><installer-gui-script minSpecVersion=\"2\">"
-                query("//title")
-                query("//options")
-                query("//background")
-                query("//welcome")
-                query("//license")
-                query("for $x in //pkg-ref where $x/@id!='\(prefPaneId)' return $x")
-                query("//choices-outline")
-                query("//choice")
-                query("//product")
+                func getDriverComponentDir() -> String? {
+                        if let element = xQueryResult("for $x in /installer-gui-script/choice/pkg-ref where $x/@id='NV' return $x") as? XMLElement {
+                                return element.stringValue?.replacingOccurrences(of: "#", with: "")
+                        }
+                        return nil
+                }
+                
+                func getPackageTitle() -> String? {
+                        if let element = xQueryResult("//title") as? XMLElement {
+                                return element.stringValue
+                        }
+                        return nil
+                }
+                
+                func getVersion() -> String? {
+                        if let version = xQueryResult("for $x in //product return data($x/@version)") as? String {
+                                return version
+                        }
+                        return nil
+                }
+                
+                let name = getDriverComponentDir()
+                let title = getPackageTitle()
+                let version = getVersion()
+                
+                if name == nil {
+                        os_log("Packager: name should no longer be nil")
+                        return nil
+                }
+                
+                if title == nil {
+                        os_log("Packager: title should no longer be nil")
+                        return nil
+                }
+                
+                if version == nil {
+                        os_log("Packager: version should no longer be nil")
+                        return nil
+                }
+                
+                xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+                xml += "<installer-gui-script minSpecVersion=\"2\">"
+                xml += "<title>\(title!)</title>"
+                xml += "<options customize=\"never\" allow-external-scripts=\"false\" rootVolumeOnly=\"true\"/>"
+                xml += "<background file=\"background.png\" scaling=\"none\" alignment=\"bottomleft\"/>"
+                xml += "<welcome file=\"Welcome.rtf\"/>"
+                xml += "<choices-outline>"
+                xml += "<line choice=\"manual\"/>"
+                xml += "</choices-outline>"
+                xml += "<choice id=\"manual\" title=\"\(title!)\" description=\"NVIDIA driver components\">"
+                xml += "<pkg-ref id=\"NV\" auth=\"Root\" onConclusion=\"none\">#\(name!)</pkg-ref>"
+                xml += "</choice>"
+                xml += "<pkg-ref id=\"NV\" packageIdentifier=\"com.nvidia.web-driver\"></pkg-ref>"
+                xml += "<product id=\"com.nvidia.combo-pkg\" version=\"\(version!)\"/>"
                 xml += "</installer-gui-script>"
                 
                 do {
                         document = try XMLDocument.init(xmlString: xml, options: XMLNode.Options.documentTidyXML)
                 } catch {
                         os_log("Liberator: error parsing XML string")
-                        return -1
+                        return nil
                 }
                 
                 let data = document?.xmlData(options: XMLNode.Options.nodePrettyPrint)
                 
                 do  {
-                        try data?.write(to: url)
+                        try data?.write(to: distribution)
                 } catch {
                         os_log("Liberator: error writing xml")
-                        return -1
+                        return nil
                 }
+                
                 os_log("Liberator: wrote XML")
-                return status
+                return (name!, version!)
         }
 }
