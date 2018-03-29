@@ -22,7 +22,9 @@ import os.log
 
 class WebDriverNotifications: NSObject, NSUserNotificationCenterDelegate {
         
-        let nvidiaUpdatesUrl = "/Library/Extensions/GeForceWeb.kext/Contents/Info.plist"
+        let osLog = OSLog.init(subsystem: "org.vulgo.WebDriverManager", category: "Notifications")
+        let updatesUrl = URL.init(string: "https://gfestage.nvidia.com/mac-update")
+        let infoPlistUrl = URL.init(fileURLWithPath: "/Library/Extensions/GeForceWeb.kext/Contents/Info.plist")
         var checksum: String?
         var downloadUrl: String?
         var remoteVersion: String?
@@ -32,8 +34,7 @@ class WebDriverNotifications: NSObject, NSUserNotificationCenterDelegate {
         }
         
         var localVersion: String? {
-                os_log("Updates URL: %{public}@", nvidiaUpdatesUrl)
-                let infoPlistUrl = URL.init(fileURLWithPath: nvidiaUpdatesUrl)
+                os_log("Updates URL: %{public}@", log: osLog, type: .default, updatesUrl?.path ?? "nil")
                 guard let info = NSDictionary.init(contentsOf: infoPlistUrl) else {
                         return nil
                 }
@@ -44,21 +45,21 @@ class WebDriverNotifications: NSObject, NSUserNotificationCenterDelegate {
                 guard components.count == 3 else {
                         return nil
                 }
-                os_log("Local version: %{public}@", components[2])
+                os_log("Local version: %{public}@", log: osLog, type: .info, components[2])
                 return components[2]
         }
         
         var updates: Array<AnyObject>? {
-                guard let updatesURL = URL.init(string: "https://gfestage.nvidia.com/mac-update") else {
-                        return nil
+                if let url = updatesUrl {
+                        guard let downloaded = NSDictionary.init(contentsOf: url) else {
+                                return nil
+                        }
+                        guard let array = downloaded["updates"] as? NSArray else {
+                                return nil
+                        }
+                        return array as Array<AnyObject>
                 }
-                guard let downloaded = NSDictionary.init(contentsOf: updatesURL) else {
-                        return nil
-                }
-                guard let array = downloaded["updates"] as? NSArray else {
-                        return nil
-                }
-                return array as Array<AnyObject>
+                return nil
         }
         
         override init() {
@@ -93,10 +94,10 @@ class WebDriverNotifications: NSObject, NSUserNotificationCenterDelegate {
                 switch (notification.activationType) {
                 case .actionButtonClicked:
                         if let versionToSuppress = notification.identifier {
-                                os_log("Suppressing alerts for version: %{public}@", versionToSuppress)
+                                os_log("Suppressing alerts for version: %{public}@", log: osLog, type: .default, versionToSuppress)
                                 Defaults.shared.suppressUpdateAlerts = versionToSuppress
                         } else {
-                                os_log("Notification identifier was nil, unable to suppress alerts")
+                                os_log("Notification identifier was nil, unable to suppress alerts", log: osLog, type: .default)
                         }
                 default:
                         break;
@@ -105,7 +106,7 @@ class WebDriverNotifications: NSObject, NSUserNotificationCenterDelegate {
         
         func checkForUpdates(userCheck: Bool = false) -> Bool {
                 guard updates != nil else {
-                        os_log("Couldn't get updates data from NVIDIA")
+                        os_log("Couldn't get updates data from NVIDIA", log: osLog, type: .default)
                         return false
                 }
                 for update in updates! {
@@ -128,29 +129,29 @@ class WebDriverNotifications: NSObject, NSUserNotificationCenterDelegate {
                                 } else {
                                         setupNotAvailable(notification: &webDriverAlert, message: "No update available")
                                 }
-                                os_log("Scheduling no update notification, delivery date: %{public}@", webDriverAlert.deliveryDate?.description ?? "unknown")
+                                os_log("Scheduling no update notification, delivery date: %{public}@", log: osLog, type: .default, webDriverAlert.deliveryDate?.description ?? "unknown")
                                 NSUserNotificationCenter.default.scheduleNotification(webDriverAlert)
                         }
                         return false
                 }
                 guard remoteVersion != localVersion else {
-                        os_log("Remote version %{public}@ is already installed", remoteVersion!)
+                        os_log("Remote version %{public}@ is already installed", log: osLog, type: .default, remoteVersion!)
                         if userCheck {
                                 var webDriverAlert = NSUserNotification()
                                 setupNotAvailable(notification: &webDriverAlert, message: "\(remoteVersion!) already installed")
-                                os_log("Scheduling no update notification, delivery date: %{public}@", webDriverAlert.deliveryDate?.description ?? "unknown")
+                                os_log("Scheduling 'no update available' notification, delivery date: %{public}@", log: osLog, type: .default, webDriverAlert.deliveryDate?.description ?? "unknown")
                                 NSUserNotificationCenter.default.scheduleNotification(webDriverAlert)
                         }
                         return false
                 }
                 guard remoteVersion != Defaults.shared.suppressUpdateAlerts else {
-                        os_log("Alerts for %{public}@ have been suppressed in user defaults", remoteVersion!)
+                        os_log("Alerts for %{public}@ have been suppressed in user defaults", log: osLog, type: .default, remoteVersion!)
                         return false
                 }
-                os_log("Remote version available: %{public}@", remoteVersion!)
+                os_log("Remote version available: %{public}@", log: osLog, type: .default, remoteVersion!)
                 var webDriverAlert = NSUserNotification()
                 setup(notification: &webDriverAlert, forVersion: remoteVersion!)
-                os_log("Scheduling update notification, delivery date: %{public}@", webDriverAlert.deliveryDate?.description ?? "unknown")
+                os_log("Scheduling update notification, delivery date: %{public}@", log: osLog, type: .default, webDriverAlert.deliveryDate?.description ?? "unknown")
                 NSUserNotificationCenter.default.scheduleNotification(webDriverAlert)
                 return true
         }

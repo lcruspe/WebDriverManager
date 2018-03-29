@@ -21,7 +21,7 @@ import Foundation
 
 class Nvram: RegistryEntry {
         
-        init() {
+        init?() {
                 super.init(fromPath: "IODeviceTree:/options")
         }
         

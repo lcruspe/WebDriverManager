@@ -22,11 +22,11 @@ import os.log
 
 class Packager {
 
+        let osLog = OSLog.init(subsystem: "org.vulgo.WebDriverManager", category: "Packager")
         let fileManager = FileManager()
         let packagerQueue = DispatchQueue(label: "packager", attributes: .concurrent)
         var packagerWorkItem: DispatchWorkItem?
         let nvidiaIdentifier = "NVWebDrivers"
-        
         @discardableResult func list(archive: String) -> String? {
                 let task = Process()
                 task.launchPath = "/usr/bin/xar"
@@ -97,9 +97,9 @@ class Packager {
                 return (task.terminationStatus)
         }
         
-        func start(atUrl url: URL) {
+        func processPackage(atUrl url: URL) {
                 packagerQueue.async {
-                        self.packagerDidFinish(result: self._start(url))
+                        self.packagerDidFinish(result: self.processPackage(url))
                 }
         }
         
@@ -109,48 +109,53 @@ class Packager {
                 }
         }
         
-        private func _start(_ url: URL) -> Bool {
-                let base = NSTemporaryDirectory()
-                let uuid = NSUUID().uuidString
-                let temp = "\(base)\(uuid)"
-                let extracted = "\(temp)/tmp"
+        private func processPackage(_ url: URL) -> Bool {
+                os_log("Processing dropped package...", log: osLog, type: .info)
                 if !fileManager.fileExists(atPath: url.path) {
-                        os_log("Packager: Package or other file type not found")
+                        os_log("Package or other file type not found", log: osLog, type: .default)
                         return false
                 }
                 let fileList: String = list(archive: url.path) ?? ""
                 if !fileList.contains(nvidiaIdentifier) {
                         NSSound.beep()
-                        os_log("Packager: NVIDIA driver package not detected")
+                        os_log("NVIDIA driver package not detected", log: osLog, type: .default)
                         return false
                 }
+                
                 /* Close package drop window */
+                
                 if let appDelegate = NSApp.delegate as? AppDelegate {
                         appDelegate.packageDropController?.close()
                 }
-                do {
-                        try fileManager.removeItem(atPath: temp)
-                } catch {
-                        if debug {
-                                os_log("Packager: Nothing to remove")
+                let temporaryDirectory = "\(NSTemporaryDirectory())\(NSUUID().uuidString)"
+                let removeTemporaryDirectory = {
+                        do {
+                                try self.fileManager.removeItem(at: URL.init(fileURLWithPath: temporaryDirectory))
+                        } catch {
+                                os_log("Failed to remove temporary directory", log: self.osLog, type: .default)
                         }
                 }
+                let extracted = "\(temporaryDirectory)/tmp"
+                removeTemporaryDirectory()
                 do {
                         try fileManager.createDirectory(atPath: extracted, withIntermediateDirectories: true, attributes: nil)
                 } catch {
-                        os_log("Packager: Failed to create temporary directory")
+                        os_log("Failed to create temporary directory", log: osLog, type: .default)
+                        removeTemporaryDirectory()
                         return false
                 }
                 if debug {
-                        os_log("Packager: Extracting to %{public}@", extracted)
+                        os_log("Extracting to %{public}@", log: osLog, type: .info, extracted)
                 }
                 if extract(archive: url.path, destinationDirectory: extracted) != 0 {
-                        os_log("Packager: Failed to extract package")
+                        removeTemporaryDirectory()
+                        os_log("Failed to extract package", log: osLog, type: .default)
                         return false
                 }
                 let distribution = "\(extracted)/Distribution"
                 if !fileManager.fileExists(atPath: distribution) {
-                        os_log("Packager: Distribution not found")
+                        os_log("Distribution not found", log: osLog, type: .default)
+                        removeTemporaryDirectory()
                         return false
                 }
                 let xml = Liberator(URL.init(fileURLWithPath: distribution))
@@ -160,7 +165,8 @@ class Packager {
                         name = result.0
                         version = result.1
                 } else {
-                        os_log("Packager: Failed to patch Distribution")
+                        os_log("Failed to patch Distribution", log: osLog, type: .default)
+                        removeTemporaryDirectory()
                         return false
                 }
                 
@@ -192,22 +198,26 @@ class Packager {
                         }
                 }
                 
+                os_log("Building driver component package...", log: osLog, type: .info)
                 buildComponent(sourceDirectory: extracted, name: name)
-                if fileManager.fileExists(atPath: "\(temp)/\(name)") {
-                        os_log("Packager: New drivers component exists")
+                if fileManager.fileExists(atPath: "\(temporaryDirectory)/\(name)") {
+                        os_log("New drivers component exists", log: osLog, type: .info)
                 } else {
-                        os_log("Packager: New drivers component doesn't exist")
+                        os_log("New drivers component doesn't exist", log: osLog, type: .default)
+                        removeTemporaryDirectory()
                         return false
                 }
                 
                 let outputPackageName = "NVIDIA-\(version).pkg"
                 
+                os_log("Building product package...", log: osLog, type: .info)
                 buildProduct(sourceDirectory: extracted, outputName: outputPackageName)
-                let outputPackagePath = "\(temp)/\(outputPackageName)"
+                let outputPackagePath = "\(temporaryDirectory)/\(outputPackageName)"
                 if fileManager.fileExists(atPath: outputPackagePath) {
-                        os_log("Packager: New product package exists")
+                        os_log("New product package exists", log: osLog, type: .info)
                 } else {
-                        os_log("Packager: New product package doesn't exist")
+                        os_log("New product package doesn't exist", log: osLog, type: .default)
+                        removeTemporaryDirectory()
                         return false
                 }
                 var desktopPath: String = ""
@@ -217,34 +227,29 @@ class Packager {
                                 try fileManager.removeItem(at: desktop)
                         } catch {
                                 if debug {
-                                        os_log("Nothing to remove")
+                                        os_log("Nothing to remove", log: osLog, type: .info)
                                 }
                         }
                         do {
                                 try fileManager.copyItem(at: URL.init(fileURLWithPath: outputPackagePath), to: desktop)
                         } catch {
-                                os_log("Packager: Failed to make a copy of driver package on the desktop")
+                                os_log("Failed to make a copy of driver package on the desktop", log: osLog, type: .default)
                         }
                 }
                 if debug {
-                        os_log("Packager: Will attempt to launch GUI installer for %{public}@", desktopPath)
+                        os_log("Will attempt to launch GUI installer for %{public}@", log: osLog, type: .info, desktopPath)
                 } else {
-                        os_log("Packager: Will attempt to launch GUI installer")
+                        os_log("Will attempt to launch GUI installer", log: osLog, type: .info)
                 }
                 var result: Bool
                 if launchInstaller(package: desktopPath) == 0 {
-                        os_log("Packager: Open command completed with success")
+                        os_log("Open command completed with success", log: osLog, type: .info)
                         result = true
                 } else {
-                        os_log("Packager: Open command returned a non-zero exit status")
+                        os_log("Open command completed with errors", log: osLog, type: .default)
                         result = false
                 }
-                let tempUrl = URL.init(fileURLWithPath: temp)
-                do {
-                        try fileManager.removeItem(at: tempUrl)
-                } catch {
-                        os_log("Packager: Failed to remove temporary directory")
-                }
+                removeTemporaryDirectory()
                 return result
         }
 }

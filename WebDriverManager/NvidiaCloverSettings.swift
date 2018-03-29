@@ -22,6 +22,8 @@ import os.log
 
 class NvidiaCloverSettings: CloverSettings {
         
+        let thisOsLog = OSLog.init(subsystem: "org.vulgo.CloverSettings", category: "NVCloverSettings")
+        
         enum Keys {
                 case KernelAndKextPatches
                 case KextsToPatch
@@ -88,7 +90,7 @@ class NvidiaCloverSettings: CloverSettings {
                                 
                                 if _nvidiaWebIsEnabled == newValue {
                                         
-                                        os_log("NvidiaCloverSettings: _nvidiaWebIsEnabled is already %{public}@", newValue.description)
+                                        os_log("_nvidiaWebIsEnabled is already %{public}@", log: thisOsLog, type: .default, newValue.description)
                                         
                                 } else {
                                         
@@ -109,7 +111,7 @@ class NvidiaCloverSettings: CloverSettings {
 
                                         }
                                         if write() {
-                                                os_log("NvidiaCloverSettings: Wrote NvidiaWeb=%{public}@", newValue.description)
+                                                os_log("Wrote NvidiaWeb=%{public}@", log: thisOsLog, type: .default, newValue.description)
                                                 _nvidiaWebIsEnabled = newValue
                                         }
                                 }
@@ -129,7 +131,7 @@ class NvidiaCloverSettings: CloverSettings {
                                 
                                 if _nvdaStartupPatchIsEnabled == newValue {
                                         
-                                        os_log("NvidiaCloverSettings: _nvdaStartupPatchIsEnabled is already %{public}@", newValue.description)
+                                        os_log("_nvdaStartupPatchIsEnabled is already %{public}@", log: thisOsLog, type: .default, newValue.description)
                                         
                                 } else {
                                         
@@ -191,7 +193,7 @@ class NvidiaCloverSettings: CloverSettings {
                                         }
                                         
                                         if write() {
-                                                os_log("NvidiaCloverSettings: Wrote KextsToPatch->NVDAStartupWeb=%{public}@", newValue.description)
+                                                os_log("Wrote KextsToPatch->NVDAStartupWeb=%{public}@", log: thisOsLog, type: .default, newValue.description)
                                                 _nvdaStartupPatchIsEnabled = newValue
                                         }
                                         
@@ -202,7 +204,7 @@ class NvidiaCloverSettings: CloverSettings {
         
         override func sync(leavingPartitionMounted leaveMounted: Bool = false) -> Bool {
                 
-                os_log("NvidiaCloverSettings: Syncing")
+                os_log("Syncing...", log: thisOsLog, type: .default)
                 
                 let syncResult = super.sync(leavingPartitionMounted: leaveMounted)
                 if syncResult {

@@ -22,6 +22,7 @@ import os.log
 
 class Liberator {
 
+        let osLog = OSLog.init(subsystem: "org.vulgo.WebDriverManager", category: "Liberator")
         let distribution: URL
         let fileManager = FileManager()
         
@@ -34,7 +35,7 @@ class Liberator {
                 var prefPaneId = "NVPrefPane"
                 
                 if !fileManager.fileExists(atPath: distribution.path) {
-                        os_log("Liberator: XML document not found")
+                        os_log("XML document not found", log: osLog, type: .default)
                         return nil
                 }
                 
@@ -42,12 +43,12 @@ class Liberator {
                 do {
                         document = try XMLDocument.init(contentsOf: distribution, options: XMLNode.Options.documentTidyXML)
                 } catch {
-                        os_log("Liberator: error parsing XML document")
+                        os_log("Error parsing XML document", log: osLog, type: .default)
                         return nil
                 }
                 
                 if document == nil {
-                        os_log("Liberator: XML document should no longer be nil")
+                        os_log("XML document should no longer be nil", log: osLog, type: .default)
                         return nil
                 }
                 
@@ -92,17 +93,17 @@ class Liberator {
                 let version = getVersion()
                 
                 if name == nil {
-                        os_log("Packager: name should no longer be nil")
+                        os_log("Name should no longer be nil", log: osLog, type: .default)
                         return nil
                 }
                 
                 if title == nil {
-                        os_log("Packager: title should no longer be nil")
+                        os_log("Title should no longer be nil", log: osLog, type: .default)
                         return nil
                 }
                 
                 if version == nil {
-                        os_log("Packager: version should no longer be nil")
+                        os_log("Version should no longer be nil", log: osLog, type: .default)
                         return nil
                 }
                 
@@ -125,7 +126,7 @@ class Liberator {
                 do {
                         document = try XMLDocument.init(xmlString: xml, options: XMLNode.Options.documentTidyXML)
                 } catch {
-                        os_log("Liberator: error parsing XML string")
+                        os_log("Error parsing XML string", log: osLog, type: .default)
                         return nil
                 }
                 
@@ -134,11 +135,11 @@ class Liberator {
                 do  {
                         try data?.write(to: distribution)
                 } catch {
-                        os_log("Liberator: error writing xml")
+                        os_log("Error writing xml", log: osLog, type: .default)
                         return nil
                 }
                 
-                os_log("Liberator: wrote XML")
+                os_log("Wrote XML", log: osLog, type: .default)
                 return (name!, version!)
         }
 }

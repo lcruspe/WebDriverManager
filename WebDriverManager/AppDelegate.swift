@@ -29,7 +29,7 @@ import os.log
 @NSApplicationMain class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         
         static let versionString = "1.12"
-        
+        let osLog = OSLog.init(subsystem: "org.vulgo.WebDriverManager", category: "Default")
         var csrActiveConfig: UInt32 = 0xFFFF
         let unsignedKexts: UInt32 = 1 << 0
         let unrestrictedFilesystem: UInt32 = 1 << 1
@@ -39,10 +39,10 @@ import os.log
         var packager = Packager()
         var packageUrl: URL? {
                 didSet {
-                        os_log("PackagerViewController: new url %{public}@", packageUrl?.absoluteString ?? "nil")
+                        os_log("New URL for Packager: %{public}@", log: osLog, type: .default, packageUrl?.absoluteString ?? "nil")
                         if let url: URL = packageUrl {
                                 showPackageDropMenuItem.isEnabled = false
-                                packager.start(atUrl: url)
+                                packager.processPackage(atUrl: url)
                         }
                         packageUrl = nil
                 }
@@ -112,10 +112,10 @@ import os.log
                         if Set(1...48).contains(hoursAfterCheck) {
                                 seconds = Double(hoursAfterCheck) * 3600.0
                         } else {
-                                os_log("Invalid value for hoursAfterCheck, using 6 hours")
+                                os_log("Invalid value for hoursAfterCheck, using 6 hours", log: osLog, type: .default)
                                 seconds = 21600.0
                         }
-                        os_log("Next check for updates after %{public}@ seconds", seconds.description)
+                        os_log("Next check for updates after %{public}@ seconds", log: osLog, type: .info, seconds.description)
                         return seconds
                 }
         }
@@ -125,17 +125,17 @@ import os.log
                 if let nvramScriptUrl = Bundle.main.url(forResource: "nvram", withExtension: "applescript") {
                         nvramScript = NSAppleScript(contentsOf: nvramScriptUrl, error: &appleScriptError)
                 } else {
-                        os_log("Failed to get resource url for nvram script")
+                        os_log("Failed to get resource URL for NVRAM script", log: osLog, type: .default)
                 }
                 if let unstageScriptUrl = Bundle.main.url(forResource: "unstage", withExtension: "applescript") {
                         unstageScript = NSAppleScript(contentsOf: unstageScriptUrl, error: &appleScriptError)
                 } else {
-                        os_log("Failed to get resource url for unstage script")
+                        os_log("Failed to get resource URL for unstage script", log: osLog, type: .default)
                 }
                 if let touchScriptUrl = Bundle.main.url(forResource: "touch", withExtension: "applescript") {
                         touchScript = NSAppleScript(contentsOf: touchScriptUrl, error: &appleScriptError)
                 } else {
-                        os_log("Failed to get resource url for touch script")
+                        os_log("Failed to get resource URL for touch script", log: osLog, type: .default)
                 }
                 let _ = csr_get_active_config(&csrActiveConfig)
                 kextAllowed = !(csr_check(unsignedKexts) != 0)
@@ -151,7 +151,6 @@ import os.log
                 statusItem.menu = statusMenu
                 statusMenu.delegate = self
                 NSUserNotificationCenter.default.delegate = webDriverNotifications
-                os_log("Started")
                 updateCheckQueue.async {
                         self.updateCheckDidFinish(result: self.beginUpdateCheck())
                 }
@@ -159,6 +158,7 @@ import os.log
                 aboutWindowController = storyboard?.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "aboutWindowController")) as? NSWindowController
                 packageDropController = storyboard?.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "packagerWindowController")) as? NSWindowController
                 preferencesWindowController = storyboard?.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "preferencesWindowController")) as? NSWindowController
+                os_log("Started", log: osLog, type: .default)
         }
         
         func menuWillOpen(_ menu: NSMenu) {
@@ -176,12 +176,20 @@ import os.log
                         useDefaultDriverMenuItem.isEnabled = false
                         driverStatusMenuItem.title = driverNotInstalledMenuItemTitle
                 }
-                if nvram.useNvidia {
-                        useNvidiaDriverMenuItem.state = .on
-                        useDefaultDriverMenuItem.state = .off
+                if let useNvidia = nvram?.useNvidia {
+                        useNvidiaDriverMenuItem.isEnabled = true
+                        useDefaultDriverMenuItem.isEnabled = true
+                        if useNvidia == true {
+                                useNvidiaDriverMenuItem.state = .on
+                                useDefaultDriverMenuItem.state = .off
+                        } else {
+                                useNvidiaDriverMenuItem.state = .off
+                                useDefaultDriverMenuItem.state = .on
+                        }
                 } else {
-                        useNvidiaDriverMenuItem.state = .off
-                        useDefaultDriverMenuItem.state = .on
+                        useNvidiaDriverMenuItem.isEnabled = false
+                        useDefaultDriverMenuItem.isEnabled = false
+                        
                 }
                 if Defaults.shared.disableUpdateAlerts {
                         notificationsStatusMenuItem.title = notificationsDisabledMenuItemTitle
@@ -242,7 +250,7 @@ import os.log
                 if sender.state == .on {
                         return
                 }
-                os_log("Setting nvda_drv nvram variable")
+                os_log("Setting nvda_drv NVRAM variable", log: osLog, type: .default)
                 let result: NSAppleEventDescriptor? = nvramScript?.executeAndReturnError(&appleScriptError)
                 if (result?.booleanValue)! {
                         if Defaults.shared.showRestartAlert {
@@ -251,7 +259,7 @@ import os.log
                         return
                 }
                 NSSound.beep()
-                os_log("Failed to set nvda_drv NVRAM variable")
+                os_log("Failed to set nvda_drv NVRAM variable", log: osLog, type: .default)
         }
         
         @IBAction func nvdaStartupWebMenuItemClicked(_ sender: NSMenuItem) {
@@ -287,7 +295,7 @@ import os.log
         func cancelSuppressedVersion() {
                 if Defaults.shared.suppressUpdateAlerts != "" {
                         Defaults.shared.suppressUpdateAlerts = ""
-                        os_log("Cancelling suppressUpdateAlerts")
+                        os_log("Cancelling suppressUpdateAlerts", log: osLog, type: .default)
                 }
         }
         
@@ -302,13 +310,13 @@ import os.log
                 if Defaults.shared.disableUpdateAlerts {
                         cancelSuppressedVersion()
                         Defaults.shared.disableUpdateAlerts = false
-                        os_log("Automatic update notifications enabled")
+                        os_log("Automatic update notifications enabled", log: osLog, type: .default)
                         updateCheckQueue.async {
                                 self.updateCheckDidFinish(result: self.beginUpdateCheck(overrideDefaults: true))
                         }
                 } else {
                         Defaults.shared.disableUpdateAlerts = true
-                        os_log("Automatic update notifications disabled")
+                        os_log("Automatic update notifications disabled", log: osLog, type: .default)
                 }
         }
         
@@ -319,17 +327,17 @@ import os.log
                 checkNowMenuItem.title = checkInProgressMenuItemTitle
                 if userWantsAlerts || overrideDefaults {
                         if !userWantsAlerts && overrideDefaults {
-                                os_log("Overriding notifications disabled user default")
+                                os_log("Overriding notifications disabled user default", log: osLog, type: .info)
                         }
                         return webDriverNotifications.checkForUpdates(userCheck: userCheck)
                 } else {
-                        os_log("Update notifications are disabled in user defaults")
+                        os_log("Update notifications are disabled in user defaults", log: osLog, type: .info)
                         return false
                 }
         }
         
         func updateCheckDidFinish(result: Bool) {
-                os_log("updateCheck returned %{public}@", result.description)
+                os_log("updateCheck returned %{public}@", log: osLog, type: .info, result.description)
                 checkNowMenuItem.isEnabled = true
                 toggleNotificationsMenuItem.isEnabled = true
                 checkNowMenuItem.title = checkNowMenuItemTitle
@@ -387,28 +395,28 @@ import os.log
                 if let url = URL.init(string: Defaults.shared.openInBrowserUrl) {
                         NSWorkspace.shared.open(url)
                 } else {
-                        os_log("Failed to create URL for opening in browser")
+                        os_log("Failed to create URL for opening in browser", log: osLog, type: .default)
                 }
         }
         
         @IBAction func unstageGpuBundlesMenuItemClicked(_ sender: NSMenuItem) {
                 let result: NSAppleEventDescriptor? = unstageScript?.executeAndReturnError(&appleScriptError)
                 if (result?.booleanValue)! {
-                        os_log("Unstage script finished")
+                        os_log("Unstage script finished", log: osLog, type: .default)
                         return
                 }
                 NSSound.beep()
-                os_log("Error running unstage script")
+                os_log("Error running unstage script", log: osLog, type: .default)
         }
         
         @IBAction func touchExtensionsMenuItemClicked(_ sender: NSMenuItem) {
                 let result: NSAppleEventDescriptor? = touchScript?.executeAndReturnError(&appleScriptError)
                 if (result?.booleanValue)! {
-                        os_log("Touch script finished")
+                        os_log("Touch script finished", log: osLog, type: .default)
                         return
                 }
                 NSSound.beep()
-                os_log("Error running touch script")
+                os_log("Error running touch script", log: osLog, type: .default)
         }
         
         @IBAction func preferencesMenuItemClicked(_ sender: NSMenuItem) {
@@ -424,7 +432,7 @@ import os.log
         }
         
         @IBAction func quitMenuItemClicked(_ sender: NSMenuItem) {
-                os_log("Quit menu item clicked, exiting")
+                os_log("Quit menu item clicked, exiting", log: osLog, type: .info)
                 exit(0)
         }        
 }
