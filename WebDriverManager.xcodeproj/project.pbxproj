@@ -28,6 +28,8 @@
 		4D8347AC204211D100C82104 /* nvram.applescript in Sources */ = {isa = PBXBuildFile; fileRef = 4D8347AB204211D100C82104 /* nvram.applescript */; };
 		4D8347AD204211E100C82104 /* nvram.applescript in Resources */ = {isa = PBXBuildFile; fileRef = 4D8347AB204211D100C82104 /* nvram.applescript */; };
 		4D8879272055DF4400C82104 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8879262055DF4400C82104 /* AboutViewController.swift */; };
+		4D9A8DD2206F96CC00C82104 /* clearStaging.applescript in Sources */ = {isa = PBXBuildFile; fileRef = 4D9A8DD1206F96CC00C82104 /* clearStaging.applescript */; };
+		4D9A8DD3206F987D00C82104 /* clearStaging.applescript in Resources */ = {isa = PBXBuildFile; fileRef = 4D9A8DD1206F96CC00C82104 /* clearStaging.applescript */; };
 		4DA515A4205BB17D00C82104 /* PackageDropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA515A3205BB17D00C82104 /* PackageDropView.swift */; };
 		4DA7AACF205E660200C82104 /* Welcome.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 4DA7AACE205E660200C82104 /* Welcome.rtf */; };
 		4DD5F6BA20666EB600C82104 /* unstage.applescript in Sources */ = {isa = PBXBuildFile; fileRef = 4DD5F6B920666EB600C82104 /* unstage.applescript */; };
@@ -76,6 +78,7 @@
 		4D8270C9205C728800C82104 /* Packager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Packager.swift; sourceTree = "<group>"; };
 		4D8347AB204211D100C82104 /* nvram.applescript */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.applescript; path = nvram.applescript; sourceTree = "<group>"; };
 		4D8879262055DF4400C82104 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		4D9A8DD1206F96CC00C82104 /* clearStaging.applescript */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.applescript; path = clearStaging.applescript; sourceTree = "<group>"; };
 		4DA515A3205BB17D00C82104 /* PackageDropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageDropView.swift; sourceTree = "<group>"; };
 		4DA7AACE205E660200C82104 /* Welcome.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Welcome.rtf; sourceTree = "<group>"; };
 		4DD5F6B920666EB600C82104 /* unstage.applescript */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.applescript; path = unstage.applescript; sourceTree = "<group>"; };
@@ -131,32 +134,41 @@
 		4D304421204090C400C82104 /* WebDriverManager */ = {
 			isa = PBXGroup;
 			children = (
-				4D29BA37206BCC0900C82104 /* background.png */,
-				4D29BA31206BA22700C82104 /* product.sh */,
-				4D29BA2F206BA21C00C82104 /* component.sh */,
-				4DA7AACE205E660200C82104 /* Welcome.rtf */,
+				4D71DEAE2077FE3000C82104 /* applescript */,
 				4D8879262055DF4400C82104 /* AboutViewController.swift */,
 				4D304422204090C400C82104 /* AppDelegate.swift */,
 				4D304424204090C400C82104 /* Assets.xcassets */,
+				4D29BA37206BCC0900C82104 /* background.png */,
 				4D82707A205BF93F00C82104 /* BridgingHeader.h */,
+				4D29BA2F206BA21C00C82104 /* component.sh */,
 				4D09C74E2042B63600C82104 /* Defaults.swift */,
 				4D304429204090C400C82104 /* Info.plist */,
 				4D827090205C21BC00C82104 /* Liberator.swift */,
 				4D6BC7312058153100C82104 /* Main.storyboard */,
 				4D304426204090C400C82104 /* MainMenu.xib */,
 				4D163C58205A8A9100C82104 /* NvidiaCloverSettings.swift */,
-				4D8347AB204211D100C82104 /* nvram.applescript */,
-				4DD5F6B920666EB600C82104 /* unstage.applescript */,
-				4DD5F6BC206670D300C82104 /* touch.applescript */,
 				4D304433204090F300C82104 /* Nvram.swift */,
 				4DA515A3205BB17D00C82104 /* PackageDropView.swift */,
 				4D8270C9205C728800C82104 /* Packager.swift */,
+				4D49F93E205D011300C82104 /* PreferencesViewController.swift */,
+				4D29BA31206BA22700C82104 /* product.sh */,
 				4D17721D204544E900C82104 /* sysctl.swift */,
 				4D30442A204090C400C82104 /* Web_Driver_Manager.entitlements */,
 				4D17721B20453FE300C82104 /* WebDriverNotifications.swift */,
-				4D49F93E205D011300C82104 /* PreferencesViewController.swift */,
+				4DA7AACE205E660200C82104 /* Welcome.rtf */,
 			);
 			path = WebDriverManager;
+			sourceTree = "<group>";
+		};
+		4D71DEAE2077FE3000C82104 /* applescript */ = {
+			isa = PBXGroup;
+			children = (
+				4D9A8DD1206F96CC00C82104 /* clearStaging.applescript */,
+				4DD5F6B920666EB600C82104 /* unstage.applescript */,
+				4D8347AB204211D100C82104 /* nvram.applescript */,
+				4DD5F6BC206670D300C82104 /* touch.applescript */,
+			);
+			path = applescript;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -227,6 +239,7 @@
 				4D304425204090C400C82104 /* Assets.xcassets in Resources */,
 				4DA7AACF205E660200C82104 /* Welcome.rtf in Resources */,
 				4D555D642055381E00C82104 /* README.md in Resources */,
+				4D9A8DD3206F987D00C82104 /* clearStaging.applescript in Resources */,
 				4D304428204090C400C82104 /* MainMenu.xib in Resources */,
 				4DD5F6BB20666F4800C82104 /* unstage.applescript in Resources */,
 				4D29BA38206BCC0900C82104 /* background.png in Resources */,
@@ -241,6 +254,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D9A8DD2206F96CC00C82104 /* clearStaging.applescript in Sources */,
 				4D09C74F2042B63600C82104 /* Defaults.swift in Sources */,
 				4D163C57205A541F00C82104 /* CloverSettings.swift in Sources */,
 				4D163C59205A8A9100C82104 /* NvidiaCloverSettings.swift in Sources */,

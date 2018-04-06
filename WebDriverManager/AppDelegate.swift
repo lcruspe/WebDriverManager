@@ -99,6 +99,7 @@ import os.log
         var appleScriptError: NSDictionary?
         var nvramScript: NSAppleScript?
         var unstageScript: NSAppleScript?
+        var clearStagingScript: NSAppleScript?
         var touchScript: NSAppleScript?
         let fileManager = FileManager()
         let cloverSettings = NvidiaCloverSettings()
@@ -131,6 +132,11 @@ import os.log
                         unstageScript = NSAppleScript(contentsOf: unstageScriptUrl, error: &appleScriptError)
                 } else {
                         os_log("Failed to get resource URL for unstage script", log: osLog, type: .default)
+                }
+                if let clearStagingScriptUrl = Bundle.main.url(forResource: "clearStaging", withExtension: "applescript") {
+                        clearStagingScript = NSAppleScript(contentsOf: clearStagingScriptUrl, error: &appleScriptError)
+                } else {
+                        os_log("Failed to get resource URL for clear staging script", log: osLog, type: .default)
                 }
                 if let touchScriptUrl = Bundle.main.url(forResource: "touch", withExtension: "applescript") {
                         touchScript = NSAppleScript(contentsOf: touchScriptUrl, error: &appleScriptError)
@@ -407,6 +413,16 @@ import os.log
                 }
                 NSSound.beep()
                 os_log("Error running unstage script", log: osLog, type: .default)
+        }
+        
+        @IBAction func clearStagingMenuItemClicked(_ sender: NSMenuItem) {
+                let result: NSAppleEventDescriptor? = clearStagingScript?.executeAndReturnError(&appleScriptError)
+                if (result?.booleanValue)! {
+                        os_log("Clear staging script finished", log: osLog, type: .default)
+                        return
+                }
+                NSSound.beep()
+                os_log("Error running clear staging script", log: osLog, type: .default)
         }
         
         @IBAction func touchExtensionsMenuItemClicked(_ sender: NSMenuItem) {

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14109"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -126,10 +126,16 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="TFm-nc-AlV"/>
-                            <menuItem title="Unstage GPU Bundles" enabled="NO" id="3dM-4y-E8V">
+                            <menuItem title="Unstage GPU Bundles" tag="1" enabled="NO" id="3dM-4y-E8V">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="unstageGpuBundlesMenuItemClicked:" target="Voe-Tx-rLC" id="hqs-jW-XzZ"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Clear Staging" tag="1" alternate="YES" id="kPV-bE-bW3">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES"/>
+                                <connections>
+                                    <action selector="clearStagingMenuItemClicked:" target="Voe-Tx-rLC" id="vjv-Vm-UNU"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Touch Extensions Directory" id="8PR-cl-B7X">
