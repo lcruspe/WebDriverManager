@@ -132,6 +132,34 @@ class Packager: NSObject {
                                 controller.packageDropWindowController?.close()
                         }
                 }
+                
+                /* Show busy window */
+                DispatchQueue.main.async {
+                        let storyboard = NSStoryboard(name: NSStoryboard.Name(rawValue: "Main"), bundle: nil)
+                        let busyWindowController = storyboard.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "busyWindowController")) as? NSWindowController
+                        if let window = busyWindowController?.window {
+                                if !window.isVisible {
+                                        window.center()
+                                }
+                                window.level = .floating
+                                (window.contentViewController as? BusyViewController)?.progress.startAnimation(Packager.self)
+                                window.makeKeyAndOrderFront(self)
+                        }
+                }
+                
+                func closeBusyWindow() {
+                        DispatchQueue.main.async {
+                                let windows = NSApplication.shared.windows
+                                for window in windows {
+                                        if let id = window.identifier?.rawValue {
+                                                if id == "busy" {
+                                                        window.close()
+                                                }
+                                        }
+                                }
+                        }
+                }
+                
                 let temporaryDirectory = "\(NSTemporaryDirectory())\(NSUUID().uuidString)"
                 let removeTemporaryDirectory = {
                         do {
@@ -148,6 +176,7 @@ class Packager: NSObject {
                 } catch {
                         os_log("Failed to create temporary directory", log: osLog, type: .default)
                         removeTemporaryDirectory()
+                        closeBusyWindow()
                         return false
                 }
                 if debug {
@@ -156,12 +185,15 @@ class Packager: NSObject {
                 if extract(archive: url.path, destinationDirectory: extracted) != 0 {
                         removeTemporaryDirectory()
                         os_log("Failed to extract package", log: osLog, type: .default)
+                        removeTemporaryDirectory()
+                        closeBusyWindow()
                         return false
                 }
                 let distribution = "\(extracted)/Distribution"
                 if !fileManager.fileExists(atPath: distribution) {
                         os_log("Distribution not found", log: osLog, type: .default)
                         removeTemporaryDirectory()
+                        closeBusyWindow()
                         return false
                 }
                 let xml = Liberator(URL.init(fileURLWithPath: distribution))
@@ -173,6 +205,7 @@ class Packager: NSObject {
                 } else {
                         os_log("Failed to patch Distribution", log: osLog, type: .default)
                         removeTemporaryDirectory()
+                        closeBusyWindow()
                         return false
                 }
                 
@@ -211,6 +244,7 @@ class Packager: NSObject {
                 } else {
                         os_log("New drivers component doesn't exist", log: osLog, type: .default)
                         removeTemporaryDirectory()
+                        closeBusyWindow()
                         return false
                 }
                 
@@ -224,6 +258,7 @@ class Packager: NSObject {
                 } else {
                         os_log("New product package doesn't exist", log: osLog, type: .default)
                         removeTemporaryDirectory()
+                        closeBusyWindow()
                         return false
                 }
                 var desktopPath: String = ""
@@ -256,6 +291,7 @@ class Packager: NSObject {
                         result = false
                 }
                 removeTemporaryDirectory()
+                closeBusyWindow()
                 return result
         }
 }

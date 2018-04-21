@@ -13,6 +13,7 @@
 		4D163C59205A8A9100C82104 /* NvidiaCloverSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D163C58205A8A9100C82104 /* NvidiaCloverSettings.swift */; };
 		4D17721C20453FE300C82104 /* WebDriverNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D17721B20453FE300C82104 /* WebDriverNotifications.swift */; };
 		4D17721E204544E900C82104 /* sysctl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D17721D204544E900C82104 /* sysctl.swift */; };
+		4D1942A7208BA06900C82104 /* BusyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1942A6208BA06900C82104 /* BusyViewController.swift */; };
 		4D29BA30206BA21D00C82104 /* component.sh in Resources */ = {isa = PBXBuildFile; fileRef = 4D29BA2F206BA21C00C82104 /* component.sh */; };
 		4D29BA32206BA22700C82104 /* product.sh in Resources */ = {isa = PBXBuildFile; fileRef = 4D29BA31206BA22700C82104 /* product.sh */; };
 		4D29BA38206BCC0900C82104 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 4D29BA37206BCC0900C82104 /* background.png */; };
@@ -60,6 +61,7 @@
 		4D163C58205A8A9100C82104 /* NvidiaCloverSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NvidiaCloverSettings.swift; sourceTree = "<group>"; };
 		4D17721B20453FE300C82104 /* WebDriverNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebDriverNotifications.swift; sourceTree = "<group>"; };
 		4D17721D204544E900C82104 /* sysctl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sysctl.swift; sourceTree = "<group>"; };
+		4D1942A6208BA06900C82104 /* BusyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusyViewController.swift; sourceTree = "<group>"; };
 		4D29BA2F206BA21C00C82104 /* component.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = component.sh; sourceTree = "<group>"; };
 		4D29BA31206BA22700C82104 /* product.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = product.sh; sourceTree = "<group>"; };
 		4D29BA37206BCC0900C82104 /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
@@ -141,6 +143,7 @@
 				4D71DEAE2077FE3000C82104 /* Scripts */,
 				4D8879262055DF4400C82104 /* AboutViewController.swift */,
 				4D304422204090C400C82104 /* AppDelegate.swift */,
+				4D1942A6208BA06900C82104 /* BusyViewController.swift */,
 				4D304424204090C400C82104 /* Assets.xcassets */,
 				4D29BA37206BCC0900C82104 /* background.png */,
 				4D82707A205BF93F00C82104 /* BridgingHeader.h */,
@@ -273,6 +276,7 @@
 				4D17721C20453FE300C82104 /* WebDriverNotifications.swift in Sources */,
 				4D8347AC204211D100C82104 /* nvram.applescript in Sources */,
 				4DA515A4205BB17D00C82104 /* PackageDropView.swift in Sources */,
+				4D1942A7208BA06900C82104 /* BusyViewController.swift in Sources */,
 				4D8879272055DF4400C82104 /* AboutViewController.swift in Sources */,
 				4D304423204090C400C82104 /* AppDelegate.swift in Sources */,
 				4D163C51205A541500C82104 /* RegistryEntry.swift in Sources */,

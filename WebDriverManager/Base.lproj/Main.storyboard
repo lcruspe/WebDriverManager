@@ -7,6 +7,58 @@
     </dependencies>
     <scenes>
         <!--Window Controller-->
+        <scene sceneID="HR7-4s-rmI">
+            <objects>
+                <windowController storyboardIdentifier="busyWindowController" id="FvI-tC-cCc" sceneMemberID="viewController">
+                    <window key="window" identifier="busy" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" titlebarAppearsTransparent="YES" titleVisibility="hidden" id="Sie-Dy-T8S">
+                        <windowStyleMask key="styleMask" titled="YES" fullSizeContentView="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="294" y="314" width="221" height="122"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1058"/>
+                        <connections>
+                            <outlet property="delegate" destination="FvI-tC-cCc" id="9FT-DU-JNg"/>
+                        </connections>
+                    </window>
+                    <connections>
+                        <segue destination="N12-FC-O1g" kind="relationship" relationship="window.shadowedContentViewController" id="B8x-cG-3yh"/>
+                    </connections>
+                </windowController>
+                <customObject id="OUA-Jg-m02" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="8" y="-193"/>
+        </scene>
+        <!--Busy View Controller-->
+        <scene sceneID="PRW-uS-4zl">
+            <objects>
+                <viewController id="N12-FC-O1g" customClass="BusyViewController" customModule="Web_Driver_Manager" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="UTB-nQ-rt6">
+                        <rect key="frame" x="0.0" y="0.0" width="300" height="79"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O0z-ae-8ve">
+                                <rect key="frame" x="18" y="42" width="264" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Processing driver package..." id="AaV-wk-ZSW">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <progressIndicator wantsLayer="YES" fixedFrame="YES" maxValue="100" indeterminate="YES" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="kY7-mx-t2A">
+                                <rect key="frame" x="20" y="19" width="260" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            </progressIndicator>
+                        </subviews>
+                    </view>
+                    <connections>
+                        <outlet property="progress" destination="kY7-mx-t2A" id="1pw-JC-bn1"/>
+                    </connections>
+                </viewController>
+                <customObject id="pTA-vP-dLB" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="394" y="-285"/>
+        </scene>
+        <!--Window Controller-->
         <scene sceneID="dOi-6X-tjr">
             <objects>
                 <windowController storyboardIdentifier="aboutWindowController" showSeguePresentationStyle="single" id="Nb0-iy-xEI" sceneMemberID="viewController">
