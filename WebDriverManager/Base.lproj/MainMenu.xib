@@ -14,9 +14,7 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Web_Driver_Manager" customModuleProvider="target">
             <connections>
-                <outlet property="checkNowMenuItem" destination="CNc-jG-bOC" id="Llw-EF-dyI"/>
                 <outlet property="statusMenu" destination="FVg-r4-d2m" id="est-R8-sQo"/>
-                <outlet property="toggleNotificationsMenuItem" destination="z7c-mr-eA2" id="mXx-89-ECK"/>
             </connections>
         </customObject>
         <customObject id="mMO-jR-0xx" customClass="StatusMenuController" customModule="Web_Driver_Manager" customModuleProvider="target">

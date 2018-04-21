@@ -26,6 +26,10 @@ class StatusMenuController: NSObject, NSMenuDelegate {
         
         var packager = Packager()
         var scripts = Scripts()
+        let cloverSettings = NvidiaCloverSettings()
+        let webDriverNotifications = WebDriverNotifications()
+        let fileManager = FileManager()
+        
         var packageUrl: URL? {
                 didSet {
                         os_log("PackagerViewController: new url %{public}@", log: osLog, type: .info, packageUrl?.absoluteString ?? "nil")
@@ -37,12 +41,35 @@ class StatusMenuController: NSObject, NSMenuDelegate {
                 }
         }
         
+        let updateCheckQueue = DispatchQueue(label: "updateCheck", attributes: .concurrent)
+        var updateCheckWorkItem: DispatchWorkItem?
+        
+        var userWantsAlerts: Bool {
+                return !Defaults.shared.disableUpdateAlerts
+        }
+        
+        var updateCheckInterval: Double {
+                get {
+                        let hoursAfterCheck = Defaults.shared.hoursAfterCheck
+                        var seconds: Double
+                        if Set(1...48).contains(hoursAfterCheck) {
+                                seconds = Double(hoursAfterCheck) * 3600.0
+                        } else {
+                                os_log("Invalid value for hoursAfterCheck, using 6 hours", log: osLog, type: .default)
+                                seconds = 21600.0
+                        }
+                        os_log("Next check for updates after %{public}@ seconds", log: osLog, type: .info, seconds.description)
+                        return seconds
+                }
+        }
+        
         var csrActiveConfig: UInt32 = 0xFFFF
         let unsignedKexts: UInt32 = 1 << 0
         let unrestrictedFilesystem: UInt32 = 1 << 1
         var fsAllowed: Bool = false
         var kextAllowed: Bool = false
-        let cloverSettings = NvidiaCloverSettings()
+
+        let statusItem = NSStatusBar.system.statusItem(withLength:NSStatusItem.variableLength)
         var storyboard: NSStoryboard?
         var aboutWindowController: NSWindowController?
         var preferencesWindowController: NSWindowController?
@@ -54,9 +81,9 @@ class StatusMenuController: NSObject, NSMenuDelegate {
                 kextAllowed = !(csr_check(unsignedKexts) != 0)
                 fsAllowed = !(csr_check(unrestrictedFilesystem) != 0)
         }
-        
-        let fileManager = FileManager()
+
         let nvAccelerator = RegistryEntry.init(fromMatchingDictionary: IOServiceMatching("nvAccelerator"))
+        
         var driverStatus = NSLocalizedString("Driver status unavailable", comment: "Main menu: Driver status unavailable")
         let driverNotInstalledMenuItemTitle = NSLocalizedString("Web driver not installed", comment: "Main menu: Web driver not installed")
         let driverNotInUseMenuItemTitle = NSLocalizedString("Web driver not in use", comment: "Main menu: Web driver not in use")
@@ -67,6 +94,11 @@ class StatusMenuController: NSObject, NSMenuDelegate {
         let mountEFIItemTitle = NSLocalizedString("Mount EFI Partition", comment: "Main menu: Mount Clover/EFI")
         let unmountEFIItemTitle = NSLocalizedString("Unmount EFI Partition", comment: "Main menu: Unmount Clover/EFI")
         let openInBrowserMenuItemTitle = NSLocalizedString("Open % in Browser", comment: "Main menu: Open in browser replacing % with title from defaults")
+        let restartAlertMessage = NSLocalizedString("Settings will be applied after you restart.", comment: "Restart alert: message")
+        let restartAlertInformativeText = NSLocalizedString("Your bootloader may override the choice you make here.", comment: "Restart alert: informative text")
+        let restartAlertButtonTitle = NSLocalizedString("Close", comment: "Restart alert: button title")
+        let checkNowMenuItemTitle = NSLocalizedString("Check Now", comment: "Main menu: Check Now")
+        let checkInProgressMenuItemTitle = NSLocalizedString("Check in progress...", comment: "Main menu: Check in progress")
 
         @IBOutlet weak var statusMenu: NSMenu!
         @IBOutlet weak var driverStatusMenuItem: NSMenuItem!
@@ -88,8 +120,6 @@ class StatusMenuController: NSObject, NSMenuDelegate {
         @IBOutlet weak var driverDoctorMenuItem: NSMenuItem!
         @IBOutlet weak var csrActiveConfigMenuItem: NSMenuItem!
         @IBOutlet weak var unstageGpuBundlesMenuItem: NSMenuItem!
-        
-        let statusItem = NSStatusBar.system.statusItem(withLength:NSStatusItem.variableLength)
         
         override func awakeFromNib() {
                 if let button = statusItem.button {
@@ -182,6 +212,39 @@ class StatusMenuController: NSObject, NSMenuDelegate {
                 }
         }
         
+        /* Update-check-related functions that also control the status menu */
+        
+        @discardableResult func beginUpdateCheck(overrideDefaults: Bool = false, userCheck: Bool = false) -> Bool {
+                updateCheckWorkItem?.cancel()
+                checkNowMenuItem.isEnabled = false
+                toggleNotificationsMenuItem.isEnabled = false
+                checkNowMenuItem.title = checkInProgressMenuItemTitle
+                if userWantsAlerts || overrideDefaults {
+                        if !userWantsAlerts && overrideDefaults {
+                                os_log("Overriding notifications disabled user default", log: osLog, type: .info)
+                        }
+                        return webDriverNotifications.checkForUpdates(userCheck: userCheck)
+                } else {
+                        os_log("Update notifications are disabled in user defaults", log: osLog, type: .info)
+                        return false
+                }
+        }
+        
+        func updateCheckDidFinish(result: Bool) {
+                os_log("updateCheck returned %{public}@", log: osLog, type: .info, result.description)
+                checkNowMenuItem.isEnabled = true
+                toggleNotificationsMenuItem.isEnabled = true
+                checkNowMenuItem.title = checkNowMenuItemTitle
+                if userWantsAlerts {
+                        updateCheckWorkItem = DispatchWorkItem {
+                                self.updateCheckDidFinish(result: self.beginUpdateCheck())
+                        }
+                        updateCheckQueue.asyncAfter(deadline: DispatchTime.now() + updateCheckInterval, execute: updateCheckWorkItem!)
+                }
+        }
+        
+        /* Menu actions */
+        
         @IBAction func changeDriverMenuItemClicked(_ sender: NSMenuItem) {
                 if sender.state == .on {
                         return
@@ -190,8 +253,14 @@ class StatusMenuController: NSObject, NSMenuDelegate {
                 let result = scripts.nvram?.executeAndReturnError(&scripts.error)
                 if scripts.boolValue(result) {
                         if Defaults.shared.showRestartAlert {
-                                if let appDelegate = NSApp.delegate as? AppDelegate {
-                                        appDelegate.makeAndShowRestartAlert()
+                                let alert = NSAlert()
+                                alert.messageText = restartAlertMessage
+                                alert.informativeText = restartAlertInformativeText
+                                alert.addButton(withTitle: restartAlertButtonTitle)
+                                alert.showsSuppressionButton = true
+                                alert.runModal()
+                                if (alert.suppressionButton?.state == .on) {
+                                        Defaults.shared.showRestartAlert = false
                                 }
                         }
                         return
@@ -230,28 +299,27 @@ class StatusMenuController: NSObject, NSMenuDelegate {
                 }
         }
         
-        func cancelSuppressedVersion() {
+        @IBAction func checkNowMenuItemClicked(_ sender: NSMenuItem) {
                 if Defaults.shared.suppressUpdateAlerts != "" {
                         Defaults.shared.suppressUpdateAlerts = ""
                         os_log("Cancelling suppressUpdateAlerts", log: osLog, type: .info)
                 }
-        }
-        
-        @IBAction func checkNowMenuItemClicked(_ sender: NSMenuItem) {
-                cancelSuppressedVersion()
-                /*updateCheckQueue.async {
+                updateCheckQueue.async {
                         self.updateCheckDidFinish(result: self.beginUpdateCheck(overrideDefaults: true, userCheck: true))
-                }*/
+                }
         }
         
         @IBAction func toggleNotificationsMenuItemClicked(_ sender: NSMenuItem) {
                 if Defaults.shared.disableUpdateAlerts {
-                        cancelSuppressedVersion()
+                        if Defaults.shared.suppressUpdateAlerts != "" {
+                                Defaults.shared.suppressUpdateAlerts = ""
+                                os_log("Cancelling suppressUpdateAlerts", log: osLog, type: .info)
+                        }
                         Defaults.shared.disableUpdateAlerts = false
                         os_log("Automatic update notifications enabled", log: osLog, type: .info)
-                        /*updateCheckQueue.async {
+                        updateCheckQueue.async {
                                 self.updateCheckDidFinish(result: self.beginUpdateCheck(overrideDefaults: true))
-                        }*/
+                        }
                 } else {
                         Defaults.shared.disableUpdateAlerts = true
                         os_log("Automatic update notifications disabled", log: osLog, type: .info)
