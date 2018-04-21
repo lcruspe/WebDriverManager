@@ -34,7 +34,7 @@ class WebDriverNotifications: NSObject, NSUserNotificationCenterDelegate {
         }
         
         var localVersion: String? {
-                os_log("Updates URL: %{public}@", log: osLog, type: .default, updatesUrl?.path ?? "nil")
+                os_log("Updates URL: %{public}@", log: osLog, type: .default, updatesUrl?.absoluteString ?? "nil")
                 guard let info = NSDictionary.init(contentsOf: infoPlistUrl) else {
                         return nil
                 }
