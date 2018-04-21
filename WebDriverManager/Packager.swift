@@ -20,13 +20,14 @@
 import Cocoa
 import os.log
 
-class Packager {
+class Packager: NSObject {
 
         let osLog = OSLog.init(subsystem: "org.vulgo.WebDriverManager", category: "Packager")
         let fileManager = FileManager()
         let packagerQueue = DispatchQueue(label: "packager", attributes: .concurrent)
         var packagerWorkItem: DispatchWorkItem?
         let nvidiaIdentifier = "NVWebDrivers"
+        
         @discardableResult func list(archive: String) -> String? {
                 let task = Process()
                 task.launchPath = "/usr/bin/xar"
@@ -99,14 +100,17 @@ class Packager {
         
         func processPackage(atUrl url: URL) {
                 packagerQueue.async {
-                        self.packagerDidFinish(result: self.processPackage(url))
+                        self.installPackageDidFinish(result: self.processPackage(url))
                 }
         }
         
-        private func packagerDidFinish(result: Bool) {
-                if let appDelegate = NSApplication.shared.delegate as? AppDelegate {
-                        appDelegate.showPackageDropMenuItem.isEnabled = true
+        private func installPackageDidFinish(result: Bool) {
+                DispatchQueue.main.async {
+                        if let controller = (NSApplication.shared.delegate as? AppDelegate)?.statusMenu.delegate as? StatusMenuController {
+                                controller.showPackageDropMenuItem.isEnabled = true
+                        }
                 }
+
         }
         
         private func processPackage(_ url: URL) -> Bool {
@@ -123,9 +127,10 @@ class Packager {
                 }
                 
                 /* Close package drop window */
-                
-                if let appDelegate = NSApp.delegate as? AppDelegate {
-                        appDelegate.packageDropController?.close()
+                DispatchQueue.main.async {
+                        if let controller = (NSApplication.shared.delegate as? AppDelegate)?.statusMenu.delegate as? StatusMenuController {
+                                controller.packageDropWindowController?.close()
+                        }
                 }
                 let temporaryDirectory = "\(NSTemporaryDirectory())\(NSUUID().uuidString)"
                 let removeTemporaryDirectory = {
@@ -135,6 +140,7 @@ class Packager {
                                 os_log("Failed to remove temporary directory", log: self.osLog, type: .default)
                         }
                 }
+                
                 let extracted = "\(temporaryDirectory)/tmp"
                 removeTemporaryDirectory()
                 do {

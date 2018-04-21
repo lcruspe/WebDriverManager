@@ -21,6 +21,8 @@ import Foundation
 
 class Nvram: RegistryEntry {
         
+        static let shared = Nvram()
+        
         init?() {
                 super.init(fromPath: "IODeviceTree:/options")
         }

@@ -22,8 +22,6 @@ import Cocoa
 @available(OSX 10.13, *)
 class PackageDropView: NSVisualEffectView {
         
-        let appDelegate = NSApplication.shared.delegate as? AppDelegate
-        
         @IBOutlet weak var dropLabelTextField: NSTextField!
         
         let defaultMaterial = NSVisualEffectView.Material.light
@@ -78,7 +76,9 @@ class PackageDropView: NSVisualEffectView {
                 isActive = false
                 let pasteBoard = draggingInfo.draggingPasteboard()
                 if let fileUrl = NSURL.init(from: pasteBoard) {
-                        appDelegate?.packageUrl = fileUrl as URL
+                        if let controller = (NSApplication.shared.delegate as? AppDelegate)?.statusMenu.delegate as? StatusMenuController {
+                                controller.packageUrl = fileUrl as URL
+                        }
                         return true
                 }
                 return false

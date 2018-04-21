@@ -5,7 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14109"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
+        <customObject id="-2" userLabel="File's Owner" customClass="StatusMenuController" customModule="Web_Driver_Manager" customModuleProvider="target">
             <connections>
                 <outlet property="delegate" destination="Voe-Tx-rLC" id="GzC-gU-4Uq"/>
             </connections>
@@ -14,26 +14,33 @@
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Web_Driver_Manager" customModuleProvider="target">
             <connections>
-                <outlet property="aboutMenuItem" destination="x6D-xp-qHF" id="UoA-8f-0tB"/>
-                <outlet property="checkNowMenuItem" destination="CNc-jG-bOC" id="ots-mR-2hB"/>
-                <outlet property="cloverPartitionMenuItem" destination="70R-pl-3SH" id="ZS7-5M-pEi"/>
-                <outlet property="cloverSubMenuItem" destination="G12-vs-qSw" id="Zx2-in-90j"/>
-                <outlet property="csrActiveConfigMenuItem" destination="p3K-hL-gP4" id="2aA-m9-gnF"/>
-                <outlet property="driverDoctorMenuItem" destination="Rsp-0c-Bj4" id="tJA-BL-IRM"/>
-                <outlet property="driverStatusMenuItem" destination="d6q-bn-6in" id="eBR-5K-Hsi"/>
-                <outlet property="notificationsStatusMenuItem" destination="5Zv-wc-Q7x" id="6xw-Ek-QNZ"/>
-                <outlet property="nvdaStartupMenuItem" destination="WST-Oi-0mS" id="Vyc-bR-8W2"/>
-                <outlet property="nvidiaWebMenuItem" destination="f4s-yx-WDp" id="EzE-CD-WhC"/>
-                <outlet property="openInBrowserMenuItem" destination="IVX-Ks-Xry" id="8Xs-NA-aRM"/>
-                <outlet property="openInBrowserSeparator" destination="27s-Kb-0DA" id="dyh-eR-35b"/>
-                <outlet property="preferencesMenuItem" destination="Kxa-9u-PYf" id="nLY-uc-4fb"/>
-                <outlet property="quitMenuItem" destination="MAd-yk-Fz2" id="mdA-KF-nQD"/>
-                <outlet property="showPackageDropMenuItem" destination="taC-Qi-Szq" id="hul-U8-Phv"/>
-                <outlet property="statusMenu" destination="FVg-r4-d2m" id="gbK-U7-H5Y"/>
-                <outlet property="toggleNotificationsMenuItem" destination="z7c-mr-eA2" id="PoX-9x-lDn"/>
-                <outlet property="unstageGpuBundlesMenuItem" destination="3dM-4y-E8V" id="Axb-8d-BnH"/>
-                <outlet property="useDefaultDriverMenuItem" destination="8n0-nR-8WC" id="DLy-eJ-fVD"/>
-                <outlet property="useNvidiaDriverMenuItem" destination="lBp-Ry-pEh" id="01W-dZ-EMq"/>
+                <outlet property="checkNowMenuItem" destination="CNc-jG-bOC" id="Llw-EF-dyI"/>
+                <outlet property="statusMenu" destination="FVg-r4-d2m" id="est-R8-sQo"/>
+                <outlet property="toggleNotificationsMenuItem" destination="z7c-mr-eA2" id="mXx-89-ECK"/>
+            </connections>
+        </customObject>
+        <customObject id="mMO-jR-0xx" customClass="StatusMenuController" customModule="Web_Driver_Manager" customModuleProvider="target">
+            <connections>
+                <outlet property="aboutMenuItem" destination="x6D-xp-qHF" id="Otc-mG-oyV"/>
+                <outlet property="checkNowMenuItem" destination="CNc-jG-bOC" id="b26-uW-3El"/>
+                <outlet property="cloverPartitionMenuItem" destination="70R-pl-3SH" id="G4G-2n-Ojf"/>
+                <outlet property="cloverSubMenuItem" destination="G12-vs-qSw" id="qEA-BH-GcX"/>
+                <outlet property="csrActiveConfigMenuItem" destination="p3K-hL-gP4" id="cx4-Wf-EfA"/>
+                <outlet property="driverDoctorMenuItem" destination="Rsp-0c-Bj4" id="GXr-6H-E9A"/>
+                <outlet property="driverStatusMenuItem" destination="d6q-bn-6in" id="d47-Gf-0hn"/>
+                <outlet property="notificationsStatusMenuItem" destination="5Zv-wc-Q7x" id="oTB-9e-h5Z"/>
+                <outlet property="nvdaStartupMenuItem" destination="WST-Oi-0mS" id="8KJ-JN-fmC"/>
+                <outlet property="nvidiaWebMenuItem" destination="f4s-yx-WDp" id="T2v-ST-1ae"/>
+                <outlet property="openInBrowserMenuItem" destination="IVX-Ks-Xry" id="azs-XV-wea"/>
+                <outlet property="openInBrowserSeparator" destination="27s-Kb-0DA" id="fPV-d7-CeR"/>
+                <outlet property="preferencesMenuItem" destination="Kxa-9u-PYf" id="ksK-5q-EnR"/>
+                <outlet property="quitMenuItem" destination="MAd-yk-Fz2" id="eMk-Hv-4nx"/>
+                <outlet property="showPackageDropMenuItem" destination="taC-Qi-Szq" id="A09-zZ-7ik"/>
+                <outlet property="statusMenu" destination="FVg-r4-d2m" id="Gvh-tB-VML"/>
+                <outlet property="toggleNotificationsMenuItem" destination="z7c-mr-eA2" id="cJh-5s-29X"/>
+                <outlet property="unstageGpuBundlesMenuItem" destination="3dM-4y-E8V" id="aN7-3c-U6z"/>
+                <outlet property="useDefaultDriverMenuItem" destination="8n0-nR-8WC" id="gc9-i2-GFp"/>
+                <outlet property="useNvidiaDriverMenuItem" destination="lBp-Ry-pEh" id="qml-es-4rc"/>
             </connections>
         </customObject>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
@@ -46,13 +53,13 @@
                 <menuItem title="NVIDIA Web Driver" id="lBp-Ry-pEh">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="changeDriverMenuItemClicked:" target="Voe-Tx-rLC" id="hFo-nC-UmX"/>
+                        <action selector="changeDriverMenuItemClicked:" target="mMO-jR-0xx" id="CjU-1o-TJf"/>
                     </connections>
                 </menuItem>
                 <menuItem title="Default macOS Graphics Driver" id="8n0-nR-8WC">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="changeDriverMenuItemClicked:" target="Voe-Tx-rLC" id="tg5-oO-tmL"/>
+                        <action selector="changeDriverMenuItemClicked:" target="mMO-jR-0xx" id="kHW-lJ-zge"/>
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="p0L-mW-g6u"/>
@@ -66,14 +73,14 @@
                             <menuItem id="z7c-mr-eA2">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="toggleNotificationsMenuItemClicked:" target="Voe-Tx-rLC" id="Kww-5c-6E7"/>
+                                    <action selector="toggleNotificationsMenuItemClicked:" target="mMO-jR-0xx" id="Tpl-By-Mxk"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="BmP-Lh-vwC"/>
                             <menuItem id="CNc-jG-bOC">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="checkNowMenuItemClicked:" target="Voe-Tx-rLC" id="Byb-qU-2Dd"/>
+                                    <action selector="checkNowMenuItemClicked:" target="mMO-jR-0xx" id="EmZ-S8-2vN"/>
                                 </connections>
                             </menuItem>
                         </items>
@@ -89,7 +96,7 @@
                             <menuItem title="NVDAStartupWeb" id="WST-Oi-0mS">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="nvdaStartupWebMenuItemClicked:" target="Voe-Tx-rLC" id="TaU-f6-8CI"/>
+                                    <action selector="nvdaStartupWebMenuItemClicked:" target="mMO-jR-0xx" id="4hl-zZ-AP0"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="z01-XJ-NeA"/>
@@ -99,14 +106,14 @@
                             <menuItem title="NvidiaWeb" id="f4s-yx-WDp">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="nvidiaWebMenuItemClicked:" target="Voe-Tx-rLC" id="Qde-xW-7ZU"/>
+                                    <action selector="nvidiaWebMenuItemClicked:" target="mMO-jR-0xx" id="o0H-lx-Hnp"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="kcL-dD-Pwl"/>
                             <menuItem id="70R-pl-3SH">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="cloverPartitionMenuItemClicked:" target="Voe-Tx-rLC" id="tM4-cU-kTu"/>
+                                    <action selector="cloverPartitionMenuItemClicked:" target="mMO-jR-0xx" id="8E1-gQ-ymG"/>
                                 </connections>
                             </menuItem>
                         </items>
@@ -115,7 +122,7 @@
                 <menuItem title="Show Package Installer" id="taC-Qi-Szq">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="packageDropMenuItemClicked:" target="Voe-Tx-rLC" id="lUE-nh-0oG"/>
+                        <action selector="packageDropMenuItemClicked:" target="mMO-jR-0xx" id="RRE-1d-ShO"/>
                     </connections>
                 </menuItem>
                 <menuItem title="Driver Doctor" id="Rsp-0c-Bj4">
@@ -129,19 +136,19 @@
                             <menuItem title="Unstage GPU Bundles" tag="1" enabled="NO" id="3dM-4y-E8V">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="unstageGpuBundlesMenuItemClicked:" target="Voe-Tx-rLC" id="hqs-jW-XzZ"/>
+                                    <action selector="unstageGpuBundlesMenuItemClicked:" target="mMO-jR-0xx" id="U1G-ci-elF"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Clear Staging" tag="1" alternate="YES" id="kPV-bE-bW3">
                                 <modifierMask key="keyEquivalentModifierMask" option="YES"/>
                                 <connections>
-                                    <action selector="clearStagingMenuItemClicked:" target="Voe-Tx-rLC" id="vjv-Vm-UNU"/>
+                                    <action selector="clearStagingMenuItemClicked:" target="mMO-jR-0xx" id="A2G-oB-6Kw"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Touch Extensions Directory" id="8PR-cl-B7X">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="touchExtensionsMenuItemClicked:" target="Voe-Tx-rLC" id="gNi-j5-jzj"/>
+                                    <action selector="touchExtensionsMenuItemClicked:" target="mMO-jR-0xx" id="cC8-JO-Pam"/>
                                 </connections>
                             </menuItem>
                         </items>
@@ -151,7 +158,7 @@
                 <menuItem title="Open % in Browser" id="IVX-Ks-Xry">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
-                        <action selector="openInBrowserMenuItemClicked:" target="Voe-Tx-rLC" id="Fh3-S9-J63"/>
+                        <action selector="openInBrowserMenuItemClicked:" target="mMO-jR-0xx" id="PXP-mZ-hKF"/>
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="sdZ-23-Xjx"/>
@@ -162,19 +169,19 @@
                             <menuItem title="About Web Driver Manager" id="x6D-xp-qHF">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
-                                    <action selector="aboutMenuItemClicked:" target="Voe-Tx-rLC" id="vzz-mm-Izb"/>
+                                    <action selector="aboutMenuItemClicked:" target="mMO-jR-0xx" id="6D3-ya-YIN"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="3fM-2B-Tpf"/>
                             <menuItem title="Preferences..." keyEquivalent="," id="Kxa-9u-PYf">
                                 <connections>
-                                    <action selector="preferencesMenuItemClicked:" target="Voe-Tx-rLC" id="nFL-Qy-uS7"/>
+                                    <action selector="preferencesMenuItemClicked:" target="mMO-jR-0xx" id="zoh-rL-vx7"/>
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="Jwb-8N-ktr"/>
                             <menuItem title="Quit Web Driver Manager" keyEquivalent="q" id="MAd-yk-Fz2">
                                 <connections>
-                                    <action selector="quitMenuItemClicked:" target="Voe-Tx-rLC" id="cEd-Ho-xcX"/>
+                                    <action selector="quitMenuItemClicked:" target="mMO-jR-0xx" id="yEy-SZ-zwf"/>
                                 </connections>
                             </menuItem>
                         </items>
