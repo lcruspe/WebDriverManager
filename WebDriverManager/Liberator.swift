@@ -1,4 +1,6 @@
 /*
+ * Credit: Pavo-IM https://github.com/Pavo-IM/NvidiaWebDriverRepackager
+ *
  * File: Liberator.swift
  *
  * WebDriverManager © vulgo 2018
