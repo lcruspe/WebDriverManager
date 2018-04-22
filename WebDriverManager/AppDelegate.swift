@@ -28,7 +28,7 @@ import os.log
 
 @NSApplicationMain class AppDelegate: NSObject, NSApplicationDelegate {
         
-        static let versionString = "1.13"
+        static let versionString: String = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unavailable"
         
         @IBOutlet weak var statusMenu: NSMenu!
         
