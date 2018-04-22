@@ -167,7 +167,7 @@ class NvidiaCloverSettings: CloverSettings {
                                                 
                                         } else {
                                                 
-                                                /* Merge into existing, try to remove existing */
+                                                /* Merge into existing array, removing duplicate patches */
                                                 
                                                 let existing: IndexSet? = kextsToPatch?.indexesOfObjects(options: [], passingTest: { (constraint, idx, stop) in
                                                         if let test = constraint as? NSDictionary {
