@@ -318,7 +318,7 @@ class StatusMenuController: NSObject, NSMenuDelegate {
                         Defaults.shared.disableUpdateAlerts = false
                         os_log("Automatic update notifications enabled", log: osLog, type: .info)
                         updateCheckQueue.async {
-                                self.updateCheckDidFinish(result: self.beginUpdateCheck(overrideDefaults: true))
+                                self.updateCheckDidFinish(result: self.beginUpdateCheck(overrideDefaults: true, userCheck: true))
                         }
                 } else {
                         Defaults.shared.disableUpdateAlerts = true

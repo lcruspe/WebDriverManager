@@ -129,7 +129,7 @@ class WebDriverNotifications: NSObject, NSUserNotificationCenterDelegate {
                                 } else {
                                         setupNotAvailable(notification: &webDriverAlert, message: "No update available")
                                 }
-                                os_log("Scheduling no update notification, delivery date: %{public}@", log: osLog, type: .default, webDriverAlert.deliveryDate?.description ?? "unknown")
+                                os_log("Scheduling 'no update available' notification, delivery date: %{public}@", log: osLog, type: .default, webDriverAlert.deliveryDate?.description ?? "unknown")
                                 NSUserNotificationCenter.default.scheduleNotification(webDriverAlert)
                         }
                         return false
@@ -139,7 +139,7 @@ class WebDriverNotifications: NSObject, NSUserNotificationCenterDelegate {
                         if userCheck {
                                 var webDriverAlert = NSUserNotification()
                                 setupNotAvailable(notification: &webDriverAlert, message: "\(remoteVersion!) already installed")
-                                os_log("Scheduling 'no update available' notification, delivery date: %{public}@", log: osLog, type: .default, webDriverAlert.deliveryDate?.description ?? "unknown")
+                                os_log("Scheduling 'already installed' notification, delivery date: %{public}@", log: osLog, type: .default, webDriverAlert.deliveryDate?.description ?? "unknown")
                                 NSUserNotificationCenter.default.scheduleNotification(webDriverAlert)
                         }
                         return false
