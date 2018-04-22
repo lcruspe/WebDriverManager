@@ -93,8 +93,7 @@ class PreferencesViewController: NSViewController {
                         Defaults.shared.hideDriverDoctor = false
                 }
         }
-        
-        
+
         @IBAction func openInBrowserUrlTextFieldDidEndEditing(_ sender: NSTextField) {
                 var string = openInBrowserUrlTextField.stringValue
                 if let url = URL.init(string: string) {

@@ -19,7 +19,6 @@
 
 import Cocoa
 
-@available(OSX 10.13, *)
 class PackageDropView: NSVisualEffectView {
         
         @IBOutlet weak var dropLabelTextField: NSTextField!

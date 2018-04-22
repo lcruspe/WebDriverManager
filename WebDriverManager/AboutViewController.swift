@@ -21,13 +21,15 @@ import Cocoa
 
 class AboutViewController: NSViewController {
         
+        let versionString: String = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unavailable"
+        
         @IBOutlet weak var versionTextField: NSTextField!
         let sourceUrl = URL(string: "https://github.com/vulgo/WebDriverManager")
         let licenseUrl = URL(string: "https://www.gnu.org/licenses/gpl-3.0.en.html")
         
         override func viewDidLoad() {
                 super.viewDidLoad()
-                versionTextField.stringValue = String(format: "%@ %@", NSLocalizedString("Version", comment: "About dialog: Version"), AppDelegate.versionString)
+                versionTextField.stringValue = String(format: "%@ %@", NSLocalizedString("Version", comment: "About dialog: Version"), versionString)
                 view.wantsLayer = true
                 view.layer?.backgroundColor = CGColor.white
         }

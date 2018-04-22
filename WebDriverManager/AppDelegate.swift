@@ -27,13 +27,10 @@ import Cocoa
 import os.log
 
 @NSApplicationMain class AppDelegate: NSObject, NSApplicationDelegate {
-        
-        static let versionString: String = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unavailable"
-        
+    
         @IBOutlet weak var statusMenu: NSMenu!
         
         func applicationDidFinishLaunching(_ aNotification: Notification) {
-                os_log("Started")
                 if let controller = statusMenu.delegate as? StatusMenuController {
                         controller.updateCheckDidFinish(result: controller.beginUpdateCheck())
                 }

@@ -409,5 +409,4 @@ class StatusMenuController: NSObject, NSMenuDelegate {
                 os_log("Quit menu item clicked, exiting", log: osLog, type: .default)
                 exit(0)
         }        
-
 }
