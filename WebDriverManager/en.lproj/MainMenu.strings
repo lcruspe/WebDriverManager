@@ -8,8 +8,8 @@
 /* Class = "NSMenuItem"; title = "Web Driver Manager"; ObjectID = "VGT-UL-p7l"; */
 "VGT-UL-p7l.title" = "Web Driver Manager";
 
-/* Class = "NSMenu"; title = "Notifications"; ObjectID = "ef9-hL-wiF"; */
-"ef9-hL-wiF.title" = "Notifications";
+/* Class = "NSMenu"; title = "Driver Update Notifications"; ObjectID = "ef9-hL-wiF"; */
+"ef9-hL-wiF.title" = "Driver Update Notifications";
 
 /* Class = "NSMenuItem"; title = "Notifications"; ObjectID = "geg-WS-0Tl"; */
 "geg-WS-0Tl.title" = "Notifications";

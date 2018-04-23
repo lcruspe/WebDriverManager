@@ -22,7 +22,6 @@ import Cocoa
 class PreferencesViewController: NSViewController {
       
         @IBOutlet weak var hideCloverSettingsButton: NSButton!
-        @IBOutlet weak var hidePackageDropButton: NSButton!
         @IBOutlet weak var hideOpenInBrowserButton: NSButton!
         @IBOutlet weak var hideDriverDoctorButton: NSButton!
         @IBOutlet weak var openInBrowserUrlTextField: NSTextField!
@@ -34,11 +33,6 @@ class PreferencesViewController: NSViewController {
                         hideCloverSettingsButton.state = .on
                 } else {
                         hideCloverSettingsButton.state = .off
-                }
-                if Defaults.shared.hidePackageDrop {
-                        hidePackageDropButton.state = .on
-                } else {
-                        hidePackageDropButton.state = .off
                 }
                 if Defaults.shared.hideOpenInBrowser {
                         hideOpenInBrowserButton.state = .on
@@ -65,15 +59,7 @@ class PreferencesViewController: NSViewController {
                         Defaults.shared.hideCloverSettings = false
                 }
         }
-        
-        @IBAction func hidePackageDropButtonPressed(_ sender: NSButton) {
-                if sender.state == .on {
-                        Defaults.shared.hidePackageDrop = true
-                } else {
-                        Defaults.shared.hidePackageDrop = false
-                }
-        }
-        
+
         @IBAction func hideOpenInBrowserButtonPressed(_ sender: NSButton) {
                 if sender.state == .on {
                         Defaults.shared.hideOpenInBrowser = true

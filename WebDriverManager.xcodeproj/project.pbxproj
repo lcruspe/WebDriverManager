@@ -39,6 +39,7 @@
 		4DD5F6BB20666F4800C82104 /* unstage.applescript in Resources */ = {isa = PBXBuildFile; fileRef = 4DD5F6B920666EB600C82104 /* unstage.applescript */; };
 		4DD5F6BD206670D300C82104 /* touch.applescript in Sources */ = {isa = PBXBuildFile; fileRef = 4DD5F6BC206670D300C82104 /* touch.applescript */; };
 		4DD5F6BE2066718000C82104 /* touch.applescript in Resources */ = {isa = PBXBuildFile; fileRef = 4DD5F6BC206670D300C82104 /* touch.applescript */; };
+		4DF216BF208DD44300C82104 /* EditBootArgsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF216BE208DD44300C82104 /* EditBootArgsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -75,9 +76,7 @@
 		4D47D20B208B4B0200C82104 /* Scripts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scripts.swift; sourceTree = "<group>"; };
 		4D49F93E205D011300C82104 /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		4D555D632055381E00C82104 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		4D6BC72E2058110400C82104 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/MainMenu.strings; sourceTree = "<group>"; };
 		4D6BC7302058153100C82104 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		4D6BC7352058156300C82104 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		4D82707A205BF93F00C82104 /* BridgingHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BridgingHeader.h; sourceTree = "<group>"; };
 		4D827090205C21BC00C82104 /* Liberator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Liberator.swift; sourceTree = "<group>"; };
 		4D8270C9205C728800C82104 /* Packager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Packager.swift; sourceTree = "<group>"; };
@@ -89,6 +88,7 @@
 		4DA7AACE205E660200C82104 /* Welcome.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Welcome.rtf; sourceTree = "<group>"; };
 		4DD5F6B920666EB600C82104 /* unstage.applescript */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.applescript; path = unstage.applescript; sourceTree = "<group>"; };
 		4DD5F6BC206670D300C82104 /* touch.applescript */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.applescript; path = touch.applescript; sourceTree = "<group>"; };
+		4DF216BE208DD44300C82104 /* EditBootArgsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBootArgsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,14 +140,14 @@
 		4D304421204090C400C82104 /* WebDriverManager */ = {
 			isa = PBXGroup;
 			children = (
-				4D71DEAE2077FE3000C82104 /* Scripts */,
 				4D8879262055DF4400C82104 /* AboutViewController.swift */,
 				4D304422204090C400C82104 /* AppDelegate.swift */,
-				4D1942A6208BA06900C82104 /* BusyViewController.swift */,
 				4D304424204090C400C82104 /* Assets.xcassets */,
 				4D29BA37206BCC0900C82104 /* background.png */,
 				4D82707A205BF93F00C82104 /* BridgingHeader.h */,
+				4D1942A6208BA06900C82104 /* BusyViewController.swift */,
 				4D09C74E2042B63600C82104 /* Defaults.swift */,
+				4DF216BE208DD44300C82104 /* EditBootArgsViewController.swift */,
 				4D304429204090C400C82104 /* Info.plist */,
 				4D827090205C21BC00C82104 /* Liberator.swift */,
 				4D6BC7312058153100C82104 /* Main.storyboard */,
@@ -157,6 +157,7 @@
 				4DA515A3205BB17D00C82104 /* PackageDropView.swift */,
 				4D8270C9205C728800C82104 /* Packager.swift */,
 				4D49F93E205D011300C82104 /* PreferencesViewController.swift */,
+				4D71DEAE2077FE3000C82104 /* Scripts */,
 				4D8D81AF207A7D4400C82104 /* StatusMenuController.swift */,
 				4D17721D204544E900C82104 /* sysctl.swift */,
 				4D30442A204090C400C82104 /* Web_Driver_Manager.entitlements */,
@@ -282,6 +283,7 @@
 				4D163C51205A541500C82104 /* RegistryEntry.swift in Sources */,
 				4D8270CA205C728800C82104 /* Packager.swift in Sources */,
 				4DD5F6BD206670D300C82104 /* touch.applescript in Sources */,
+				4DF216BF208DD44300C82104 /* EditBootArgsViewController.swift in Sources */,
 				4D47D20C208B4B0200C82104 /* Scripts.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -293,7 +295,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				4D304427204090C400C82104 /* Base */,
-				4D6BC72E2058110400C82104 /* en */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -302,7 +303,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				4D6BC7302058153100C82104 /* Base */,
-				4D6BC7352058156300C82104 /* en */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";

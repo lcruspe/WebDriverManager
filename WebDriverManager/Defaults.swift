@@ -30,7 +30,6 @@ class Defaults {
                 case suppressVersion
                 case disableUpdateAlerts
                 case hideCloverSettings
-                case hidePackageDrop
                 case hideOpenInBrowser
                 case hideDriverDoctor
                 case openInBrowserUrl
@@ -49,8 +48,6 @@ class Defaults {
                                 return "disabledUpdateAlerts"
                         case .hideCloverSettings:
                                 return "hideCloverSettings"
-                        case .hidePackageDrop:
-                                return "hidePackageDrop"
                         case .hideOpenInBrowser:
                                 return "hideOpenInBrowser"
                         case .hideDriverDoctor:
@@ -118,15 +115,6 @@ class Defaults {
                 }
         }
         
-        var hidePackageDrop: Bool {
-                get {
-                        return userDefaults.bool(forKey: WebDriverManager.hidePackageDrop.key)
-                }
-                set {
-                        userDefaults.set(newValue, forKey: WebDriverManager.hidePackageDrop.key)
-                }
-        }
-        
         var hideOpenInBrowser: Bool {
                 get {
                         return userDefaults.bool(forKey: WebDriverManager.hideOpenInBrowser.key)
@@ -172,9 +160,9 @@ class Defaults {
         private func registerFactoryDefaults() {
                 var factoryDefaults: [String : Any] = [:]
                 if debug {
-                        factoryDefaults = [WebDriverManager.initialized.key: true, WebDriverManager.showRestartAlert.key: true, WebDriverManager.suppressVersion.key: "", WebDriverManager.disableUpdateAlerts.key: true, WebDriverManager.hideCloverSettings.key: false, WebDriverManager.hidePackageDrop.key: false, WebDriverManager.hideOpenInBrowser.key: false, WebDriverManager.hideDriverDoctor.key: false, WebDriverManager.openInBrowserUrl.key: "https://vulgo.github.io/nvidia-drivers", WebDriverManager.openInBrowserTitle.key: "Nvidia Drivers", WebDriverManager.hoursAfterCheck.key: 6]
+                        factoryDefaults = [WebDriverManager.initialized.key: true, WebDriverManager.showRestartAlert.key: true, WebDriverManager.suppressVersion.key: "", WebDriverManager.disableUpdateAlerts.key: true, WebDriverManager.hideCloverSettings.key: false, WebDriverManager.hideOpenInBrowser.key: false, WebDriverManager.hideDriverDoctor.key: false, WebDriverManager.openInBrowserUrl.key: "https://vulgo.github.io/nvidia-drivers", WebDriverManager.openInBrowserTitle.key: "Nvidia Drivers", WebDriverManager.hoursAfterCheck.key: 6]
                 } else {
-                factoryDefaults = [WebDriverManager.initialized.key: true, WebDriverManager.showRestartAlert.key: true, WebDriverManager.suppressVersion.key: "", WebDriverManager.disableUpdateAlerts.key: true, WebDriverManager.hideCloverSettings.key: true, WebDriverManager.hidePackageDrop.key: true, WebDriverManager.hideOpenInBrowser.key: true, WebDriverManager.hideDriverDoctor.key: true, WebDriverManager.openInBrowserUrl.key: "https://vulgo.github.io/nvidia-drivers", WebDriverManager.openInBrowserTitle.key: "Nvidia Drivers", WebDriverManager.hoursAfterCheck.key: 6]
+                factoryDefaults = [WebDriverManager.initialized.key: true, WebDriverManager.showRestartAlert.key: true, WebDriverManager.suppressVersion.key: "", WebDriverManager.disableUpdateAlerts.key: true, WebDriverManager.hideCloverSettings.key: true, WebDriverManager.hideOpenInBrowser.key: true, WebDriverManager.hideDriverDoctor.key: true, WebDriverManager.openInBrowserUrl.key: "https://vulgo.github.io/nvidia-drivers", WebDriverManager.openInBrowserTitle.key: "Nvidia Drivers", WebDriverManager.hoursAfterCheck.key: 6]
                 }
                 userDefaults.register(defaults: factoryDefaults)
         }
@@ -185,7 +173,6 @@ class Defaults {
                 userDefaults.removeObject(forKey: WebDriverManager.suppressVersion.key)
                 userDefaults.removeObject(forKey: WebDriverManager.disableUpdateAlerts.key)
                 userDefaults.removeObject(forKey: WebDriverManager.hideCloverSettings.key)
-                userDefaults.removeObject(forKey: WebDriverManager.hidePackageDrop.key)
                 userDefaults.removeObject(forKey: WebDriverManager.hideOpenInBrowser.key)
                 userDefaults.removeObject(forKey: WebDriverManager.hideDriverDoctor.key)
                 userDefaults.removeObject(forKey: WebDriverManager.openInBrowserUrl.key)

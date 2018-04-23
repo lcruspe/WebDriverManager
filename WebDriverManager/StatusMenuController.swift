@@ -74,6 +74,7 @@ class StatusMenuController: NSObject, NSMenuDelegate {
         var aboutWindowController: NSWindowController?
         var preferencesWindowController: NSWindowController?
         var packageDropWindowController: NSWindowController?
+        var editBootArgsController: NSWindowController?
         
         override init() {
                 super.init()
@@ -133,6 +134,7 @@ class StatusMenuController: NSObject, NSMenuDelegate {
                 aboutWindowController = storyboard?.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "aboutWindowController")) as? NSWindowController
                 packageDropWindowController = storyboard?.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "packagerWindowController")) as? NSWindowController
                 preferencesWindowController = storyboard?.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "preferencesWindowController")) as? NSWindowController
+                editBootArgsController = storyboard?.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "editBootArgsWindowController")) as? NSWindowController
         }
         
         func menuWillOpen(_ menu: NSMenu) {
@@ -185,11 +187,6 @@ class StatusMenuController: NSObject, NSMenuDelegate {
                         } else {
                                 cloverPartitionMenuItem.title = mountEFIItemTitle
                         }
-                }
-                if Defaults.shared.hidePackageDrop {
-                        showPackageDropMenuItem.isHidden = true
-                } else {
-                        showPackageDropMenuItem.isHidden = false
                 }
                 if Defaults.shared.hideOpenInBrowser {
                         openInBrowserSeparator.isHidden = true
@@ -288,6 +285,17 @@ class StatusMenuController: NSObject, NSMenuDelegate {
                         cloverSettings!.nvidiaWebIsEnabled = false
                 } else {
                         cloverSettings!.nvidiaWebIsEnabled = true
+                }
+        }
+        
+        @IBAction func bootArgumentsMenuItemClicked(_ sender: Any) {
+                NSApp.activate(ignoringOtherApps: true)
+                if let window = editBootArgsController?.window {
+                        if !window.isVisible {
+                                window.center()
+                        }
+                        window.level = .floating
+                        window.makeKeyAndOrderFront(self)
                 }
         }
         

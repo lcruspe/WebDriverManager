@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14109"/>
     </dependencies>
     <objects>
@@ -44,10 +43,16 @@
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
         <menu autoenablesItems="NO" id="FVg-r4-d2m">
             <items>
+                <menuItem title="Show Package Installer" id="taC-Qi-Szq">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="packageDropMenuItemClicked:" target="mMO-jR-0xx" id="RRE-1d-ShO"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="YUp-Qj-GR1"/>
                 <menuItem enabled="NO" id="d6q-bn-6in">
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
-                <menuItem isSeparatorItem="YES" id="dkj-jM-Hl7"/>
                 <menuItem title="NVIDIA Web Driver" id="lBp-Ry-pEh">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
@@ -61,28 +66,14 @@
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="p0L-mW-g6u"/>
-                <menuItem title="Notifications" id="geg-WS-0Tl">
+                <menuItem title="System Configuration" enabled="NO" id="sXP-OH-siF">
                     <modifierMask key="keyEquivalentModifierMask"/>
-                    <menu key="submenu" title="Notifications" autoenablesItems="NO" id="ef9-hL-wiF">
-                        <items>
-                            <menuItem enabled="NO" id="5Zv-wc-Q7x">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                            </menuItem>
-                            <menuItem id="z7c-mr-eA2">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="toggleNotificationsMenuItemClicked:" target="mMO-jR-0xx" id="Tpl-By-Mxk"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="BmP-Lh-vwC"/>
-                            <menuItem id="CNc-jG-bOC">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="checkNowMenuItemClicked:" target="mMO-jR-0xx" id="EmZ-S8-2vN"/>
-                                </connections>
-                            </menuItem>
-                        </items>
-                    </menu>
+                </menuItem>
+                <menuItem title="Show Boot Arguments" id="Xfa-fp-4X4">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="bootArgumentsMenuItemClicked:" target="mMO-jR-0xx" id="qIy-Pg-fSo"/>
+                    </connections>
                 </menuItem>
                 <menuItem title="Clover Settings" id="G12-vs-qSw">
                     <modifierMask key="keyEquivalentModifierMask"/>
@@ -91,7 +82,7 @@
                             <menuItem title="Kexts to Patch" enabled="NO" id="bFG-nf-4va">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                             </menuItem>
-                            <menuItem title="NVDAStartupWeb" id="WST-Oi-0mS">
+                            <menuItem title="Ignore NVDARequiredOS" id="WST-Oi-0mS">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="nvdaStartupWebMenuItemClicked:" target="mMO-jR-0xx" id="4hl-zZ-AP0"/>
@@ -116,12 +107,6 @@
                             </menuItem>
                         </items>
                     </menu>
-                </menuItem>
-                <menuItem title="Show Package Installer" id="taC-Qi-Szq">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="packageDropMenuItemClicked:" target="mMO-jR-0xx" id="RRE-1d-ShO"/>
-                    </connections>
                 </menuItem>
                 <menuItem title="Driver Doctor" id="Rsp-0c-Bj4">
                     <modifierMask key="keyEquivalentModifierMask"/>
@@ -160,6 +145,29 @@
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="sdZ-23-Xjx"/>
+                <menuItem title="NVIDIA Update Notifications" id="geg-WS-0Tl">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="NVIDIA Update Notifications" autoenablesItems="NO" id="ef9-hL-wiF">
+                        <items>
+                            <menuItem enabled="NO" id="5Zv-wc-Q7x">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                            </menuItem>
+                            <menuItem id="z7c-mr-eA2">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="toggleNotificationsMenuItemClicked:" target="mMO-jR-0xx" id="Tpl-By-Mxk"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="BmP-Lh-vwC"/>
+                            <menuItem id="CNc-jG-bOC">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="checkNowMenuItemClicked:" target="mMO-jR-0xx" id="EmZ-S8-2vN"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
                 <menuItem title="Web Driver Manager" id="VGT-UL-p7l">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Web Driver Manager" autoenablesItems="NO" id="kRS-lT-gOO">
