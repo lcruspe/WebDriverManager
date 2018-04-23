@@ -76,6 +76,8 @@ class EditBootArgsViewController: NSViewController {
                         view.window?.close()
                 } else {
                         os_log("Failed to save boot arguments", log: osLog, type: .default)
+                        NSApp.activate(ignoringOtherApps: true)
+                        view.window?.makeKeyAndOrderFront(self)
                         NSSound.beep()
                 }
         }
