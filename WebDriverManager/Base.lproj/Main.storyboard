@@ -3,6 +3,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14109"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+        <capability name="system font weights other than Regular or Bold" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
         <!--Window Controller-->
@@ -328,19 +329,11 @@ DQ
             <objects>
                 <viewController id="ujv-C2-0AP" customClass="PreferencesViewController" customModule="Web_Driver_Manager" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="iZR-Om-zLY">
-                        <rect key="frame" x="0.0" y="0.0" width="543" height="166"/>
+                        <rect key="frame" x="0.0" y="0.0" width="584" height="189"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rga-AY-5BF">
-                                <rect key="frame" x="18" y="53" width="175" height="17"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Open In Browser URL:" id="Jy3-nd-1Tz">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zsE-36-6FA" customClass="TextField" customModule="Web_Driver_Manager" customModuleProvider="target">
-                                <rect key="frame" x="199" y="50" width="324" height="22"/>
+                                <rect key="frame" x="240" y="50" width="324" height="22"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="https://gfe.nvidia.com/mac-update" placeholderString="URL to open" drawsBackground="YES" id="W8R-iR-AhY">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -351,7 +344,7 @@ DQ
                                 </connections>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2x6-Qx-mox">
-                                <rect key="frame" x="18" y="23" width="175" height="17"/>
+                                <rect key="frame" x="156" y="23" width="78" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Description:" id="OY8-lE-qxL">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -359,7 +352,7 @@ DQ
                                 </textFieldCell>
                             </textField>
                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vgg-wl-XvS" customClass="TextField" customModule="Web_Driver_Manager" customModuleProvider="target">
-                                <rect key="frame" x="199" y="20" width="324" height="22"/>
+                                <rect key="frame" x="240" y="20" width="324" height="22"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="Nvidia Drivers" placeholderString="Title displayed in menu" drawsBackground="YES" id="uYF-wm-gjl">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -369,28 +362,8 @@ DQ
                                     <action selector="openInBrowserTitleTextFieldDidEndEditing:" target="ujv-C2-0AP" id="zij-a3-KkJ"/>
                                 </connections>
                             </textField>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EWu-z6-Mha">
-                                <rect key="frame" x="197" y="128" width="115" height="18"/>
-                                <buttonCell key="cell" type="check" title="Clover Settings" bezelStyle="regularSquare" imagePosition="left" inset="2" id="snu-sq-wbC">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="hideCloverSettingsButtonPressed:" target="ujv-C2-0AP" id="Kbh-9j-h9U"/>
-                                </connections>
-                            </button>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aqo-Xq-IF2">
-                                <rect key="frame" x="197" y="88" width="122" height="18"/>
-                                <buttonCell key="cell" type="check" title="Open in Browser" bezelStyle="regularSquare" imagePosition="left" inset="2" id="jhU-96-pIf">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="hideOpenInBrowserButtonPressed:" target="ujv-C2-0AP" id="QIa-Na-jrW"/>
-                                </connections>
-                            </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="LT5-Vp-7Wn">
-                                <rect key="frame" x="197" y="108" width="104" height="18"/>
+                                <rect key="frame" x="238" y="130" width="104" height="18"/>
                                 <buttonCell key="cell" type="check" title="Driver Doctor" bezelStyle="regularSquare" imagePosition="left" inset="2" id="Yrd-jB-zax">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -399,39 +372,92 @@ DQ
                                     <action selector="hideDriverDoctorButtonPressed:" target="ujv-C2-0AP" id="EUp-f4-pn9"/>
                                 </connections>
                             </button>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fWW-sk-Uyf">
-                                <rect key="frame" x="18" y="129" width="175" height="17"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="171" id="AET-q2-Q43"/>
-                                </constraints>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Hide These Items:" id="42z-Cj-Aiq">
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aqo-Xq-IF2">
+                                <rect key="frame" x="66" y="52" width="168" height="18"/>
+                                <buttonCell key="cell" type="check" title="Show Open in Browser:" bezelStyle="regularSquare" imagePosition="left" inset="2" id="jhU-96-pIf">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="systemSemibold" size="13"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="hideOpenInBrowserButtonPressed:" target="ujv-C2-0AP" id="QIa-Na-jrW"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EWu-z6-Mha">
+                                <rect key="frame" x="238" y="153" width="115" height="18"/>
+                                <buttonCell key="cell" type="check" title="Clover Settings" bezelStyle="regularSquare" imagePosition="left" inset="2" id="snu-sq-wbC">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="hideCloverSettingsButtonPressed:" target="ujv-C2-0AP" id="Kbh-9j-h9U"/>
+                                </connections>
+                            </button>
+                            <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9xy-kp-Aap">
+                                <rect key="frame" x="238" y="89" width="98" height="26"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="93" id="lzs-jz-sOh"/>
+                                </constraints>
+                                <popUpButtonCell key="cell" type="push" title="Enabled" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="m9N-At-nUv" id="xrl-p3-6wd">
+                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="menu"/>
+                                    <menu key="menu" id="jDJ-h9-WQF">
+                                        <items>
+                                            <menuItem title="Enabled" state="on" id="m9N-At-nUv">
+                                                <modifierMask key="keyEquivalentModifierMask"/>
+                                            </menuItem>
+                                            <menuItem title="Disabled" id="LIi-5e-U1Z"/>
+                                        </items>
+                                    </menu>
+                                </popUpButtonCell>
+                            </popUpButton>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GRJ-zY-7VF">
+                                <rect key="frame" x="53" y="95" width="181" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Driver Update Notifications:" id="7Ul-Jg-YRA">
+                                    <font key="font" metaFont="systemSemibold" size="13"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oOe-Q6-kh6">
+                                <rect key="frame" x="335" y="85" width="109" height="32"/>
+                                <buttonCell key="cell" type="push" title="Check Now" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="jDH-qa-UA8">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fWW-sk-Uyf">
+                                <rect key="frame" x="59" y="153" width="175" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Hide These Menu Items:" id="42z-Cj-Aiq">
+                                    <font key="font" metaFont="systemSemibold" size="13"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="EWu-z6-Mha" firstAttribute="leading" secondItem="fWW-sk-Uyf" secondAttribute="trailing" constant="8" symbolic="YES" id="0qR-nV-YvN"/>
-                            <constraint firstItem="aqo-Xq-IF2" firstAttribute="leading" secondItem="zsE-36-6FA" secondAttribute="leading" id="1J2-OX-UQ9"/>
-                            <constraint firstItem="zsE-36-6FA" firstAttribute="leading" secondItem="vgg-wl-XvS" secondAttribute="leading" id="3O4-oD-tPc"/>
-                            <constraint firstItem="vgg-wl-XvS" firstAttribute="top" secondItem="zsE-36-6FA" secondAttribute="bottom" constant="8" id="5E9-k6-pXr"/>
-                            <constraint firstItem="EWu-z6-Mha" firstAttribute="leading" secondItem="LT5-Vp-7Wn" secondAttribute="leading" id="6RO-yK-J60"/>
-                            <constraint firstAttribute="trailing" secondItem="zsE-36-6FA" secondAttribute="trailing" constant="20" symbolic="YES" id="Brh-30-mcI"/>
-                            <constraint firstItem="fWW-sk-Uyf" firstAttribute="leading" secondItem="rga-AY-5BF" secondAttribute="leading" id="DQd-90-yj7"/>
-                            <constraint firstItem="zsE-36-6FA" firstAttribute="trailing" secondItem="vgg-wl-XvS" secondAttribute="trailing" id="Dbd-1l-wVX"/>
-                            <constraint firstAttribute="bottom" secondItem="vgg-wl-XvS" secondAttribute="bottom" constant="20" symbolic="YES" id="EUK-mB-RIw"/>
-                            <constraint firstItem="2x6-Qx-mox" firstAttribute="baseline" secondItem="vgg-wl-XvS" secondAttribute="baseline" id="F5N-um-lbe"/>
-                            <constraint firstItem="fWW-sk-Uyf" firstAttribute="baseline" secondItem="EWu-z6-Mha" secondAttribute="baseline" id="H6J-xT-fSB"/>
-                            <constraint firstItem="vgg-wl-XvS" firstAttribute="leading" secondItem="2x6-Qx-mox" secondAttribute="trailing" constant="8" symbolic="YES" id="H9O-Pn-WT1"/>
-                            <constraint firstItem="zsE-36-6FA" firstAttribute="leading" secondItem="rga-AY-5BF" secondAttribute="trailing" constant="8" symbolic="YES" id="Jth-Lz-b3m"/>
-                            <constraint firstItem="LT5-Vp-7Wn" firstAttribute="top" secondItem="EWu-z6-Mha" secondAttribute="bottom" constant="6" symbolic="YES" id="QSa-sM-0IT"/>
-                            <constraint firstItem="rga-AY-5BF" firstAttribute="baseline" secondItem="zsE-36-6FA" secondAttribute="baseline" id="Qch-in-DYb"/>
-                            <constraint firstItem="fWW-sk-Uyf" firstAttribute="top" secondItem="iZR-Om-zLY" secondAttribute="top" constant="20" symbolic="YES" id="U9y-Yu-J9g"/>
-                            <constraint firstItem="LT5-Vp-7Wn" firstAttribute="leading" secondItem="aqo-Xq-IF2" secondAttribute="leading" id="UXi-wu-GPf"/>
-                            <constraint firstItem="fWW-sk-Uyf" firstAttribute="leading" secondItem="iZR-Om-zLY" secondAttribute="leading" constant="20" symbolic="YES" id="dkO-De-lA5"/>
-                            <constraint firstItem="rga-AY-5BF" firstAttribute="leading" secondItem="2x6-Qx-mox" secondAttribute="leading" id="hZ6-5E-UkS"/>
-                            <constraint firstItem="aqo-Xq-IF2" firstAttribute="top" secondItem="LT5-Vp-7Wn" secondAttribute="bottom" constant="6" symbolic="YES" id="q1N-gc-UGq"/>
+                            <constraint firstItem="aqo-Xq-IF2" firstAttribute="baseline" secondItem="zsE-36-6FA" secondAttribute="baseline" id="0ID-j0-MeL"/>
+                            <constraint firstItem="vgg-wl-XvS" firstAttribute="leading" secondItem="2x6-Qx-mox" secondAttribute="trailing" constant="8" symbolic="YES" id="0dx-xf-yoG"/>
+                            <constraint firstItem="9xy-kp-Aap" firstAttribute="leading" secondItem="GRJ-zY-7VF" secondAttribute="trailing" constant="8" symbolic="YES" id="47F-jR-3ku"/>
+                            <constraint firstItem="zsE-36-6FA" firstAttribute="leading" secondItem="aqo-Xq-IF2" secondAttribute="trailing" constant="8" symbolic="YES" id="5Ll-Rn-jXB"/>
+                            <constraint firstItem="fWW-sk-Uyf" firstAttribute="leading" secondItem="iZR-Om-zLY" secondAttribute="leading" constant="61" id="5hX-mf-AsT"/>
+                            <constraint firstItem="zsE-36-6FA" firstAttribute="leading" secondItem="vgg-wl-XvS" secondAttribute="leading" id="Cye-E7-dT9"/>
+                            <constraint firstItem="EWu-z6-Mha" firstAttribute="leading" secondItem="fWW-sk-Uyf" secondAttribute="trailing" constant="8" symbolic="YES" id="D0s-f0-d7Z"/>
+                            <constraint firstItem="EWu-z6-Mha" firstAttribute="leading" secondItem="LT5-Vp-7Wn" secondAttribute="leading" id="Fcj-vi-TRe"/>
+                            <constraint firstItem="zsE-36-6FA" firstAttribute="trailing" secondItem="vgg-wl-XvS" secondAttribute="trailing" id="ID7-gF-OSH"/>
+                            <constraint firstItem="fWW-sk-Uyf" firstAttribute="centerY" secondItem="EWu-z6-Mha" secondAttribute="centerY" id="LBb-z0-h75"/>
+                            <constraint firstItem="GRJ-zY-7VF" firstAttribute="leading" secondItem="iZR-Om-zLY" secondAttribute="leading" constant="55" id="QYt-V3-Llz"/>
+                            <constraint firstItem="LT5-Vp-7Wn" firstAttribute="top" secondItem="EWu-z6-Mha" secondAttribute="bottom" constant="9" id="VwJ-rD-E6A"/>
+                            <constraint firstItem="EWu-z6-Mha" firstAttribute="top" secondItem="iZR-Om-zLY" secondAttribute="top" constant="20" symbolic="YES" id="WWF-Tv-P9m"/>
+                            <constraint firstItem="GRJ-zY-7VF" firstAttribute="baseline" secondItem="9xy-kp-Aap" secondAttribute="baseline" id="Yat-3R-JZY"/>
+                            <constraint firstItem="2x6-Qx-mox" firstAttribute="baseline" secondItem="vgg-wl-XvS" secondAttribute="baseline" id="bd5-eA-TXL"/>
+                            <constraint firstItem="9xy-kp-Aap" firstAttribute="baseline" secondItem="oOe-Q6-kh6" secondAttribute="baseline" id="iMc-l4-KQX"/>
+                            <constraint firstItem="oOe-Q6-kh6" firstAttribute="leading" secondItem="9xy-kp-Aap" secondAttribute="trailing" constant="8" symbolic="YES" id="nuv-4A-qDd"/>
+                            <constraint firstItem="LT5-Vp-7Wn" firstAttribute="leading" secondItem="9xy-kp-Aap" secondAttribute="leading" id="oK8-mM-0oE"/>
+                            <constraint firstItem="zsE-36-6FA" firstAttribute="top" secondItem="9xy-kp-Aap" secondAttribute="bottom" constant="20" id="pgH-yH-E5U"/>
+                            <constraint firstItem="vgg-wl-XvS" firstAttribute="top" secondItem="zsE-36-6FA" secondAttribute="bottom" constant="8" id="q7D-LM-51K"/>
+                            <constraint firstAttribute="bottom" secondItem="vgg-wl-XvS" secondAttribute="bottom" constant="20" symbolic="YES" id="u67-nB-p5V"/>
+                            <constraint firstItem="9xy-kp-Aap" firstAttribute="leading" secondItem="zsE-36-6FA" secondAttribute="leading" id="urG-kQ-jLC"/>
+                            <constraint firstAttribute="trailing" secondItem="zsE-36-6FA" secondAttribute="trailing" constant="20" symbolic="YES" id="v52-gh-yXj"/>
                         </constraints>
                     </view>
                     <connections>
@@ -444,7 +470,7 @@ DQ
                 </viewController>
                 <customObject id="5JY-31-zfU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="930.5" y="-79"/>
+            <point key="canvasLocation" x="951" y="-67.5"/>
         </scene>
     </scenes>
     <resources>
