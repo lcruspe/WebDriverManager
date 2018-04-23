@@ -40,6 +40,7 @@
 		4DD5F6BD206670D300C82104 /* touch.applescript in Sources */ = {isa = PBXBuildFile; fileRef = 4DD5F6BC206670D300C82104 /* touch.applescript */; };
 		4DD5F6BE2066718000C82104 /* touch.applescript in Resources */ = {isa = PBXBuildFile; fileRef = 4DD5F6BC206670D300C82104 /* touch.applescript */; };
 		4DF216BF208DD44300C82104 /* EditBootArgsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF216BE208DD44300C82104 /* EditBootArgsViewController.swift */; };
+		4DF216C1208E44C600C82104 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF216C0208E44C600C82104 /* TextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -89,6 +90,7 @@
 		4DD5F6B920666EB600C82104 /* unstage.applescript */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.applescript; path = unstage.applescript; sourceTree = "<group>"; };
 		4DD5F6BC206670D300C82104 /* touch.applescript */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.applescript; path = touch.applescript; sourceTree = "<group>"; };
 		4DF216BE208DD44300C82104 /* EditBootArgsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBootArgsViewController.swift; sourceTree = "<group>"; };
+		4DF216C0208E44C600C82104 /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,6 +165,7 @@
 				4D30442A204090C400C82104 /* Web_Driver_Manager.entitlements */,
 				4D17721B20453FE300C82104 /* WebDriverNotifications.swift */,
 				4DA7AACE205E660200C82104 /* Welcome.rtf */,
+				4DF216C0208E44C600C82104 /* TextField.swift */,
 			);
 			path = WebDriverManager;
 			sourceTree = "<group>";
@@ -265,6 +268,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D9A8DD2206F96CC00C82104 /* clearStaging.applescript in Sources */,
+				4DF216C1208E44C600C82104 /* TextField.swift in Sources */,
 				4D09C74F2042B63600C82104 /* Defaults.swift in Sources */,
 				4D163C57205A541F00C82104 /* CloverSettings.swift in Sources */,
 				4D8D81B0207A7D4400C82104 /* StatusMenuController.swift in Sources */,
