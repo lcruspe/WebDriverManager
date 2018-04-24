@@ -72,7 +72,9 @@ class BootArgsViewController: NSViewController {
                 script += "\t" + "return false" + "\n"
                 script += "end try" + "\n"
                 script += "return true" + "\n"
-                print(script)
+                if debug {
+                        print(script)
+                }
                 let appleScript = NSAppleScript(source: script)
                 var error: NSDictionary?
                 let eventDescriptor = appleScript?.executeAndReturnError(&error)
