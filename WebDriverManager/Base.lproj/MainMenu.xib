@@ -130,7 +130,6 @@
                         <action selector="showPackageInstallerMenuItemClicked:" target="mMO-jR-0xx" id="4CM-Sv-J5P"/>
                     </connections>
                 </menuItem>
-                <menuItem isSeparatorItem="YES" id="27s-Kb-0DA"/>
                 <menuItem title="Open % in Browser" keyEquivalent="o" allowsKeyEquivalentWhenHidden="YES" id="IVX-Ks-Xry">
                     <connections>
                         <action selector="openInBrowserMenuItemClicked:" target="mMO-jR-0xx" id="PXP-mZ-hKF"/>
