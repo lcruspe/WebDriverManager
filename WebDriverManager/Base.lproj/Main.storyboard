@@ -48,10 +48,10 @@
             </objects>
             <point key="canvasLocation" x="-147" y="-422"/>
         </scene>
-        <!--Edit Boot Args View Controller-->
+        <!--Boot Args View Controller-->
         <scene sceneID="n8m-ZL-3kL">
             <objects>
-                <viewController id="glU-gv-Z5e" customClass="EditBootArgsViewController" customModule="Web_Driver_Manager" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="glU-gv-Z5e" customClass="BootArgsViewController" customModule="Web_Driver_Manager" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="ahs-bs-TyX">
                         <rect key="frame" x="0.0" y="0.0" width="511" height="95"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -307,7 +307,7 @@ DQ
         <scene sceneID="1Uw-uy-b2Z">
             <objects>
                 <windowController storyboardIdentifier="preferencesWindowController" id="JdI-lC-nvw" sceneMemberID="viewController">
-                    <window key="window" title="Web Driver Manager Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="rt3-v9-6ra" customClass="NSPanel">
+                    <window key="window" identifier="preferences" title="Web Driver Manager Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="rt3-v9-6ra" customClass="NSPanel">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="294" y="389" width="425" height="200"/>
@@ -322,16 +322,54 @@ DQ
                 </windowController>
                 <customObject id="mne-in-wVU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="930.5" y="-478"/>
+            <point key="canvasLocation" x="952" y="-440"/>
         </scene>
         <!--Preferences View Controller-->
         <scene sceneID="Mwe-Fn-lUo">
             <objects>
                 <viewController id="ujv-C2-0AP" customClass="PreferencesViewController" customModule="Web_Driver_Manager" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="iZR-Om-zLY">
-                        <rect key="frame" x="0.0" y="0.0" width="584" height="189"/>
+                        <rect key="frame" x="0.0" y="0.0" width="584" height="228"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="LT5-Vp-7Wn">
+                                <rect key="frame" x="238" y="150" width="130" height="18"/>
+                                <buttonCell key="cell" type="check" title="Kernel Extensions" bezelStyle="regularSquare" imagePosition="left" inset="2" id="Yrd-jB-zax">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="hideKernelExtensionsButtonPressed:" target="ujv-C2-0AP" id="EUp-f4-pn9"/>
+                                </connections>
+                            </button>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EWu-z6-Mha">
+                                <rect key="frame" x="238" y="170" width="115" height="18"/>
+                                <buttonCell key="cell" type="check" title="Clover Settings" bezelStyle="regularSquare" imagePosition="left" inset="2" id="snu-sq-wbC">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="hideCloverSettingsButtonPressed:" target="ujv-C2-0AP" id="ibW-QD-2lM"/>
+                                </connections>
+                            </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fWW-sk-Uyf">
+                                <rect key="frame" x="59" y="192" width="175" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Hide These Menu Items:" id="42z-Cj-Aiq">
+                                    <font key="font" metaFont="systemSemibold" size="13"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="W1x-Dh-rkh">
+                                <rect key="frame" x="238" y="190" width="120" height="18"/>
+                                <buttonCell key="cell" type="check" title="Boot Arguments" bezelStyle="regularSquare" imagePosition="left" inset="2" id="Nbv-Ua-aXE">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="hideBootArgumentsButtonPressed:" target="ujv-C2-0AP" id="404-BN-Jcf"/>
+                                </connections>
+                            </button>
                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zsE-36-6FA" customClass="TextField" customModule="Web_Driver_Manager" customModuleProvider="target">
                                 <rect key="frame" x="240" y="50" width="324" height="22"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="https://gfe.nvidia.com/mac-update" placeholderString="URL to open" drawsBackground="YES" id="W8R-iR-AhY">
@@ -340,7 +378,7 @@ DQ
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                                 <connections>
-                                    <action selector="openInBrowserUrlTextFieldDidEndEditing:" target="ujv-C2-0AP" id="A2k-Ps-IdU"/>
+                                    <action selector="openInBrowserUrlTextFieldDidEndEditing:" target="ujv-C2-0AP" id="Gnx-XT-Dg3"/>
                                 </connections>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2x6-Qx-mox">
@@ -359,43 +397,23 @@ DQ
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                                 <connections>
-                                    <action selector="openInBrowserTitleTextFieldDidEndEditing:" target="ujv-C2-0AP" id="zij-a3-KkJ"/>
+                                    <action selector="openInBrowserTitleTextFieldDidEndEditing:" target="ujv-C2-0AP" id="hhn-Zz-NpS"/>
                                 </connections>
                             </textField>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="LT5-Vp-7Wn">
-                                <rect key="frame" x="238" y="130" width="104" height="18"/>
-                                <buttonCell key="cell" type="check" title="Driver Doctor" bezelStyle="regularSquare" imagePosition="left" inset="2" id="Yrd-jB-zax">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="hideDriverDoctorButtonPressed:" target="ujv-C2-0AP" id="EUp-f4-pn9"/>
-                                </connections>
-                            </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aqo-Xq-IF2">
-                                <rect key="frame" x="66" y="52" width="168" height="18"/>
-                                <buttonCell key="cell" type="check" title="Show Open in Browser:" bezelStyle="regularSquare" imagePosition="left" inset="2" id="jhU-96-pIf">
+                                <rect key="frame" x="58" y="52" width="176" height="18"/>
+                                <buttonCell key="cell" type="check" title="Enable Open in Browser:" bezelStyle="regularSquare" imagePosition="left" inset="2" id="jhU-96-pIf">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="systemSemibold" size="13"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="hideOpenInBrowserButtonPressed:" target="ujv-C2-0AP" id="QIa-Na-jrW"/>
-                                </connections>
-                            </button>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EWu-z6-Mha">
-                                <rect key="frame" x="238" y="153" width="115" height="18"/>
-                                <buttonCell key="cell" type="check" title="Clover Settings" bezelStyle="regularSquare" imagePosition="left" inset="2" id="snu-sq-wbC">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="hideCloverSettingsButtonPressed:" target="ujv-C2-0AP" id="Kbh-9j-h9U"/>
+                                    <action selector="showOpenInBrowserButtonPressed:" target="ujv-C2-0AP" id="pOt-ub-hyt"/>
                                 </connections>
                             </button>
                             <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9xy-kp-Aap">
-                                <rect key="frame" x="238" y="89" width="98" height="26"/>
+                                <rect key="frame" x="238" y="88" width="98" height="26"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="93" id="lzs-jz-sOh"/>
+                                    <constraint firstAttribute="width" constant="93" id="gZg-EM-wna"/>
                                 </constraints>
                                 <popUpButtonCell key="cell" type="push" title="Enabled" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="m9N-At-nUv" id="xrl-p3-6wd">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -404,14 +422,21 @@ DQ
                                         <items>
                                             <menuItem title="Enabled" state="on" id="m9N-At-nUv">
                                                 <modifierMask key="keyEquivalentModifierMask"/>
+                                                <connections>
+                                                    <action selector="notificationsPopupMenuItemEnabledClicked:" target="ujv-C2-0AP" id="QyU-K8-jhW"/>
+                                                </connections>
                                             </menuItem>
-                                            <menuItem title="Disabled" id="LIi-5e-U1Z"/>
+                                            <menuItem title="Disabled" id="LIi-5e-U1Z">
+                                                <connections>
+                                                    <action selector="notificationsPopupMenuItemDisabledClicked:" target="ujv-C2-0AP" id="Yry-Uz-4pa"/>
+                                                </connections>
+                                            </menuItem>
                                         </items>
                                     </menu>
                                 </popUpButtonCell>
                             </popUpButton>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GRJ-zY-7VF">
-                                <rect key="frame" x="53" y="95" width="181" height="17"/>
+                                <rect key="frame" x="53" y="94" width="181" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Driver Update Notifications:" id="7Ul-Jg-YRA">
                                     <font key="font" metaFont="systemSemibold" size="13"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -419,58 +444,78 @@ DQ
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oOe-Q6-kh6">
-                                <rect key="frame" x="335" y="85" width="109" height="32"/>
+                                <rect key="frame" x="335" y="84" width="109" height="32"/>
                                 <buttonCell key="cell" type="push" title="Check Now" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="jDH-qa-UA8">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="checkNowButtonClicked:" target="ujv-C2-0AP" id="z7E-c2-aie"/>
+                                </connections>
                             </button>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fWW-sk-Uyf">
-                                <rect key="frame" x="59" y="153" width="175" height="17"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Hide These Menu Items:" id="42z-Cj-Aiq">
-                                    <font key="font" metaFont="systemSemibold" size="13"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
+                            <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="V1i-7w-xbZ">
+                                <rect key="frame" x="446" y="94" width="16" height="16"/>
+                            </progressIndicator>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RE1-gB-hqt">
+                                <rect key="frame" x="238" y="130" width="125" height="18"/>
+                                <buttonCell key="cell" type="check" title="Package Installer" bezelStyle="regularSquare" imagePosition="left" inset="2" id="DuJ-2q-f6W">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="hidePackageInstallerButtonPressed:" target="ujv-C2-0AP" id="hcg-yT-gXZ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="aqo-Xq-IF2" firstAttribute="baseline" secondItem="zsE-36-6FA" secondAttribute="baseline" id="0ID-j0-MeL"/>
-                            <constraint firstItem="vgg-wl-XvS" firstAttribute="leading" secondItem="2x6-Qx-mox" secondAttribute="trailing" constant="8" symbolic="YES" id="0dx-xf-yoG"/>
-                            <constraint firstItem="9xy-kp-Aap" firstAttribute="leading" secondItem="GRJ-zY-7VF" secondAttribute="trailing" constant="8" symbolic="YES" id="47F-jR-3ku"/>
-                            <constraint firstItem="zsE-36-6FA" firstAttribute="leading" secondItem="aqo-Xq-IF2" secondAttribute="trailing" constant="8" symbolic="YES" id="5Ll-Rn-jXB"/>
-                            <constraint firstItem="fWW-sk-Uyf" firstAttribute="leading" secondItem="iZR-Om-zLY" secondAttribute="leading" constant="61" id="5hX-mf-AsT"/>
-                            <constraint firstItem="zsE-36-6FA" firstAttribute="leading" secondItem="vgg-wl-XvS" secondAttribute="leading" id="Cye-E7-dT9"/>
-                            <constraint firstItem="EWu-z6-Mha" firstAttribute="leading" secondItem="fWW-sk-Uyf" secondAttribute="trailing" constant="8" symbolic="YES" id="D0s-f0-d7Z"/>
-                            <constraint firstItem="EWu-z6-Mha" firstAttribute="leading" secondItem="LT5-Vp-7Wn" secondAttribute="leading" id="Fcj-vi-TRe"/>
-                            <constraint firstItem="zsE-36-6FA" firstAttribute="trailing" secondItem="vgg-wl-XvS" secondAttribute="trailing" id="ID7-gF-OSH"/>
-                            <constraint firstItem="fWW-sk-Uyf" firstAttribute="centerY" secondItem="EWu-z6-Mha" secondAttribute="centerY" id="LBb-z0-h75"/>
-                            <constraint firstItem="GRJ-zY-7VF" firstAttribute="leading" secondItem="iZR-Om-zLY" secondAttribute="leading" constant="55" id="QYt-V3-Llz"/>
-                            <constraint firstItem="LT5-Vp-7Wn" firstAttribute="top" secondItem="EWu-z6-Mha" secondAttribute="bottom" constant="9" id="VwJ-rD-E6A"/>
-                            <constraint firstItem="EWu-z6-Mha" firstAttribute="top" secondItem="iZR-Om-zLY" secondAttribute="top" constant="20" symbolic="YES" id="WWF-Tv-P9m"/>
-                            <constraint firstItem="GRJ-zY-7VF" firstAttribute="baseline" secondItem="9xy-kp-Aap" secondAttribute="baseline" id="Yat-3R-JZY"/>
-                            <constraint firstItem="2x6-Qx-mox" firstAttribute="baseline" secondItem="vgg-wl-XvS" secondAttribute="baseline" id="bd5-eA-TXL"/>
-                            <constraint firstItem="9xy-kp-Aap" firstAttribute="baseline" secondItem="oOe-Q6-kh6" secondAttribute="baseline" id="iMc-l4-KQX"/>
-                            <constraint firstItem="oOe-Q6-kh6" firstAttribute="leading" secondItem="9xy-kp-Aap" secondAttribute="trailing" constant="8" symbolic="YES" id="nuv-4A-qDd"/>
-                            <constraint firstItem="LT5-Vp-7Wn" firstAttribute="leading" secondItem="9xy-kp-Aap" secondAttribute="leading" id="oK8-mM-0oE"/>
-                            <constraint firstItem="zsE-36-6FA" firstAttribute="top" secondItem="9xy-kp-Aap" secondAttribute="bottom" constant="20" id="pgH-yH-E5U"/>
-                            <constraint firstItem="vgg-wl-XvS" firstAttribute="top" secondItem="zsE-36-6FA" secondAttribute="bottom" constant="8" id="q7D-LM-51K"/>
-                            <constraint firstAttribute="bottom" secondItem="vgg-wl-XvS" secondAttribute="bottom" constant="20" symbolic="YES" id="u67-nB-p5V"/>
-                            <constraint firstItem="9xy-kp-Aap" firstAttribute="leading" secondItem="zsE-36-6FA" secondAttribute="leading" id="urG-kQ-jLC"/>
-                            <constraint firstAttribute="trailing" secondItem="zsE-36-6FA" secondAttribute="trailing" constant="20" symbolic="YES" id="v52-gh-yXj"/>
+                            <constraint firstItem="vgg-wl-XvS" firstAttribute="top" secondItem="zsE-36-6FA" secondAttribute="bottom" constant="8" id="0nZ-WK-hnj"/>
+                            <constraint firstItem="EWu-z6-Mha" firstAttribute="top" secondItem="W1x-Dh-rkh" secondAttribute="bottom" constant="6" symbolic="YES" id="1j0-QF-xxd"/>
+                            <constraint firstItem="zsE-36-6FA" firstAttribute="trailing" secondItem="vgg-wl-XvS" secondAttribute="trailing" id="4JD-3b-KKm"/>
+                            <constraint firstItem="vgg-wl-XvS" firstAttribute="leading" secondItem="2x6-Qx-mox" secondAttribute="trailing" constant="8" symbolic="YES" id="5lc-gn-ZCN"/>
+                            <constraint firstItem="2x6-Qx-mox" firstAttribute="baseline" secondItem="vgg-wl-XvS" secondAttribute="baseline" id="6vj-I4-Mb2"/>
+                            <constraint firstItem="LT5-Vp-7Wn" firstAttribute="leading" secondItem="RE1-gB-hqt" secondAttribute="leading" id="7Bi-KQ-mJZ"/>
+                            <constraint firstItem="GRJ-zY-7VF" firstAttribute="bottom" secondItem="V1i-7w-xbZ" secondAttribute="bottom" id="AgN-BK-vOj"/>
+                            <constraint firstItem="9xy-kp-Aap" firstAttribute="leading" secondItem="zsE-36-6FA" secondAttribute="leading" id="Ef5-Qp-lgu"/>
+                            <constraint firstItem="V1i-7w-xbZ" firstAttribute="leading" secondItem="oOe-Q6-kh6" secondAttribute="trailing" constant="8" symbolic="YES" id="H7b-3i-Zcb"/>
+                            <constraint firstAttribute="trailing" secondItem="zsE-36-6FA" secondAttribute="trailing" constant="20" symbolic="YES" id="I2k-vy-8yh"/>
+                            <constraint firstItem="LT5-Vp-7Wn" firstAttribute="top" secondItem="EWu-z6-Mha" secondAttribute="bottom" constant="6" symbolic="YES" id="LlR-Sg-PkK"/>
+                            <constraint firstItem="zsE-36-6FA" firstAttribute="leading" secondItem="vgg-wl-XvS" secondAttribute="leading" id="Piz-qM-aO2"/>
+                            <constraint firstItem="fWW-sk-Uyf" firstAttribute="bottom" secondItem="W1x-Dh-rkh" secondAttribute="bottom" id="RWl-8P-hpV"/>
+                            <constraint firstItem="W1x-Dh-rkh" firstAttribute="leading" secondItem="fWW-sk-Uyf" secondAttribute="trailing" constant="8" symbolic="YES" id="UDG-cU-HWp"/>
+                            <constraint firstItem="oOe-Q6-kh6" firstAttribute="top" secondItem="RE1-gB-hqt" secondAttribute="bottom" constant="20" symbolic="YES" id="YVI-Ys-CYc"/>
+                            <constraint firstItem="RE1-gB-hqt" firstAttribute="top" secondItem="LT5-Vp-7Wn" secondAttribute="bottom" constant="6" symbolic="YES" id="aUV-8o-RZm"/>
+                            <constraint firstItem="9xy-kp-Aap" firstAttribute="leading" secondItem="GRJ-zY-7VF" secondAttribute="trailing" constant="8" symbolic="YES" id="bI4-9g-54r"/>
+                            <constraint firstItem="aqo-Xq-IF2" firstAttribute="baseline" secondItem="zsE-36-6FA" secondAttribute="baseline" id="dBh-ez-GsY"/>
+                            <constraint firstItem="GRJ-zY-7VF" firstAttribute="baseline" secondItem="9xy-kp-Aap" secondAttribute="baseline" id="fAt-gA-eBf"/>
+                            <constraint firstItem="zsE-36-6FA" firstAttribute="leading" secondItem="aqo-Xq-IF2" secondAttribute="trailing" constant="8" symbolic="YES" id="fNh-jl-Nkp"/>
+                            <constraint firstItem="oOe-Q6-kh6" firstAttribute="leading" secondItem="9xy-kp-Aap" secondAttribute="trailing" constant="8" symbolic="YES" id="gOZ-4b-12s"/>
+                            <constraint firstItem="RE1-gB-hqt" firstAttribute="leading" secondItem="9xy-kp-Aap" secondAttribute="leading" id="glq-K3-GTN"/>
+                            <constraint firstItem="zsE-36-6FA" firstAttribute="top" secondItem="9xy-kp-Aap" secondAttribute="bottom" constant="19" id="iwU-zw-yxc"/>
+                            <constraint firstItem="EWu-z6-Mha" firstAttribute="leading" secondItem="LT5-Vp-7Wn" secondAttribute="leading" id="jJ9-oS-hP7"/>
+                            <constraint firstItem="W1x-Dh-rkh" firstAttribute="leading" secondItem="EWu-z6-Mha" secondAttribute="leading" id="neq-Qn-DFd"/>
+                            <constraint firstAttribute="bottom" secondItem="vgg-wl-XvS" secondAttribute="bottom" constant="20" symbolic="YES" id="pbf-bo-q7p"/>
+                            <constraint firstItem="fWW-sk-Uyf" firstAttribute="centerX" secondItem="aqo-Xq-IF2" secondAttribute="centerX" id="sjB-MK-B4a"/>
+                            <constraint firstItem="GRJ-zY-7VF" firstAttribute="leading" secondItem="iZR-Om-zLY" secondAttribute="leading" constant="55" id="xac-aH-igm"/>
+                            <constraint firstItem="9xy-kp-Aap" firstAttribute="baseline" secondItem="oOe-Q6-kh6" secondAttribute="baseline" id="znU-T9-lK7"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="checkNowButton" destination="oOe-Q6-kh6" id="keq-wn-HNj"/>
+                        <outlet property="hideBootArgumentsButton" destination="W1x-Dh-rkh" id="Ofi-wF-vWo"/>
                         <outlet property="hideCloverSettingsButton" destination="EWu-z6-Mha" id="whC-kM-e3z"/>
-                        <outlet property="hideDriverDoctorButton" destination="LT5-Vp-7Wn" id="wT6-Zk-Tz3"/>
-                        <outlet property="hideOpenInBrowserButton" destination="aqo-Xq-IF2" id="jge-cc-gtm"/>
+                        <outlet property="hideKernelExtensionsButton" destination="LT5-Vp-7Wn" id="wT6-Zk-Tz3"/>
+                        <outlet property="hidePackageInstaller" destination="RE1-gB-hqt" id="az4-w2-66F"/>
+                        <outlet property="openInBrowserDescriptionLabel" destination="2x6-Qx-mox" id="ebC-jL-vXO"/>
                         <outlet property="openInBrowserTitleTextField" destination="vgg-wl-XvS" id="hvp-9g-BjT"/>
                         <outlet property="openInBrowserUrlTextField" destination="zsE-36-6FA" id="IgA-X1-b9n"/>
+                        <outlet property="showOpenInBrowserButton" destination="aqo-Xq-IF2" id="U5n-eC-ZUm"/>
+                        <outlet property="toggleNotificationsPopupMenuButton" destination="9xy-kp-Aap" id="pHu-pt-oZn"/>
+                        <outlet property="updateCheckProgressIndicator" destination="V1i-7w-xbZ" id="aHY-AC-fhn"/>
                     </connections>
                 </viewController>
                 <customObject id="5JY-31-zfU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="951" y="-67.5"/>
+            <point key="canvasLocation" x="951" y="-48"/>
         </scene>
     </scenes>
     <resources>

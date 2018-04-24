@@ -31,8 +31,6 @@ import os.log
         @IBOutlet weak var statusMenu: NSMenu!
         
         func applicationDidFinishLaunching(_ aNotification: Notification) {
-                if let controller = statusMenu.delegate as? StatusMenuController {
-                        controller.updateCheckDidFinish(result: controller.beginUpdateCheck())
-                }
+                WebDriverNotifications.shared.beginUpdateCheck()
         }
 }

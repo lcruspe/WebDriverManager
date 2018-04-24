@@ -29,13 +29,14 @@ class Defaults {
                 case showRestartAlert
                 case suppressVersion
                 case disableUpdateAlerts
+                case hideBootArguments
                 case hideCloverSettings
-                case hideOpenInBrowser
-                case hideDriverDoctor
+                case showOpenInBrowser
+                case hideKernelExtensions
+                case hidePackageInstaller
                 case openInBrowserUrl
                 case openInBrowserTitle
                 case hoursAfterCheck
-                
                 var key: String {
                         switch self {
                         case .initialized:
@@ -46,12 +47,16 @@ class Defaults {
                                 return "suppressUpdateAlerts"
                         case .disableUpdateAlerts:
                                 return "disabledUpdateAlerts"
+                        case .hideBootArguments:
+                                return "hideBootArguments"
                         case .hideCloverSettings:
                                 return "hideCloverSettings"
-                        case .hideOpenInBrowser:
-                                return "hideOpenInBrowser"
-                        case .hideDriverDoctor:
-                                return "hideDriverDoctor"
+                        case .showOpenInBrowser:
+                                return "showOpenInBrowser"
+                        case .hideKernelExtensions:
+                                return "hideKernelExtensions"
+                        case .hidePackageInstaller:
+                                return "hidePackageInstaller"
                         case .openInBrowserUrl:
                                 return "openInBrowserUrl"
                         case .openInBrowserTitle:
@@ -106,6 +111,15 @@ class Defaults {
                 }
         }
         
+        var hideBootArguments: Bool {
+                get {
+                        return userDefaults.bool(forKey: WebDriverManager.hideBootArguments.key)
+                }
+                set {
+                        userDefaults.set(newValue, forKey: WebDriverManager.hideBootArguments.key)
+                }
+        }
+        
         var hideCloverSettings: Bool {
                 get {
                         return userDefaults.bool(forKey: WebDriverManager.hideCloverSettings.key)
@@ -115,21 +129,30 @@ class Defaults {
                 }
         }
         
-        var hideOpenInBrowser: Bool {
+        var showOpenInBrowser: Bool {
                 get {
-                        return userDefaults.bool(forKey: WebDriverManager.hideOpenInBrowser.key)
+                        return userDefaults.bool(forKey: WebDriverManager.showOpenInBrowser.key)
                 }
                 set {
-                        userDefaults.set(newValue, forKey: WebDriverManager.hideOpenInBrowser.key)
+                        userDefaults.set(newValue, forKey: WebDriverManager.showOpenInBrowser.key)
                 }
         }
         
-        var hideDriverDoctor: Bool {
+        var hideKernelExtensions: Bool {
                 get {
-                        return userDefaults.bool(forKey: WebDriverManager.hideDriverDoctor.key)
+                        return userDefaults.bool(forKey: WebDriverManager.hideKernelExtensions.key)
                 }
                 set {
-                        userDefaults.set(newValue, forKey: WebDriverManager.hideDriverDoctor.key)
+                        userDefaults.set(newValue, forKey: WebDriverManager.hideKernelExtensions.key)
+                }
+        }
+        
+        var hidePackageInstaller: Bool {
+                get {
+                        return userDefaults.bool(forKey: WebDriverManager.hidePackageInstaller.key)
+                }
+                set {
+                        userDefaults.set(newValue, forKey: WebDriverManager.hidePackageInstaller.key)
                 }
         }
         
@@ -160,9 +183,9 @@ class Defaults {
         private func registerFactoryDefaults() {
                 var factoryDefaults: [String : Any] = [:]
                 if debug {
-                        factoryDefaults = [WebDriverManager.initialized.key: true, WebDriverManager.showRestartAlert.key: true, WebDriverManager.suppressVersion.key: "", WebDriverManager.disableUpdateAlerts.key: true, WebDriverManager.hideCloverSettings.key: false, WebDriverManager.hideOpenInBrowser.key: false, WebDriverManager.hideDriverDoctor.key: false, WebDriverManager.openInBrowserUrl.key: "https://vulgo.github.io/nvidia-drivers", WebDriverManager.openInBrowserTitle.key: "Nvidia Drivers", WebDriverManager.hoursAfterCheck.key: 6]
+                        factoryDefaults = [WebDriverManager.initialized.key: true, WebDriverManager.showRestartAlert.key: true, WebDriverManager.suppressVersion.key: "", WebDriverManager.disableUpdateAlerts.key: true, WebDriverManager.hideBootArguments.key: false, WebDriverManager.hideCloverSettings.key: false, WebDriverManager.showOpenInBrowser.key: true, WebDriverManager.hideKernelExtensions.key: false, WebDriverManager.hidePackageInstaller.key: false, WebDriverManager.openInBrowserUrl.key: "https://vulgo.github.io/nvidia-drivers", WebDriverManager.openInBrowserTitle.key: "Nvidia Drivers", WebDriverManager.hoursAfterCheck.key: 6]
                 } else {
-                factoryDefaults = [WebDriverManager.initialized.key: true, WebDriverManager.showRestartAlert.key: true, WebDriverManager.suppressVersion.key: "", WebDriverManager.disableUpdateAlerts.key: true, WebDriverManager.hideCloverSettings.key: true, WebDriverManager.hideOpenInBrowser.key: true, WebDriverManager.hideDriverDoctor.key: true, WebDriverManager.openInBrowserUrl.key: "https://vulgo.github.io/nvidia-drivers", WebDriverManager.openInBrowserTitle.key: "Nvidia Drivers", WebDriverManager.hoursAfterCheck.key: 6]
+                factoryDefaults = [WebDriverManager.initialized.key: true, WebDriverManager.showRestartAlert.key: true, WebDriverManager.suppressVersion.key: "", WebDriverManager.disableUpdateAlerts.key: true, WebDriverManager.hideBootArguments.key: true, WebDriverManager.hideCloverSettings.key: true, WebDriverManager.showOpenInBrowser.key: false, WebDriverManager.hideKernelExtensions.key: true, WebDriverManager.hidePackageInstaller.key: false, WebDriverManager.openInBrowserUrl.key: "https://vulgo.github.io/nvidia-drivers", WebDriverManager.openInBrowserTitle.key: "Nvidia Drivers", WebDriverManager.hoursAfterCheck.key: 6]
                 }
                 userDefaults.register(defaults: factoryDefaults)
         }
@@ -172,9 +195,11 @@ class Defaults {
                 userDefaults.removeObject(forKey: WebDriverManager.showRestartAlert.key)
                 userDefaults.removeObject(forKey: WebDriverManager.suppressVersion.key)
                 userDefaults.removeObject(forKey: WebDriverManager.disableUpdateAlerts.key)
+                userDefaults.removeObject(forKey: WebDriverManager.hideBootArguments.key)
                 userDefaults.removeObject(forKey: WebDriverManager.hideCloverSettings.key)
-                userDefaults.removeObject(forKey: WebDriverManager.hideOpenInBrowser.key)
-                userDefaults.removeObject(forKey: WebDriverManager.hideDriverDoctor.key)
+                userDefaults.removeObject(forKey: WebDriverManager.showOpenInBrowser.key)
+                userDefaults.removeObject(forKey: WebDriverManager.hideKernelExtensions.key)
+                userDefaults.removeObject(forKey: WebDriverManager.hidePackageInstaller.key)
                 userDefaults.removeObject(forKey: WebDriverManager.openInBrowserUrl.key)
                 userDefaults.removeObject(forKey: WebDriverManager.openInBrowserTitle.key)
                 userDefaults.removeObject(forKey: WebDriverManager.hoursAfterCheck.key)

@@ -23,11 +23,36 @@ import os.log
 class WebDriverNotifications: NSObject, NSUserNotificationCenterDelegate {
         
         let osLog = OSLog.init(subsystem: "org.vulgo.WebDriverManager", category: "Notifications")
+        
+        static let shared = WebDriverNotifications()
+        
+        let updateCheckQueue = DispatchQueue(label: "updateCheck", attributes: .concurrent)
+        var updateCheckWorkItem: DispatchWorkItem?
+        var checkInProgress: Bool = false
         let updatesUrl = URL.init(string: "https://gfestage.nvidia.com/mac-update")
         let infoPlistUrl = URL.init(fileURLWithPath: "/Library/Extensions/GeForceWeb.kext/Contents/Info.plist")
         var checksum: String?
         var downloadUrl: String?
         var remoteVersion: String?
+        
+        var userWantsAlerts: Bool {
+                return !Defaults.shared.disableUpdateAlerts
+        }
+        
+        var updateCheckInterval: Double {
+                get {
+                        let hoursAfterCheck = Defaults.shared.hoursAfterCheck
+                        var seconds: Double
+                        if Set(1...48).contains(hoursAfterCheck) {
+                                seconds = Double(hoursAfterCheck) * 3600.0
+                        } else {
+                                os_log("Invalid value for hoursAfterCheck, using 6 hours", log: osLog, type: .default)
+                                seconds = 21600.0
+                        }
+                        os_log("Next check for updates after %{public}@ seconds", log: osLog, type: .info, seconds.description)
+                        return seconds
+                }
+        }
         
         var build: String? {
                 return sysctl(byName: "kern.osversion")
@@ -60,10 +85,6 @@ class WebDriverNotifications: NSObject, NSUserNotificationCenterDelegate {
                         return array as Array<AnyObject>
                 }
                 return nil
-        }
-        
-        override init() {
-                super.init()
         }
         
         func setup(notification: inout NSUserNotification, forVersion version: String) {
@@ -104,7 +125,51 @@ class WebDriverNotifications: NSObject, NSUserNotificationCenterDelegate {
                 }
         }
         
-        func checkForUpdates(userCheck: Bool = false) -> Bool {
+        func beginUpdateCheck(overrideDefaults: Bool = false, userCheck: Bool = false) {
+                updateCheckQueue.async {
+                        self.updateCheckDidFinish(result: self.checkForUpdates(overrideDefaults: true, userCheck: true))
+                }
+        }
+        
+        private func updateCheckDidFinish(result: Bool) {
+                checkInProgress = false
+                os_log("updateCheck returned %{public}@", log: osLog, type: .info, result.description)
+                if userWantsAlerts {
+                        updateCheckWorkItem = DispatchWorkItem {
+                                self.updateCheckDidFinish(result: self.checkForUpdates())
+                        }
+                        updateCheckQueue.asyncAfter(deadline: DispatchTime.now() + updateCheckInterval, execute: updateCheckWorkItem!)
+                }
+                DispatchQueue.main.async {
+                        for window in NSApplication.shared.windows {
+                                if let id = window.identifier?.rawValue, id == "preferences" {
+                                        if let controller = window.contentViewController as? PreferencesViewController {
+                                                controller.enableUpdateCheckControls()
+                                        }
+                                }
+                        }
+                }
+        }
+        
+        private func checkForUpdates(overrideDefaults: Bool = false, userCheck: Bool = false) -> Bool {
+                DispatchQueue.main.async {
+                        for window in NSApplication.shared.windows {
+                                if let id = window.identifier?.rawValue, id == "preferences" {
+                                        if let controller = window.contentViewController as? PreferencesViewController {
+                                                controller.disableUpdateCheckControls()
+                                        }
+                                }
+                        }
+                }
+                checkInProgress = true
+                updateCheckWorkItem?.cancel()
+                if userWantsAlerts == false && overrideDefaults == false {
+                        os_log("Update notifications are disabled in user defaults", log: osLog, type: .info)
+                        return false
+                }
+                if userWantsAlerts == false && overrideDefaults == true {
+                        os_log("Overriding notifications disabled user default", log: osLog, type: .info)
+                }
                 guard updates != nil else {
                         os_log("Couldn't get updates data from NVIDIA", log: osLog, type: .default)
                         return false

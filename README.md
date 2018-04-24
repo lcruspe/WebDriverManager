@@ -15,15 +15,15 @@
 
 ## Features
 
-- Drag and drop repackager to remove OS checks + non-essential software from NVIDIA's installer
-- Displays web driver loaded status
+- Displays web driver loaded status in the top of the menu
 - Enable NVIDIA drivers or use macOS default drivers
-- Edit boot arguments NVRAM variable
 - Enable notifications of NVIDA driver updates/releases
 - Optional extras enabled in Preferences
 
 ## Extras
 
+- Drag and drop repackager to remove OS checks + non-essential software from NVIDIA's installer
+- Edit boot arguments NVRAM variable
 - Disable NVIDIA required OS check and toggle NvidiaWeb setting in Clover's config.plist
 - One-click extensions/kernel cache troubleshooting options
 - Open drivers web page with your choice of URL

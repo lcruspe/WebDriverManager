@@ -107,7 +107,7 @@ class Packager: NSObject {
         private func installPackageDidFinish(result: Bool) {
                 DispatchQueue.main.async {
                         if let controller = (NSApplication.shared.delegate as? AppDelegate)?.statusMenu.delegate as? StatusMenuController {
-                                controller.showPackageDropMenuItem.isEnabled = true
+                                controller.showPackageInstallerMenuItem.isEnabled = true
                         }
                 }
 
@@ -129,7 +129,7 @@ class Packager: NSObject {
                 /* Close package drop window */
                 DispatchQueue.main.async {
                         if let controller = (NSApplication.shared.delegate as? AppDelegate)?.statusMenu.delegate as? StatusMenuController {
-                                controller.packageDropWindowController?.close()
+                                controller.packagerWindowController?.close()
                         }
                 }
                 
@@ -149,12 +149,9 @@ class Packager: NSObject {
                 
                 func closeBusyWindow() {
                         DispatchQueue.main.async {
-                                let windows = NSApplication.shared.windows
-                                for window in windows {
-                                        if let id = window.identifier?.rawValue {
-                                                if id == "busy" {
-                                                        window.close()
-                                                }
+                                for window in NSApplication.shared.windows {
+                                        if let id = window.identifier?.rawValue, id == "busy" {
+                                                window.close()
                                         }
                                 }
                         }

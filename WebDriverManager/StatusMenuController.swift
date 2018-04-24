@@ -27,42 +27,19 @@ class StatusMenuController: NSObject, NSMenuDelegate {
         var packager = Packager()
         var scripts = Scripts()
         let cloverSettings = NvidiaCloverSettings()
-        let webDriverNotifications = WebDriverNotifications()
         let fileManager = FileManager()
         
         var packageUrl: URL? {
                 didSet {
                         os_log("PackagerViewController: new url %{public}@", log: osLog, type: .info, packageUrl?.absoluteString ?? "nil")
                         if let url: URL = packageUrl {
-                                showPackageDropMenuItem.isEnabled = false
+                                showPackageInstallerMenuItem.isEnabled = false
                                 packager.processPackage(atUrl: url)
                         }
                         packageUrl = nil
                 }
         }
-        
-        let updateCheckQueue = DispatchQueue(label: "updateCheck", attributes: .concurrent)
-        var updateCheckWorkItem: DispatchWorkItem?
-        
-        var userWantsAlerts: Bool {
-                return !Defaults.shared.disableUpdateAlerts
-        }
-        
-        var updateCheckInterval: Double {
-                get {
-                        let hoursAfterCheck = Defaults.shared.hoursAfterCheck
-                        var seconds: Double
-                        if Set(1...48).contains(hoursAfterCheck) {
-                                seconds = Double(hoursAfterCheck) * 3600.0
-                        } else {
-                                os_log("Invalid value for hoursAfterCheck, using 6 hours", log: osLog, type: .default)
-                                seconds = 21600.0
-                        }
-                        os_log("Next check for updates after %{public}@ seconds", log: osLog, type: .info, seconds.description)
-                        return seconds
-                }
-        }
-        
+
         var csrActiveConfig: UInt32 = 0xFFFF
         let unsignedKexts: UInt32 = 1 << 0
         let unrestrictedFilesystem: UInt32 = 1 << 1
@@ -73,7 +50,7 @@ class StatusMenuController: NSObject, NSMenuDelegate {
         var storyboard: NSStoryboard?
         var aboutWindowController: NSWindowController?
         var preferencesWindowController: NSWindowController?
-        var packageDropWindowController: NSWindowController?
+        var packagerWindowController: NSWindowController?
         var editBootArgsController: NSWindowController?
         
         override init() {
@@ -88,35 +65,26 @@ class StatusMenuController: NSObject, NSMenuDelegate {
         var driverStatus = NSLocalizedString("Driver status unavailable", comment: "Main menu: Driver status unavailable")
         let driverNotInstalledMenuItemTitle = NSLocalizedString("Web driver not installed", comment: "Main menu: Web driver not installed")
         let driverNotInUseMenuItemTitle = NSLocalizedString("Web driver not in use", comment: "Main menu: Web driver not in use")
-        let disableNotificationsMenuItemTitle = NSLocalizedString("Disable Update Notifications", comment: "Main menu: Disable update notifications")
-        let enableNotificationsMenuItemTitle = NSLocalizedString("Enable Update Notifications", comment: "Main menu: Enable update notifications")
-        let notificationsEnabledMenuItemTitle = NSLocalizedString("Notifications: Enabled", comment: "Main menu: Notifications enabled")
-        let notificationsDisabledMenuItemTitle = NSLocalizedString("Notifications: Disabled", comment: "Main menu: Notifications disabled")
         let mountEFIItemTitle = NSLocalizedString("Mount EFI Partition", comment: "Main menu: Mount Clover/EFI")
         let unmountEFIItemTitle = NSLocalizedString("Unmount EFI Partition", comment: "Main menu: Unmount Clover/EFI")
         let openInBrowserMenuItemTitle = NSLocalizedString("Open % in Browser", comment: "Main menu: Open in browser replacing % with title from defaults")
         let restartAlertMessage = NSLocalizedString("Settings will be applied after you restart.", comment: "Restart alert: message")
         let restartAlertInformativeText = NSLocalizedString("Your bootloader may override the choice you make here.", comment: "Restart alert: informative text")
         let restartAlertButtonTitle = NSLocalizedString("Close", comment: "Restart alert: button title")
-        let checkNowMenuItemTitle = NSLocalizedString("Check Now", comment: "Main menu: Check Now")
-        let checkInProgressMenuItemTitle = NSLocalizedString("Check in progress...", comment: "Main menu: Check in progress")
 
         @IBOutlet weak var statusMenu: NSMenu!
         @IBOutlet weak var driverStatusMenuItem: NSMenuItem!
         @IBOutlet weak var useNvidiaDriverMenuItem: NSMenuItem!
         @IBOutlet weak var useDefaultDriverMenuItem: NSMenuItem!
-        @IBOutlet weak var checkNowMenuItem: NSMenuItem!
-        @IBOutlet weak var notificationsStatusMenuItem: NSMenuItem!
-        @IBOutlet weak var toggleNotificationsMenuItem: NSMenuItem!
         @IBOutlet weak var aboutMenuItem: NSMenuItem!
         @IBOutlet weak var quitMenuItem: NSMenuItem!
+        @IBOutlet weak var bootArgumentsMenuItem: NSMenuItem!
         @IBOutlet weak var cloverSubMenuItem: NSMenuItem!
         @IBOutlet weak var nvdaStartupMenuItem: NSMenuItem!
         @IBOutlet weak var nvidiaWebMenuItem: NSMenuItem!
         @IBOutlet weak var cloverPartitionMenuItem: NSMenuItem!
-        @IBOutlet weak var showPackageDropMenuItem: NSMenuItem!
+        @IBOutlet weak var showPackageInstallerMenuItem: NSMenuItem!
         @IBOutlet weak var preferencesMenuItem: NSMenuItem!
-        @IBOutlet weak var openInBrowserSeparator: NSMenuItem!
         @IBOutlet weak var openInBrowserMenuItem: NSMenuItem!
         @IBOutlet weak var driverDoctorMenuItem: NSMenuItem!
         @IBOutlet weak var csrActiveConfigMenuItem: NSMenuItem!
@@ -132,7 +100,7 @@ class StatusMenuController: NSObject, NSMenuDelegate {
                 statusMenu.delegate = self
                 storyboard = NSStoryboard(name: NSStoryboard.Name(rawValue: "Main"), bundle: nil)
                 aboutWindowController = storyboard?.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "aboutWindowController")) as? NSWindowController
-                packageDropWindowController = storyboard?.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "packagerWindowController")) as? NSWindowController
+                packagerWindowController = storyboard?.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "packagerWindowController")) as? NSWindowController
                 preferencesWindowController = storyboard?.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "preferencesWindowController")) as? NSWindowController
                 editBootArgsController = storyboard?.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "editBootArgsWindowController")) as? NSWindowController
         }
@@ -159,12 +127,10 @@ class StatusMenuController: NSObject, NSMenuDelegate {
                         useNvidiaDriverMenuItem.state = .off
                         useDefaultDriverMenuItem.state = .on
                 }
-                if Defaults.shared.disableUpdateAlerts {
-                        notificationsStatusMenuItem.title = notificationsDisabledMenuItemTitle
-                        toggleNotificationsMenuItem?.title = enableNotificationsMenuItemTitle
+                if !Defaults.shared.hideBootArguments {
+                        bootArgumentsMenuItem.isHidden = false
                 } else {
-                        notificationsStatusMenuItem.title = notificationsEnabledMenuItemTitle
-                        toggleNotificationsMenuItem?.title = disableNotificationsMenuItemTitle
+                        bootArgumentsMenuItem.isHidden = true
                 }
                 if cloverSettings != nil && !Defaults.shared.hideCloverSettings {
                         cloverSubMenuItem.isHidden = false
@@ -188,55 +154,29 @@ class StatusMenuController: NSObject, NSMenuDelegate {
                                 cloverPartitionMenuItem.title = mountEFIItemTitle
                         }
                 }
-                if Defaults.shared.hideOpenInBrowser {
-                        openInBrowserSeparator.isHidden = true
-                        openInBrowserMenuItem.isHidden = true
-                } else {
+                if Defaults.shared.showOpenInBrowser {
                         openInBrowserMenuItem.title = openInBrowserMenuItemTitle.replacingOccurrences(of: "%", with: Defaults.shared.openInBrowserTitle)
-                        openInBrowserSeparator.isHidden = false
+
                         openInBrowserMenuItem.isHidden = false
+                } else {
+
+                        openInBrowserMenuItem.isHidden = true
                 }
-                if Defaults.shared.hideDriverDoctor {
+                if Defaults.shared.hideKernelExtensions {
                         driverDoctorMenuItem.isHidden = true
                 } else {
                         driverDoctorMenuItem.isHidden = false
+                }
+                if Defaults.shared.hidePackageInstaller {
+                        showPackageInstallerMenuItem.isHidden = true
+                } else {
+                        showPackageInstallerMenuItem.isHidden = false
                 }
                 csrActiveConfigMenuItem.title = "CSR Active Config: \(String(format: "0x%X", csrActiveConfig))"
                 if fsAllowed {
                         unstageGpuBundlesMenuItem.isEnabled = true
                 } else {
                         unstageGpuBundlesMenuItem.isEnabled = false
-                }
-        }
-        
-        /* Update-check-related functions that also control the status menu */
-        
-        @discardableResult func beginUpdateCheck(overrideDefaults: Bool = false, userCheck: Bool = false) -> Bool {
-                updateCheckWorkItem?.cancel()
-                checkNowMenuItem.isEnabled = false
-                toggleNotificationsMenuItem.isEnabled = false
-                checkNowMenuItem.title = checkInProgressMenuItemTitle
-                if userWantsAlerts || overrideDefaults {
-                        if !userWantsAlerts && overrideDefaults {
-                                os_log("Overriding notifications disabled user default", log: osLog, type: .info)
-                        }
-                        return webDriverNotifications.checkForUpdates(userCheck: userCheck)
-                } else {
-                        os_log("Update notifications are disabled in user defaults", log: osLog, type: .info)
-                        return false
-                }
-        }
-        
-        func updateCheckDidFinish(result: Bool) {
-                os_log("updateCheck returned %{public}@", log: osLog, type: .info, result.description)
-                checkNowMenuItem.isEnabled = true
-                toggleNotificationsMenuItem.isEnabled = true
-                checkNowMenuItem.title = checkNowMenuItemTitle
-                if userWantsAlerts {
-                        updateCheckWorkItem = DispatchWorkItem {
-                                self.updateCheckDidFinish(result: self.beginUpdateCheck())
-                        }
-                        updateCheckQueue.asyncAfter(deadline: DispatchTime.now() + updateCheckInterval, execute: updateCheckWorkItem!)
                 }
         }
         
@@ -306,34 +246,7 @@ class StatusMenuController: NSObject, NSMenuDelegate {
                         cloverSettings?.unmountEfi()
                 }
         }
-        
-        @IBAction func checkNowMenuItemClicked(_ sender: NSMenuItem) {
-                if Defaults.shared.suppressUpdateAlerts != "" {
-                        Defaults.shared.suppressUpdateAlerts = ""
-                        os_log("Cancelling suppressUpdateAlerts", log: osLog, type: .info)
-                }
-                updateCheckQueue.async {
-                        self.updateCheckDidFinish(result: self.beginUpdateCheck(overrideDefaults: true, userCheck: true))
-                }
-        }
-        
-        @IBAction func toggleNotificationsMenuItemClicked(_ sender: NSMenuItem) {
-                if Defaults.shared.disableUpdateAlerts {
-                        if Defaults.shared.suppressUpdateAlerts != "" {
-                                Defaults.shared.suppressUpdateAlerts = ""
-                                os_log("Cancelling suppressUpdateAlerts", log: osLog, type: .info)
-                        }
-                        Defaults.shared.disableUpdateAlerts = false
-                        os_log("Automatic update notifications enabled", log: osLog, type: .info)
-                        updateCheckQueue.async {
-                                self.updateCheckDidFinish(result: self.beginUpdateCheck(overrideDefaults: true, userCheck: true))
-                        }
-                } else {
-                        Defaults.shared.disableUpdateAlerts = true
-                        os_log("Automatic update notifications disabled", log: osLog, type: .info)
-                }
-        }
-        
+
         @IBAction func aboutMenuItemClicked(_ sender: NSMenuItem) {
                 NSApp.activate(ignoringOtherApps: true)
                 if let window = aboutWindowController?.window {
@@ -347,8 +260,8 @@ class StatusMenuController: NSObject, NSMenuDelegate {
                 }
         }
         
-        @IBAction func packageDropMenuItemClicked(_ sender: NSMenuItem) {
-                if let window = packageDropWindowController?.window {
+        @IBAction func showPackageInstallerMenuItemClicked(_ sender: NSMenuItem) {
+                if let window = packagerWindowController?.window {
                         window.appearance = NSAppearance.init(named: NSAppearance.Name.vibrantLight)
                         window.standardWindowButton(.miniaturizeButton)?.isHidden = true
                         window.standardWindowButton(.zoomButton)?.isHidden = true

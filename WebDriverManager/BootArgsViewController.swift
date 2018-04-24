@@ -20,9 +20,9 @@
 import Cocoa
 import os.log
 
-class EditBootArgsViewController: NSViewController {
+class BootArgsViewController: NSViewController {
         
-        let osLog = OSLog.init(subsystem: "org.vulgo.WebDriverManager", category: "EditBootArgsViewController")
+        let osLog = OSLog.init(subsystem: "org.vulgo.WebDriverManager", category: "BootArgsViewController")
         var bootArgs: String?
         
         @IBOutlet weak var bootArgsTextField: NSTextField!
@@ -60,14 +60,19 @@ class EditBootArgsViewController: NSViewController {
         }
         
         @IBAction func saveButtonPressed(_ sender: NSButton) {
+                let arguments = bootArgsTextField.stringValue
                 var script = "try\n"
                 script += "\t" + "do shell script " + "\""
-                script += "nvram boot-args=" + "\\" + "\"" + (bootArgsTextField.stringValue) + "\\" + "\""
-                script += "\"" + " with administrator privileges" + "\n"
+                script += "nvram boot-args=" + "\""
+                script += " & quoted form of (\""
+                script += arguments
+                script += "\")"
+                script += " with administrator privileges" + "\n"
                 script += "on error errorNumber" + "\n"
                 script += "\t" + "return false" + "\n"
                 script += "end try" + "\n"
                 script += "return true" + "\n"
+                print(script)
                 let appleScript = NSAppleScript(source: script)
                 var error: NSDictionary?
                 let eventDescriptor = appleScript?.executeAndReturnError(&error)

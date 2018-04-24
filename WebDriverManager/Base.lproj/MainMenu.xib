@@ -4,7 +4,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14109"/>
     </dependencies>
     <objects>
-        <customObject id="-2" userLabel="File's Owner" customClass="StatusMenuController" customModule="Web_Driver_Manager" customModuleProvider="target">
+        <customObject id="-2" userLabel="File's Owner">
             <connections>
                 <outlet property="delegate" destination="Voe-Tx-rLC" id="GzC-gU-4Uq"/>
             </connections>
@@ -19,22 +19,19 @@
         <customObject id="mMO-jR-0xx" customClass="StatusMenuController" customModule="Web_Driver_Manager" customModuleProvider="target">
             <connections>
                 <outlet property="aboutMenuItem" destination="x6D-xp-qHF" id="Otc-mG-oyV"/>
-                <outlet property="checkNowMenuItem" destination="CNc-jG-bOC" id="b26-uW-3El"/>
+                <outlet property="bootArgumentsMenuItem" destination="Xfa-fp-4X4" id="IXP-61-1H8"/>
                 <outlet property="cloverPartitionMenuItem" destination="70R-pl-3SH" id="G4G-2n-Ojf"/>
                 <outlet property="cloverSubMenuItem" destination="G12-vs-qSw" id="qEA-BH-GcX"/>
                 <outlet property="csrActiveConfigMenuItem" destination="p3K-hL-gP4" id="cx4-Wf-EfA"/>
                 <outlet property="driverDoctorMenuItem" destination="Rsp-0c-Bj4" id="GXr-6H-E9A"/>
                 <outlet property="driverStatusMenuItem" destination="d6q-bn-6in" id="d47-Gf-0hn"/>
-                <outlet property="notificationsStatusMenuItem" destination="5Zv-wc-Q7x" id="oTB-9e-h5Z"/>
                 <outlet property="nvdaStartupMenuItem" destination="WST-Oi-0mS" id="8KJ-JN-fmC"/>
                 <outlet property="nvidiaWebMenuItem" destination="f4s-yx-WDp" id="T2v-ST-1ae"/>
                 <outlet property="openInBrowserMenuItem" destination="IVX-Ks-Xry" id="azs-XV-wea"/>
-                <outlet property="openInBrowserSeparator" destination="27s-Kb-0DA" id="fPV-d7-CeR"/>
                 <outlet property="preferencesMenuItem" destination="Kxa-9u-PYf" id="ksK-5q-EnR"/>
                 <outlet property="quitMenuItem" destination="MAd-yk-Fz2" id="eMk-Hv-4nx"/>
-                <outlet property="showPackageDropMenuItem" destination="taC-Qi-Szq" id="A09-zZ-7ik"/>
+                <outlet property="showPackageInstallerMenuItem" destination="taC-Qi-Szq" id="zwP-cw-iJ7"/>
                 <outlet property="statusMenu" destination="FVg-r4-d2m" id="Gvh-tB-VML"/>
-                <outlet property="toggleNotificationsMenuItem" destination="z7c-mr-eA2" id="cJh-5s-29X"/>
                 <outlet property="unstageGpuBundlesMenuItem" destination="3dM-4y-E8V" id="aN7-3c-U6z"/>
                 <outlet property="useDefaultDriverMenuItem" destination="8n0-nR-8WC" id="gc9-i2-GFp"/>
                 <outlet property="useNvidiaDriverMenuItem" destination="lBp-Ry-pEh" id="qml-es-4rc"/>
@@ -43,13 +40,6 @@
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
         <menu autoenablesItems="NO" id="FVg-r4-d2m">
             <items>
-                <menuItem title="Show Package Installer" id="taC-Qi-Szq">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="packageDropMenuItemClicked:" target="mMO-jR-0xx" id="RRE-1d-ShO"/>
-                    </connections>
-                </menuItem>
-                <menuItem isSeparatorItem="YES" id="YUp-Qj-GR1"/>
                 <menuItem enabled="NO" id="d6q-bn-6in">
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
@@ -66,9 +56,6 @@
                     </connections>
                 </menuItem>
                 <menuItem isSeparatorItem="YES" id="p0L-mW-g6u"/>
-                <menuItem title="System Configuration" enabled="NO" id="sXP-OH-siF">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                </menuItem>
                 <menuItem title="Show Boot Arguments" id="Xfa-fp-4X4">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
@@ -108,9 +95,9 @@
                         </items>
                     </menu>
                 </menuItem>
-                <menuItem title="Driver Doctor" id="Rsp-0c-Bj4">
+                <menuItem title="Kernel Extensions" id="Rsp-0c-Bj4">
                     <modifierMask key="keyEquivalentModifierMask"/>
-                    <menu key="submenu" title="Driver Doctor" autoenablesItems="NO" id="irr-dK-O0A">
+                    <menu key="submenu" title="Kernel Extensions" autoenablesItems="NO" id="irr-dK-O0A">
                         <items>
                             <menuItem enabled="NO" id="p3K-hL-gP4">
                                 <modifierMask key="keyEquivalentModifierMask"/>
@@ -137,37 +124,19 @@
                         </items>
                     </menu>
                 </menuItem>
+                <menuItem isSeparatorItem="YES" id="sdZ-23-Xjx"/>
+                <menuItem title="Show Package Installer" keyEquivalent="1" allowsKeyEquivalentWhenHidden="YES" id="taC-Qi-Szq">
+                    <connections>
+                        <action selector="showPackageInstallerMenuItemClicked:" target="mMO-jR-0xx" id="4CM-Sv-J5P"/>
+                    </connections>
+                </menuItem>
                 <menuItem isSeparatorItem="YES" id="27s-Kb-0DA"/>
-                <menuItem title="Open % in Browser" id="IVX-Ks-Xry">
-                    <modifierMask key="keyEquivalentModifierMask"/>
+                <menuItem title="Open % in Browser" keyEquivalent="o" allowsKeyEquivalentWhenHidden="YES" id="IVX-Ks-Xry">
                     <connections>
                         <action selector="openInBrowserMenuItemClicked:" target="mMO-jR-0xx" id="PXP-mZ-hKF"/>
                     </connections>
                 </menuItem>
-                <menuItem isSeparatorItem="YES" id="sdZ-23-Xjx"/>
-                <menuItem title="NVIDIA Update Notifications" id="geg-WS-0Tl">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <menu key="submenu" title="NVIDIA Update Notifications" autoenablesItems="NO" id="ef9-hL-wiF">
-                        <items>
-                            <menuItem enabled="NO" id="5Zv-wc-Q7x">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                            </menuItem>
-                            <menuItem id="z7c-mr-eA2">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="toggleNotificationsMenuItemClicked:" target="mMO-jR-0xx" id="Tpl-By-Mxk"/>
-                                </connections>
-                            </menuItem>
-                            <menuItem isSeparatorItem="YES" id="BmP-Lh-vwC"/>
-                            <menuItem id="CNc-jG-bOC">
-                                <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="checkNowMenuItemClicked:" target="mMO-jR-0xx" id="EmZ-S8-2vN"/>
-                                </connections>
-                            </menuItem>
-                        </items>
-                    </menu>
-                </menuItem>
+                <menuItem isSeparatorItem="YES" id="BTj-00-GlQ"/>
                 <menuItem title="Web Driver Manager" id="VGT-UL-p7l">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="Web Driver Manager" autoenablesItems="NO" id="kRS-lT-gOO">
