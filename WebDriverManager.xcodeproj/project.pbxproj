@@ -23,7 +23,6 @@
 		4D304438204090F300C82104 /* Nvram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D304433204090F300C82104 /* Nvram.swift */; };
 		4D47D20C208B4B0200C82104 /* Scripts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D47D20B208B4B0200C82104 /* Scripts.swift */; };
 		4D49F93F205D011300C82104 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D49F93E205D011300C82104 /* PreferencesViewController.swift */; };
-		4D555D642055381E00C82104 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4D555D632055381E00C82104 /* README.md */; };
 		4D6BC72F2058153100C82104 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D6BC7312058153100C82104 /* Main.storyboard */; };
 		4D827091205C21BC00C82104 /* Liberator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D827090205C21BC00C82104 /* Liberator.swift */; };
 		4D8270CA205C728800C82104 /* Packager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8270C9205C728800C82104 /* Packager.swift */; };
@@ -251,7 +250,6 @@
 				4D29BA30206BA21D00C82104 /* component.sh in Resources */,
 				4D304425204090C400C82104 /* Assets.xcassets in Resources */,
 				4DA7AACF205E660200C82104 /* Welcome.rtf in Resources */,
-				4D555D642055381E00C82104 /* README.md in Resources */,
 				4D9A8DD3206F987D00C82104 /* clearStaging.applescript in Resources */,
 				4D304428204090C400C82104 /* MainMenu.xib in Resources */,
 				4DD5F6BB20666F4800C82104 /* unstage.applescript in Resources */,
