@@ -31,6 +31,7 @@ import os.log
         @IBOutlet weak var statusMenu: NSMenu!
         
         func applicationDidFinishLaunching(_ aNotification: Notification) {
+                NSUserNotificationCenter.default.delegate = WebDriverNotifications.shared
                 WebDriverNotifications.shared.beginUpdateCheck()
         }
 }
