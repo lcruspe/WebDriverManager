@@ -23,7 +23,7 @@ import os.log
 class StatusMenuController: NSObject, NSMenuDelegate {
 
         let osLog = OSLog.init(subsystem: "org.vulgo.WebDriverManager", category: "StatusMenuController")
-        let cloverSettings = NvidiaCloverSettings()
+        let cloverSettings = NVCloverSettings()
         let fileManager = FileManager()
         var csrActiveConfig: UInt32 = 0xFFFF
         let unsignedKexts: UInt32 = 1 << 0

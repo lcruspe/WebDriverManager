@@ -20,7 +20,7 @@
 import Foundation
 import os.log
 
-class NvidiaCloverSettings: CloverSettings {
+class NVCloverSettings: CloverSettings {
         
         let thisOsLog = OSLog.init(subsystem: "org.vulgo.CloverSettings", category: "NVCloverSettings")
         
