@@ -33,7 +33,7 @@ class StatusMenuController: NSObject, NSMenuDelegate {
                 didSet {
                         os_log("PackagerViewController: new url %{public}@", log: osLog, type: .info, packageUrl?.absoluteString ?? "nil")
                         if let url: URL = packageUrl {
-                                showPackageInstallerMenuItem.isEnabled = false
+                                packageInstallerMenuItem.isEnabled = false
                                 packager.processPackage(atUrl: url)
                         }
                         packageUrl = nil
@@ -83,12 +83,13 @@ class StatusMenuController: NSObject, NSMenuDelegate {
         @IBOutlet weak var nvdaStartupMenuItem: NSMenuItem!
         @IBOutlet weak var nvidiaWebMenuItem: NSMenuItem!
         @IBOutlet weak var cloverPartitionMenuItem: NSMenuItem!
-        @IBOutlet weak var showPackageInstallerMenuItem: NSMenuItem!
+        @IBOutlet weak var packageInstallerMenuItem: NSMenuItem!
         @IBOutlet weak var preferencesMenuItem: NSMenuItem!
         @IBOutlet weak var openInBrowserMenuItem: NSMenuItem!
-        @IBOutlet weak var driverDoctorMenuItem: NSMenuItem!
+        @IBOutlet weak var kernelExtensionsMenuItem: NSMenuItem!
         @IBOutlet weak var csrActiveConfigMenuItem: NSMenuItem!
         @IBOutlet weak var unstageGpuBundlesMenuItem: NSMenuItem!
+        @IBOutlet weak var clearStagingMenuItem: NSMenuItem!
         
         override func awakeFromNib() {
                 if let button = statusItem.button {
@@ -162,20 +163,22 @@ class StatusMenuController: NSObject, NSMenuDelegate {
                         openInBrowserMenuItem.isHidden = true
                 }
                 if Defaults.shared.kernelExtensionsIsVisible {
-                        driverDoctorMenuItem.isHidden = false
+                        kernelExtensionsMenuItem.isHidden = false
                 } else {
-                        driverDoctorMenuItem.isHidden = true
+                        kernelExtensionsMenuItem.isHidden = true
                 }
                 if Defaults.shared.packageInstallerIsVisible {
-                        showPackageInstallerMenuItem.isHidden = false
+                        packageInstallerMenuItem.isHidden = false
                 } else {
-                        showPackageInstallerMenuItem.isHidden = true
+                        packageInstallerMenuItem.isHidden = true
                 }
                 csrActiveConfigMenuItem.title = "CSR Active Config: \(String(format: "0x%X", csrActiveConfig))"
                 if fsAllowed {
-                        unstageGpuBundlesMenuItem.isEnabled = true
+                        unstageGpuBundlesMenuItem.isHidden = false
+                        clearStagingMenuItem.isHidden = true
                 } else {
-                        unstageGpuBundlesMenuItem.isEnabled = false
+                        unstageGpuBundlesMenuItem.isHidden = true
+                        clearStagingMenuItem.isHidden = false
                 }
         }
         

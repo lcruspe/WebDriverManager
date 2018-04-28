@@ -107,7 +107,7 @@ class Packager: NSObject {
         private func installPackageDidFinish(result: Bool) {
                 DispatchQueue.main.async {
                         if let controller = (NSApplication.shared.delegate as? AppDelegate)?.statusMenu.delegate as? StatusMenuController {
-                                controller.showPackageInstallerMenuItem.isEnabled = true
+                                controller.packageInstallerMenuItem.isEnabled = true
                         }
                 }
 

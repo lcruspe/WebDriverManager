@@ -20,17 +20,18 @@
             <connections>
                 <outlet property="aboutMenuItem" destination="x6D-xp-qHF" id="Otc-mG-oyV"/>
                 <outlet property="bootArgumentsMenuItem" destination="Xfa-fp-4X4" id="IXP-61-1H8"/>
+                <outlet property="clearStagingMenuItem" destination="kPV-bE-bW3" id="BPy-KZ-RuQ"/>
                 <outlet property="cloverPartitionMenuItem" destination="70R-pl-3SH" id="G4G-2n-Ojf"/>
                 <outlet property="cloverSubMenuItem" destination="G12-vs-qSw" id="qEA-BH-GcX"/>
                 <outlet property="csrActiveConfigMenuItem" destination="p3K-hL-gP4" id="cx4-Wf-EfA"/>
-                <outlet property="driverDoctorMenuItem" destination="Rsp-0c-Bj4" id="GXr-6H-E9A"/>
                 <outlet property="driverStatusMenuItem" destination="d6q-bn-6in" id="d47-Gf-0hn"/>
+                <outlet property="kernelExtensionsMenuItem" destination="Rsp-0c-Bj4" id="GXr-6H-E9A"/>
                 <outlet property="nvdaStartupMenuItem" destination="WST-Oi-0mS" id="8KJ-JN-fmC"/>
                 <outlet property="nvidiaWebMenuItem" destination="f4s-yx-WDp" id="T2v-ST-1ae"/>
                 <outlet property="openInBrowserMenuItem" destination="IVX-Ks-Xry" id="azs-XV-wea"/>
+                <outlet property="packageInstallerMenuItem" destination="taC-Qi-Szq" id="zwP-cw-iJ7"/>
                 <outlet property="preferencesMenuItem" destination="Kxa-9u-PYf" id="ksK-5q-EnR"/>
                 <outlet property="quitMenuItem" destination="MAd-yk-Fz2" id="eMk-Hv-4nx"/>
-                <outlet property="showPackageInstallerMenuItem" destination="taC-Qi-Szq" id="zwP-cw-iJ7"/>
                 <outlet property="statusMenu" destination="FVg-r4-d2m" id="Gvh-tB-VML"/>
                 <outlet property="unstageGpuBundlesMenuItem" destination="3dM-4y-E8V" id="aN7-3c-U6z"/>
                 <outlet property="useDefaultDriverMenuItem" destination="8n0-nR-8WC" id="gc9-i2-GFp"/>
@@ -103,14 +104,14 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="TFm-nc-AlV"/>
-                            <menuItem title="Unstage GPU Bundles" tag="1" enabled="NO" id="3dM-4y-E8V">
+                            <menuItem title="Unstage GPU Bundles" id="3dM-4y-E8V">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="unstageGpuBundlesMenuItemClicked:" target="mMO-jR-0xx" id="U1G-ci-elF"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Clear Staging" tag="1" alternate="YES" id="kPV-bE-bW3">
-                                <modifierMask key="keyEquivalentModifierMask" option="YES"/>
+                            <menuItem title="Clear Staging" id="kPV-bE-bW3">
+                                <modifierMask key="keyEquivalentModifierMask"/>
                                 <connections>
                                     <action selector="clearStagingMenuItemClicked:" target="mMO-jR-0xx" id="A2G-oB-6Kw"/>
                                 </connections>
