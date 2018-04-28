@@ -230,7 +230,7 @@ class StatusMenuController: NSObject, NSMenuDelegate {
                 }
         }
         
-        @IBAction func bootArgumentsMenuItemClicked(_ sender: Any) {
+        @IBAction func bootArgumentsMenuItemClicked(_ sender: NSMenuItem) {
                 if let window = editBootArgsController?.window {
                         if !window.isVisible {
                                 window.center()
@@ -241,7 +241,7 @@ class StatusMenuController: NSObject, NSMenuDelegate {
                 }
         }
         
-        @IBAction func cloverPartitionMenuItemClicked(_ sender: Any) {
+        @IBAction func cloverPartitionMenuItemClicked(_ sender: NSMenuItem) {
                 if cloverPartitionMenuItem.title == mountEFIItemTitle {
                         cloverSettings?.mountEfi()
                 } else {
@@ -317,7 +317,7 @@ class StatusMenuController: NSObject, NSMenuDelegate {
                 os_log("Error running touch script", log: osLog, type: .default)
         }
         
-        @IBAction func preferencesMenuItemClicked(_ sender: NSMenuItem) {
+        @IBAction func preferencesMenuItemClicked(_ sender: Any) {
                 if let window = preferencesWindowController?.window {
                         if !window.isVisible {
                                 window.center()

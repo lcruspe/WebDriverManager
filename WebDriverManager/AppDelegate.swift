@@ -27,7 +27,7 @@ import Cocoa
 import os.log
 
 @NSApplicationMain class AppDelegate: NSObject, NSApplicationDelegate {
-    
+        
         @IBOutlet weak var statusMenu: NSMenu!
         
         func applicationDidFinishLaunching(_ aNotification: Notification) {
@@ -39,20 +39,21 @@ import os.log
                 DispatchQueue.main.async {
                         if event.type == NSEvent.EventType.keyDown {
                                 let modifierFlags: UInt = event.modifierFlags.rawValue & NSEvent.ModifierFlags.deviceIndependentFlagsMask.rawValue
-                                if modifierFlags == NSEvent.ModifierFlags.command.rawValue, event.charactersIgnoringModifiers != nil {
-                                        if event.charactersIgnoringModifiers! == "1" {
-                                                if let menuDelegate = self.statusMenu.delegate as? StatusMenuController {
+                                if modifierFlags == NSEvent.ModifierFlags.command.rawValue {
+                                        if let menuDelegate = self.statusMenu.delegate as? StatusMenuController {
+                                                switch event.keyCode {
+                                                case 18:
                                                         menuDelegate.showPackageInstallerMenuItemClicked(_: self)
-                                                }
-                                        }
-                                        if event.charactersIgnoringModifiers! == "2" {
-                                                if let menuDelegate = self.statusMenu.delegate as? StatusMenuController {
+                                                case 19:
                                                         menuDelegate.openInBrowserMenuItemClicked(_: self)
+                                                case 43:
+                                                        menuDelegate.preferencesMenuItemClicked(_: self)
+                                                default:
+                                                        break
                                                 }
                                         }
                                 }
                         }
                 }
         }
-
 }

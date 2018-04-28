@@ -52,7 +52,7 @@
         <scene sceneID="n8m-ZL-3kL">
             <objects>
                 <viewController id="glU-gv-Z5e" customClass="BootArgsViewController" customModule="Web_Driver_Manager" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" id="ahs-bs-TyX">
+                    <view key="view" id="ahs-bs-TyX" customClass="ViewWithPerformKeyEquivalent" customModule="Web_Driver_Manager" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="511" height="95"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
@@ -226,7 +226,7 @@ DQ
         <scene sceneID="J20-Hh-6ZV">
             <objects>
                 <viewController storyboardIdentifier="about" id="535-Ae-q8m" customClass="AboutViewController" customModule="Web_Driver_Manager" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" id="R2g-Mr-Nf2">
+                    <view key="view" id="R2g-Mr-Nf2" customClass="ViewWithPerformKeyEquivalent" customModule="Web_Driver_Manager" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="355" height="168"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
@@ -328,7 +328,7 @@ DQ
         <scene sceneID="Mwe-Fn-lUo">
             <objects>
                 <viewController id="ujv-C2-0AP" customClass="PreferencesViewController" customModule="Web_Driver_Manager" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" id="iZR-Om-zLY" customClass="PreferencesView" customModule="Web_Driver_Manager" customModuleProvider="target">
+                    <view key="view" id="iZR-Om-zLY" customClass="ViewWithPerformKeyEquivalent" customModule="Web_Driver_Manager" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="584" height="247"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>

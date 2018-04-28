@@ -19,7 +19,7 @@
 
 import Cocoa
 
-class PreferencesView: NSView {
+class ViewWithPerformKeyEquivalent: NSView {
         
         override func performKeyEquivalent(with event: NSEvent) -> Bool {
                 if let appDelegate = NSApplication.shared.delegate as? AppDelegate {
