@@ -34,4 +34,25 @@ import os.log
                 NSUserNotificationCenter.default.delegate = WebDriverNotifications.shared
                 WebDriverNotifications.shared.beginUpdateCheck()
         }
+        
+        func keyEquivalent(with event: NSEvent) {
+                DispatchQueue.main.async {
+                        if event.type == NSEvent.EventType.keyDown {
+                                let modifierFlags: UInt = event.modifierFlags.rawValue & NSEvent.ModifierFlags.deviceIndependentFlagsMask.rawValue
+                                if modifierFlags == NSEvent.ModifierFlags.command.rawValue, event.charactersIgnoringModifiers != nil {
+                                        if event.charactersIgnoringModifiers! == "1" {
+                                                if let menuDelegate = self.statusMenu.delegate as? StatusMenuController {
+                                                        menuDelegate.showPackageInstallerMenuItemClicked(_: self)
+                                                }
+                                        }
+                                        if event.charactersIgnoringModifiers! == "2" {
+                                                if let menuDelegate = self.statusMenu.delegate as? StatusMenuController {
+                                                        menuDelegate.openInBrowserMenuItemClicked(_: self)
+                                                }
+                                        }
+                                }
+                        }
+                }
+        }
+
 }

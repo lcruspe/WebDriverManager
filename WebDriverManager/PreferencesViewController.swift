@@ -21,20 +21,19 @@ import Cocoa
 import os.log
 
 class PreferencesViewController: NSViewController {
-        
+                
         let osLog = OSLog.init(subsystem: "org.vulgo.WebDriverManager", category: "Preferences")
 
-        @IBOutlet weak var hideBootArgumentsButton: NSButton!
-        @IBOutlet weak var hideCloverSettingsButton: NSButton!
-        @IBOutlet weak var showOpenInBrowserButton: NSButton!
-        @IBOutlet weak var hideKernelExtensionsButton: NSButton!
-        @IBOutlet weak var hidePackageInstaller: NSButton!
+        @IBOutlet weak var bootArgumentsVisibilityButton: NSButton!
+        @IBOutlet weak var cloverSettingsVisibilityButton: NSButton!
+        @IBOutlet weak var openInBrowserVisibilityButton: NSButton!
+        @IBOutlet weak var kernelExtensionsVisibilityButton: NSButton!
+        @IBOutlet weak var packageInstallerVisibilityButton: NSButton!
         @IBOutlet weak var toggleNotificationsPopupMenuButton: NSPopUpButton!
         @IBOutlet weak var checkNowButton: NSButton!
         @IBOutlet weak var updateCheckProgressIndicator: NSProgressIndicator!
         @IBOutlet weak var openInBrowserUrlTextField: NSTextField!
-        @IBOutlet weak var openInBrowserTitleTextField: NSTextField!
-        @IBOutlet weak var openInBrowserDescriptionLabel: NSTextField!
+        @IBOutlet weak var openInBrowserDescriptionTextField: NSTextField!
         
         let disabled: Float = 0.3
         let enabled: Float = 1.0
@@ -56,35 +55,33 @@ class PreferencesViewController: NSViewController {
         }
         
         override func viewDidAppear() {
-                if Defaults.shared.hideBootArguments {
-                        hideBootArgumentsButton.state = .on
+                if Defaults.shared.bootArgumentsIsVisible {
+                        bootArgumentsVisibilityButton.state = .on
                 } else {
-                        hideBootArgumentsButton.state = .off
+                        bootArgumentsVisibilityButton.state = .off
                 }
-                if Defaults.shared.hideCloverSettings {
-                        hideCloverSettingsButton.state = .on
+                if Defaults.shared.cloverSettingsIsVisible {
+                        cloverSettingsVisibilityButton.state = .on
                 } else {
-                        hideCloverSettingsButton.state = .off
+                        cloverSettingsVisibilityButton.state = .off
                 }
-                openInBrowserDescriptionLabel.wantsLayer = true
-                if Defaults.shared.showOpenInBrowser {
-                        showOpenInBrowserButton.state = .on
-                        openInBrowserUrlTextField.isEnabled = true
-                        openInBrowserTitleTextField.isEnabled = true
-                        openInBrowserDescriptionLabel.layer?.opacity = enabled
+                if Defaults.shared.packageInstallerIsVisible {
+                        packageInstallerVisibilityButton.state = .on
                 } else {
-                        showOpenInBrowserButton.state = .off
-                        openInBrowserUrlTextField.isEnabled = false
-                        openInBrowserTitleTextField.isEnabled = false
-                        openInBrowserDescriptionLabel.layer?.opacity = disabled
+                        packageInstallerVisibilityButton.state = .off
                 }
-                if Defaults.shared.hideKernelExtensions {
-                        hideKernelExtensionsButton.state = .on
+                if Defaults.shared.openInBrowserIsVisible {
+                        openInBrowserVisibilityButton.state = .on
                 } else {
-                        hideKernelExtensionsButton.state = .off
+                        openInBrowserVisibilityButton.state = .off
+                }
+                if Defaults.shared.kernelExtensionsIsVisible {
+                        kernelExtensionsVisibilityButton.state = .on
+                } else {
+                        kernelExtensionsVisibilityButton.state = .off
                 }
                 openInBrowserUrlTextField.stringValue = Defaults.shared.openInBrowserUrl
-                openInBrowserTitleTextField.stringValue = Defaults.shared.openInBrowserTitle
+                openInBrowserDescriptionTextField.stringValue = Defaults.shared.openInBrowserTitle
                 
                 if WebDriverNotifications.shared.checkInProgress {
                         disableUpdateCheckControls()
@@ -98,48 +95,42 @@ class PreferencesViewController: NSViewController {
         
         @IBAction func hideBootArgumentsButtonPressed(_ sender: NSButton) {
                 if sender.state == .on {
-                        Defaults.shared.hideBootArguments = true
+                        Defaults.shared.bootArgumentsIsVisible = true
                 } else {
-                        Defaults.shared.hideBootArguments = false
+                        Defaults.shared.bootArgumentsIsVisible = false
                 }
         }
         
         @IBAction func hideCloverSettingsButtonPressed(_ sender: NSButton) {
                 if sender.state == .on {
-                        Defaults.shared.hideCloverSettings = true
+                        Defaults.shared.cloverSettingsIsVisible = true
                 } else {
-                        Defaults.shared.hideCloverSettings = false
+                        Defaults.shared.cloverSettingsIsVisible = false
                 }
         }
 
         @IBAction func showOpenInBrowserButtonPressed(_ sender: NSButton) {
-                if sender.state == .off {
-                        Defaults.shared.showOpenInBrowser = false
-                        openInBrowserUrlTextField.isEnabled = false
-                        openInBrowserTitleTextField.isEnabled = false
-                        openInBrowserDescriptionLabel.isEnabled = false
-                        openInBrowserDescriptionLabel.layer?.opacity = disabled
-                } else {
-                        Defaults.shared.showOpenInBrowser = true
+                if sender.state == .on {
+                        Defaults.shared.openInBrowserIsVisible = true
                         openInBrowserUrlTextField.isEnabled = true
-                        openInBrowserTitleTextField.isEnabled = true
-                        openInBrowserDescriptionLabel.layer?.opacity = enabled
+                } else {
+                        Defaults.shared.openInBrowserIsVisible = false
                 }
         }
         
         @IBAction func hideKernelExtensionsButtonPressed(_ sender: NSButton) {
                 if sender.state == .on {
-                        Defaults.shared.hideKernelExtensions = true
+                        Defaults.shared.kernelExtensionsIsVisible = true
                 } else {
-                        Defaults.shared.hideKernelExtensions = false
+                        Defaults.shared.kernelExtensionsIsVisible = false
                 }
         }
         
         @IBAction func hidePackageInstallerButtonPressed(_ sender: NSButton) {
                 if sender.state == .on {
-                        Defaults.shared.hidePackageInstaller = true
+                        Defaults.shared.packageInstallerIsVisible = true
                 } else {
-                        Defaults.shared.hidePackageInstaller = false
+                        Defaults.shared.packageInstallerIsVisible = false
                 }
         }
         
@@ -162,7 +153,7 @@ class PreferencesViewController: NSViewController {
         }
         
         @IBAction func openInBrowserTitleTextFieldDidEndEditing(_ sender: NSTextField) {
-                Defaults.shared.openInBrowserTitle = openInBrowserTitleTextField.stringValue
+                Defaults.shared.openInBrowserTitle = openInBrowserDescriptionTextField.stringValue
         }
         
         @IBAction func checkNowButtonClicked(_ sender: NSButton) {

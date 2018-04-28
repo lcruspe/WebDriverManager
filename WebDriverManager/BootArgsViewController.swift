@@ -1,5 +1,5 @@
 /*
- * File: EditBootArgsViewController.swift
+ * File: BootArgsViewController.swift
  *
  * WebDriverManager © vulgo 2018
  *

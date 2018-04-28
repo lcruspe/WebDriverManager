@@ -328,12 +328,12 @@ DQ
         <scene sceneID="Mwe-Fn-lUo">
             <objects>
                 <viewController id="ujv-C2-0AP" customClass="PreferencesViewController" customModule="Web_Driver_Manager" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" id="iZR-Om-zLY">
-                        <rect key="frame" x="0.0" y="0.0" width="584" height="228"/>
+                    <view key="view" id="iZR-Om-zLY" customClass="PreferencesView" customModule="Web_Driver_Manager" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="584" height="247"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="LT5-Vp-7Wn">
-                                <rect key="frame" x="238" y="150" width="130" height="18"/>
+                                <rect key="frame" x="238" y="169" width="130" height="18"/>
                                 <buttonCell key="cell" type="check" title="Kernel Extensions" bezelStyle="regularSquare" imagePosition="left" inset="2" id="Yrd-jB-zax">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -343,7 +343,7 @@ DQ
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EWu-z6-Mha">
-                                <rect key="frame" x="238" y="170" width="115" height="18"/>
+                                <rect key="frame" x="238" y="189" width="115" height="18"/>
                                 <buttonCell key="cell" type="check" title="Clover Settings" bezelStyle="regularSquare" imagePosition="left" inset="2" id="snu-sq-wbC">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -353,15 +353,15 @@ DQ
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fWW-sk-Uyf">
-                                <rect key="frame" x="59" y="192" width="175" height="17"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Hide These Menu Items:" id="42z-Cj-Aiq">
+                                <rect key="frame" x="59" y="211" width="175" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Menu Item Visibility:" id="42z-Cj-Aiq">
                                     <font key="font" metaFont="systemSemibold" size="13"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="W1x-Dh-rkh">
-                                <rect key="frame" x="238" y="190" width="120" height="18"/>
+                                <rect key="frame" x="238" y="209" width="120" height="18"/>
                                 <buttonCell key="cell" type="check" title="Boot Arguments" bezelStyle="regularSquare" imagePosition="left" inset="2" id="Nbv-Ua-aXE">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -401,19 +401,19 @@ DQ
                                 </connections>
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aqo-Xq-IF2">
-                                <rect key="frame" x="58" y="52" width="176" height="18"/>
-                                <buttonCell key="cell" type="check" title="Enable Open in Browser:" bezelStyle="regularSquare" imagePosition="left" inset="2" id="jhU-96-pIf">
+                                <rect key="frame" x="238" y="129" width="122" height="18"/>
+                                <buttonCell key="cell" type="check" title="Open in Browser" bezelStyle="regularSquare" imagePosition="left" inset="2" id="jhU-96-pIf">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="systemSemibold" size="13"/>
+                                    <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <connections>
                                     <action selector="showOpenInBrowserButtonPressed:" target="ujv-C2-0AP" id="pOt-ub-hyt"/>
                                 </connections>
                             </button>
                             <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9xy-kp-Aap">
-                                <rect key="frame" x="238" y="88" width="98" height="26"/>
+                                <rect key="frame" x="238" y="87" width="98" height="26"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="93" id="gZg-EM-wna"/>
+                                    <constraint firstAttribute="width" constant="93" id="LZJ-9B-WWc"/>
                                 </constraints>
                                 <popUpButtonCell key="cell" type="push" title="Enabled" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="m9N-At-nUv" id="xrl-p3-6wd">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
@@ -436,7 +436,7 @@ DQ
                                 </popUpButtonCell>
                             </popUpButton>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GRJ-zY-7VF">
-                                <rect key="frame" x="53" y="94" width="181" height="17"/>
+                                <rect key="frame" x="53" y="93" width="181" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Driver Update Notifications:" id="7Ul-Jg-YRA">
                                     <font key="font" metaFont="systemSemibold" size="13"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -444,7 +444,7 @@ DQ
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oOe-Q6-kh6">
-                                <rect key="frame" x="335" y="84" width="109" height="32"/>
+                                <rect key="frame" x="335" y="83" width="109" height="32"/>
                                 <buttonCell key="cell" type="push" title="Check Now" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="jDH-qa-UA8">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -454,10 +454,10 @@ DQ
                                 </connections>
                             </button>
                             <progressIndicator wantsLayer="YES" horizontalHuggingPriority="750" verticalHuggingPriority="750" maxValue="100" displayedWhenStopped="NO" bezeled="NO" indeterminate="YES" controlSize="small" style="spinning" translatesAutoresizingMaskIntoConstraints="NO" id="V1i-7w-xbZ">
-                                <rect key="frame" x="446" y="94" width="16" height="16"/>
+                                <rect key="frame" x="446" y="93" width="16" height="16"/>
                             </progressIndicator>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RE1-gB-hqt">
-                                <rect key="frame" x="238" y="130" width="125" height="18"/>
+                                <rect key="frame" x="238" y="149" width="125" height="18"/>
                                 <buttonCell key="cell" type="check" title="Package Installer" bezelStyle="regularSquare" imagePosition="left" inset="2" id="DuJ-2q-f6W">
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -466,56 +466,95 @@ DQ
                                     <action selector="hidePackageInstallerButtonPressed:" target="ujv-C2-0AP" id="hcg-yT-gXZ"/>
                                 </connections>
                             </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sZF-et-kIJ">
+                                <rect key="frame" x="211" y="150" width="23" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="⌘1" id="YOk-0p-HjS">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gd3-AE-s3I">
+                                <rect key="frame" x="209" y="130" width="25" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="⌘2" id="dmB-wG-Hbq">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="c3d-up-28T">
+                                <rect key="frame" x="200" y="53" width="34" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="URL:" id="r9h-T9-eIX">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8EU-9q-9sG">
+                                <rect key="frame" x="92" y="53" width="108" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Open in Browser" id="g1j-qR-K2n">
+                                    <font key="font" metaFont="systemSemibold" size="13"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="vgg-wl-XvS" firstAttribute="top" secondItem="zsE-36-6FA" secondAttribute="bottom" constant="8" id="0nZ-WK-hnj"/>
-                            <constraint firstItem="EWu-z6-Mha" firstAttribute="top" secondItem="W1x-Dh-rkh" secondAttribute="bottom" constant="6" symbolic="YES" id="1j0-QF-xxd"/>
-                            <constraint firstItem="zsE-36-6FA" firstAttribute="trailing" secondItem="vgg-wl-XvS" secondAttribute="trailing" id="4JD-3b-KKm"/>
-                            <constraint firstItem="vgg-wl-XvS" firstAttribute="leading" secondItem="2x6-Qx-mox" secondAttribute="trailing" constant="8" symbolic="YES" id="5lc-gn-ZCN"/>
-                            <constraint firstItem="2x6-Qx-mox" firstAttribute="baseline" secondItem="vgg-wl-XvS" secondAttribute="baseline" id="6vj-I4-Mb2"/>
-                            <constraint firstItem="LT5-Vp-7Wn" firstAttribute="leading" secondItem="RE1-gB-hqt" secondAttribute="leading" id="7Bi-KQ-mJZ"/>
-                            <constraint firstItem="GRJ-zY-7VF" firstAttribute="bottom" secondItem="V1i-7w-xbZ" secondAttribute="bottom" id="AgN-BK-vOj"/>
-                            <constraint firstItem="9xy-kp-Aap" firstAttribute="leading" secondItem="zsE-36-6FA" secondAttribute="leading" id="Ef5-Qp-lgu"/>
-                            <constraint firstItem="V1i-7w-xbZ" firstAttribute="leading" secondItem="oOe-Q6-kh6" secondAttribute="trailing" constant="8" symbolic="YES" id="H7b-3i-Zcb"/>
-                            <constraint firstAttribute="trailing" secondItem="zsE-36-6FA" secondAttribute="trailing" constant="20" symbolic="YES" id="I2k-vy-8yh"/>
-                            <constraint firstItem="LT5-Vp-7Wn" firstAttribute="top" secondItem="EWu-z6-Mha" secondAttribute="bottom" constant="6" symbolic="YES" id="LlR-Sg-PkK"/>
-                            <constraint firstItem="zsE-36-6FA" firstAttribute="leading" secondItem="vgg-wl-XvS" secondAttribute="leading" id="Piz-qM-aO2"/>
-                            <constraint firstItem="fWW-sk-Uyf" firstAttribute="bottom" secondItem="W1x-Dh-rkh" secondAttribute="bottom" id="RWl-8P-hpV"/>
-                            <constraint firstItem="W1x-Dh-rkh" firstAttribute="leading" secondItem="fWW-sk-Uyf" secondAttribute="trailing" constant="8" symbolic="YES" id="UDG-cU-HWp"/>
-                            <constraint firstItem="oOe-Q6-kh6" firstAttribute="top" secondItem="RE1-gB-hqt" secondAttribute="bottom" constant="20" symbolic="YES" id="YVI-Ys-CYc"/>
-                            <constraint firstItem="RE1-gB-hqt" firstAttribute="top" secondItem="LT5-Vp-7Wn" secondAttribute="bottom" constant="6" symbolic="YES" id="aUV-8o-RZm"/>
-                            <constraint firstItem="9xy-kp-Aap" firstAttribute="leading" secondItem="GRJ-zY-7VF" secondAttribute="trailing" constant="8" symbolic="YES" id="bI4-9g-54r"/>
-                            <constraint firstItem="aqo-Xq-IF2" firstAttribute="baseline" secondItem="zsE-36-6FA" secondAttribute="baseline" id="dBh-ez-GsY"/>
-                            <constraint firstItem="GRJ-zY-7VF" firstAttribute="baseline" secondItem="9xy-kp-Aap" secondAttribute="baseline" id="fAt-gA-eBf"/>
-                            <constraint firstItem="zsE-36-6FA" firstAttribute="leading" secondItem="aqo-Xq-IF2" secondAttribute="trailing" constant="8" symbolic="YES" id="fNh-jl-Nkp"/>
-                            <constraint firstItem="oOe-Q6-kh6" firstAttribute="leading" secondItem="9xy-kp-Aap" secondAttribute="trailing" constant="8" symbolic="YES" id="gOZ-4b-12s"/>
-                            <constraint firstItem="RE1-gB-hqt" firstAttribute="leading" secondItem="9xy-kp-Aap" secondAttribute="leading" id="glq-K3-GTN"/>
-                            <constraint firstItem="zsE-36-6FA" firstAttribute="top" secondItem="9xy-kp-Aap" secondAttribute="bottom" constant="19" id="iwU-zw-yxc"/>
-                            <constraint firstItem="EWu-z6-Mha" firstAttribute="leading" secondItem="LT5-Vp-7Wn" secondAttribute="leading" id="jJ9-oS-hP7"/>
-                            <constraint firstItem="W1x-Dh-rkh" firstAttribute="leading" secondItem="EWu-z6-Mha" secondAttribute="leading" id="neq-Qn-DFd"/>
-                            <constraint firstAttribute="bottom" secondItem="vgg-wl-XvS" secondAttribute="bottom" constant="20" symbolic="YES" id="pbf-bo-q7p"/>
-                            <constraint firstItem="fWW-sk-Uyf" firstAttribute="centerX" secondItem="aqo-Xq-IF2" secondAttribute="centerX" id="sjB-MK-B4a"/>
-                            <constraint firstItem="GRJ-zY-7VF" firstAttribute="leading" secondItem="iZR-Om-zLY" secondAttribute="leading" constant="55" id="xac-aH-igm"/>
-                            <constraint firstItem="9xy-kp-Aap" firstAttribute="baseline" secondItem="oOe-Q6-kh6" secondAttribute="baseline" id="znU-T9-lK7"/>
+                            <constraint firstItem="zsE-36-6FA" firstAttribute="leading" secondItem="c3d-up-28T" secondAttribute="trailing" constant="8" symbolic="YES" id="1X1-hu-fFH"/>
+                            <constraint firstItem="aqo-Xq-IF2" firstAttribute="top" secondItem="RE1-gB-hqt" secondAttribute="bottom" constant="6" symbolic="YES" id="4WX-Kv-swL"/>
+                            <constraint firstItem="EWu-z6-Mha" firstAttribute="leading" secondItem="LT5-Vp-7Wn" secondAttribute="leading" id="5Ov-Mz-9AH"/>
+                            <constraint firstItem="sZF-et-kIJ" firstAttribute="baseline" secondItem="RE1-gB-hqt" secondAttribute="baseline" id="5Ri-wx-Xmk"/>
+                            <constraint firstItem="GRJ-zY-7VF" firstAttribute="bottom" secondItem="V1i-7w-xbZ" secondAttribute="bottom" id="6AZ-sN-oAw"/>
+                            <constraint firstItem="RE1-gB-hqt" firstAttribute="leading" secondItem="sZF-et-kIJ" secondAttribute="trailing" constant="8" symbolic="YES" id="6eQ-7c-cMk"/>
+                            <constraint firstAttribute="trailing" secondItem="zsE-36-6FA" secondAttribute="trailing" constant="20" symbolic="YES" id="7O7-oU-rAi"/>
+                            <constraint firstItem="zsE-36-6FA" firstAttribute="leading" secondItem="vgg-wl-XvS" secondAttribute="leading" id="BcD-Ww-pFJ"/>
+                            <constraint firstItem="V1i-7w-xbZ" firstAttribute="leading" secondItem="oOe-Q6-kh6" secondAttribute="trailing" constant="8" symbolic="YES" id="J6A-0d-NSO"/>
+                            <constraint firstItem="9xy-kp-Aap" firstAttribute="leading" secondItem="GRJ-zY-7VF" secondAttribute="trailing" constant="8" symbolic="YES" id="KsS-tk-1pg"/>
+                            <constraint firstItem="zsE-36-6FA" firstAttribute="top" secondItem="9xy-kp-Aap" secondAttribute="bottom" constant="18" id="Mrt-jw-XGQ"/>
+                            <constraint firstItem="RE1-gB-hqt" firstAttribute="top" secondItem="LT5-Vp-7Wn" secondAttribute="bottom" constant="6" symbolic="YES" id="OtU-1q-CD2"/>
+                            <constraint firstItem="W1x-Dh-rkh" firstAttribute="leading" secondItem="EWu-z6-Mha" secondAttribute="leading" id="Otg-bc-V5I"/>
+                            <constraint firstItem="W1x-Dh-rkh" firstAttribute="leading" secondItem="fWW-sk-Uyf" secondAttribute="trailing" constant="8" symbolic="YES" id="PYs-d2-8i0"/>
+                            <constraint firstItem="oOe-Q6-kh6" firstAttribute="top" secondItem="aqo-Xq-IF2" secondAttribute="bottom" constant="20" symbolic="YES" id="Q8E-hR-fUA"/>
+                            <constraint firstItem="EWu-z6-Mha" firstAttribute="top" secondItem="W1x-Dh-rkh" secondAttribute="bottom" constant="6" symbolic="YES" id="R2v-gp-1T2"/>
+                            <constraint firstItem="fWW-sk-Uyf" firstAttribute="centerX" secondItem="8EU-9q-9sG" secondAttribute="centerX" id="RnZ-Qj-Kku"/>
+                            <constraint firstItem="vgg-wl-XvS" firstAttribute="leading" secondItem="2x6-Qx-mox" secondAttribute="trailing" constant="8" symbolic="YES" id="WEV-Bz-PGn"/>
+                            <constraint firstItem="fWW-sk-Uyf" firstAttribute="bottom" secondItem="W1x-Dh-rkh" secondAttribute="bottom" id="Zp2-hE-yQZ"/>
+                            <constraint firstItem="LT5-Vp-7Wn" firstAttribute="top" secondItem="EWu-z6-Mha" secondAttribute="bottom" constant="6" symbolic="YES" id="baP-SG-ROw"/>
+                            <constraint firstItem="GRJ-zY-7VF" firstAttribute="leading" secondItem="iZR-Om-zLY" secondAttribute="leading" constant="55" id="cgf-9h-uie"/>
+                            <constraint firstItem="oOe-Q6-kh6" firstAttribute="leading" secondItem="9xy-kp-Aap" secondAttribute="trailing" constant="8" symbolic="YES" id="d60-FX-blH"/>
+                            <constraint firstItem="2x6-Qx-mox" firstAttribute="baseline" secondItem="vgg-wl-XvS" secondAttribute="baseline" id="dHn-qy-fhp"/>
+                            <constraint firstItem="GRJ-zY-7VF" firstAttribute="baseline" secondItem="9xy-kp-Aap" secondAttribute="baseline" id="fxs-p2-iyn"/>
+                            <constraint firstItem="RE1-gB-hqt" firstAttribute="leading" secondItem="aqo-Xq-IF2" secondAttribute="leading" id="gb2-rA-Er8"/>
+                            <constraint firstAttribute="bottom" secondItem="vgg-wl-XvS" secondAttribute="bottom" constant="20" symbolic="YES" id="kfE-xE-RX3"/>
+                            <constraint firstItem="vgg-wl-XvS" firstAttribute="top" secondItem="zsE-36-6FA" secondAttribute="bottom" constant="8" id="mF6-uG-2Ge"/>
+                            <constraint firstItem="c3d-up-28T" firstAttribute="leading" secondItem="8EU-9q-9sG" secondAttribute="trailing" constant="4" id="ma1-3z-3ou"/>
+                            <constraint firstItem="aqo-Xq-IF2" firstAttribute="leading" secondItem="gd3-AE-s3I" secondAttribute="trailing" constant="8" symbolic="YES" id="npa-tS-XLH"/>
+                            <constraint firstItem="gd3-AE-s3I" firstAttribute="baseline" secondItem="aqo-Xq-IF2" secondAttribute="baseline" id="rW8-kj-fZl"/>
+                            <constraint firstItem="zsE-36-6FA" firstAttribute="trailing" secondItem="vgg-wl-XvS" secondAttribute="trailing" id="rYG-DN-ydR"/>
+                            <constraint firstItem="9xy-kp-Aap" firstAttribute="leading" secondItem="zsE-36-6FA" secondAttribute="leading" id="u9H-ec-fpN"/>
+                            <constraint firstItem="c3d-up-28T" firstAttribute="baseline" secondItem="zsE-36-6FA" secondAttribute="baseline" id="vIv-YF-Vl1"/>
+                            <constraint firstItem="LT5-Vp-7Wn" firstAttribute="leading" secondItem="RE1-gB-hqt" secondAttribute="leading" id="vPM-Bd-72F"/>
+                            <constraint firstItem="9xy-kp-Aap" firstAttribute="baseline" secondItem="oOe-Q6-kh6" secondAttribute="baseline" id="wAa-dO-ckt"/>
+                            <constraint firstItem="aqo-Xq-IF2" firstAttribute="leading" secondItem="9xy-kp-Aap" secondAttribute="leading" id="wGh-lh-Eef"/>
+                            <constraint firstItem="8EU-9q-9sG" firstAttribute="baseline" secondItem="c3d-up-28T" secondAttribute="baseline" id="wmj-zJ-IfQ"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="bootArgumentsVisibilityButton" destination="W1x-Dh-rkh" id="Ofi-wF-vWo"/>
                         <outlet property="checkNowButton" destination="oOe-Q6-kh6" id="keq-wn-HNj"/>
-                        <outlet property="hideBootArgumentsButton" destination="W1x-Dh-rkh" id="Ofi-wF-vWo"/>
-                        <outlet property="hideCloverSettingsButton" destination="EWu-z6-Mha" id="whC-kM-e3z"/>
-                        <outlet property="hideKernelExtensionsButton" destination="LT5-Vp-7Wn" id="wT6-Zk-Tz3"/>
-                        <outlet property="hidePackageInstaller" destination="RE1-gB-hqt" id="az4-w2-66F"/>
-                        <outlet property="openInBrowserDescriptionLabel" destination="2x6-Qx-mox" id="ebC-jL-vXO"/>
-                        <outlet property="openInBrowserTitleTextField" destination="vgg-wl-XvS" id="hvp-9g-BjT"/>
-                        <outlet property="openInBrowserUrlTextField" destination="zsE-36-6FA" id="IgA-X1-b9n"/>
-                        <outlet property="showOpenInBrowserButton" destination="aqo-Xq-IF2" id="U5n-eC-ZUm"/>
+                        <outlet property="cloverSettingsVisibilityButton" destination="EWu-z6-Mha" id="whC-kM-e3z"/>
+                        <outlet property="kernelExtensionsVisibilityButton" destination="LT5-Vp-7Wn" id="wT6-Zk-Tz3"/>
+                        <outlet property="openInBrowserDescriptionTextField" destination="vgg-wl-XvS" id="Zk3-DF-bcq"/>
+                        <outlet property="openInBrowserUrlTextField" destination="zsE-36-6FA" id="wwv-7M-WPC"/>
+                        <outlet property="openInBrowserVisibilityButton" destination="aqo-Xq-IF2" id="5fd-ZN-rTp"/>
+                        <outlet property="packageInstallerVisibilityButton" destination="RE1-gB-hqt" id="4G3-fX-TFg"/>
                         <outlet property="toggleNotificationsPopupMenuButton" destination="9xy-kp-Aap" id="pHu-pt-oZn"/>
                         <outlet property="updateCheckProgressIndicator" destination="V1i-7w-xbZ" id="aHY-AC-fhn"/>
                     </connections>
                 </viewController>
                 <customObject id="5JY-31-zfU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="951" y="-48"/>
+            <point key="canvasLocation" x="951" y="-38.5"/>
         </scene>
     </scenes>
     <resources>

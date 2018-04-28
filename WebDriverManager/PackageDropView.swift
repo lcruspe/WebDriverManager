@@ -83,4 +83,11 @@ class PackageDropView: NSVisualEffectView {
                 return false
         }
         
+        override func performKeyEquivalent(with event: NSEvent) -> Bool {
+                if let appDelegate = NSApplication.shared.delegate as? AppDelegate {
+                        appDelegate.keyEquivalent(with: event)
+                }
+                return false
+        }
+        
 }

@@ -127,12 +127,12 @@ class StatusMenuController: NSObject, NSMenuDelegate {
                         useNvidiaDriverMenuItem.state = .off
                         useDefaultDriverMenuItem.state = .on
                 }
-                if !Defaults.shared.hideBootArguments {
+                if Defaults.shared.bootArgumentsIsVisible {
                         bootArgumentsMenuItem.isHidden = false
                 } else {
                         bootArgumentsMenuItem.isHidden = true
                 }
-                if cloverSettings != nil && !Defaults.shared.hideCloverSettings {
+                if cloverSettings != nil && Defaults.shared.cloverSettingsIsVisible {
                         cloverSubMenuItem.isHidden = false
                         if cloverSettings!.nvidiaWebIsEnabled {
                                 nvidiaWebMenuItem.state = .on
@@ -154,23 +154,22 @@ class StatusMenuController: NSObject, NSMenuDelegate {
                                 cloverPartitionMenuItem.title = mountEFIItemTitle
                         }
                 }
-                if Defaults.shared.showOpenInBrowser {
+                if Defaults.shared.openInBrowserIsVisible {
                         openInBrowserMenuItem.title = openInBrowserMenuItemTitle.replacingOccurrences(of: "%", with: Defaults.shared.openInBrowserTitle)
-
                         openInBrowserMenuItem.isHidden = false
                 } else {
 
                         openInBrowserMenuItem.isHidden = true
                 }
-                if Defaults.shared.hideKernelExtensions {
-                        driverDoctorMenuItem.isHidden = true
-                } else {
+                if Defaults.shared.kernelExtensionsIsVisible {
                         driverDoctorMenuItem.isHidden = false
-                }
-                if Defaults.shared.hidePackageInstaller {
-                        showPackageInstallerMenuItem.isHidden = true
                 } else {
+                        driverDoctorMenuItem.isHidden = true
+                }
+                if Defaults.shared.packageInstallerIsVisible {
                         showPackageInstallerMenuItem.isHidden = false
+                } else {
+                        showPackageInstallerMenuItem.isHidden = true
                 }
                 csrActiveConfigMenuItem.title = "CSR Active Config: \(String(format: "0x%X", csrActiveConfig))"
                 if fsAllowed {
@@ -229,12 +228,12 @@ class StatusMenuController: NSObject, NSMenuDelegate {
         }
         
         @IBAction func bootArgumentsMenuItemClicked(_ sender: Any) {
-                NSApp.activate(ignoringOtherApps: true)
                 if let window = editBootArgsController?.window {
                         if !window.isVisible {
                                 window.center()
                         }
                         window.level = .floating
+                        NSApp.activate(ignoringOtherApps: true)
                         window.makeKeyAndOrderFront(self)
                 }
         }
@@ -248,19 +247,19 @@ class StatusMenuController: NSObject, NSMenuDelegate {
         }
 
         @IBAction func aboutMenuItemClicked(_ sender: NSMenuItem) {
-                NSApp.activate(ignoringOtherApps: true)
                 if let window = aboutWindowController?.window {
                         if !window.isVisible {
                                 window.center()
                         }
                         window.isMovableByWindowBackground = true
                         window.level = .floating
+                        NSApp.activate(ignoringOtherApps: true)
                         window.makeKeyAndOrderFront(self)
                         window.level = .normal
                 }
         }
         
-        @IBAction func showPackageInstallerMenuItemClicked(_ sender: NSMenuItem) {
+        @IBAction func showPackageInstallerMenuItemClicked(_ sender: Any) {
                 if let window = packagerWindowController?.window {
                         window.appearance = NSAppearance.init(named: NSAppearance.Name.vibrantLight)
                         window.standardWindowButton(.miniaturizeButton)?.isHidden = true
@@ -272,11 +271,12 @@ class StatusMenuController: NSObject, NSMenuDelegate {
                                 window.setFrameOrigin(NSPoint(x: originX, y: originY))
                         }
                         window.level = .floating
+                        NSApp.activate(ignoringOtherApps: true)
                         window.makeKeyAndOrderFront(self)
                 }
         }
         
-        @IBAction func openInBrowserMenuItemClicked(_ sender: NSMenuItem) {
+        @IBAction func openInBrowserMenuItemClicked(_ sender: Any) {
                 if let url = URL.init(string: Defaults.shared.openInBrowserUrl) {
                         NSWorkspace.shared.open(url)
                 } else {
@@ -315,12 +315,12 @@ class StatusMenuController: NSObject, NSMenuDelegate {
         }
         
         @IBAction func preferencesMenuItemClicked(_ sender: NSMenuItem) {
-                NSApp.activate(ignoringOtherApps: true)
                 if let window = preferencesWindowController?.window {
                         if !window.isVisible {
                                 window.center()
                         }
                         window.level = .floating
+                        NSApp.activate(ignoringOtherApps: true)
                         window.makeKeyAndOrderFront(self)
                         window.level = .normal
                 }
