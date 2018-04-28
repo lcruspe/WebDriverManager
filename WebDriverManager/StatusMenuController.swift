@@ -57,10 +57,10 @@ class StatusMenuController: NSObject, NSMenuDelegate {
         let restartAlertMessage = NSLocalizedString("Settings will be applied after you restart.", comment: "Restart alert: message")
         let restartAlertInformativeText = NSLocalizedString("Your bootloader may override the choice you make here.", comment: "Restart alert: informative text")
         let restartAlertButtonTitle = NSLocalizedString("Close", comment: "Restart alert: button title")
-        let scriptErrorAlertMessage = NSLocalizedString("Running a script caused an error", comment: "Script error alert message")
-        let scriptErrorInformativeText = NSLocalizedString("If you keep seeing this message you can report it here: https://github.com/vulgo/WebDriverManager", comment: "Script error informative script")
-        let restartAfterScriptAlertMessage = NSLocalizedString("Caches will be rebuilt", comment: "Reboot after script alert message")
-        let restartAfterScriptInformativeText = NSLocalizedString("Restart to update the boot volume and apply changes.", comment: "Reboot after script informative text")
+        let scriptErrorAlertMessage = NSLocalizedString("Running a script caused an error", comment: "Script error: alert message")
+        let scriptErrorInformativeText = NSLocalizedString("If you keep seeing this message you can report it here: https://github.com/vulgo/WebDriverManager", comment: "Script error: informative text")
+        let restartAfterScriptAlertMessage = NSLocalizedString("Caches will be rebuilt", comment: "Reboot after script: alert message")
+        let restartAfterScriptInformativeText = NSLocalizedString("Restart to update the boot volume and apply changes.", comment: "Reboot after script: informative text")
 
         @IBOutlet weak var statusMenu: NSMenu!
         @IBOutlet weak var driverStatusMenuItem: NSMenuItem!
