@@ -22,6 +22,7 @@ import Foundation
 class Defaults {
         
         static let shared = Defaults()
+        
         let userDefaults = UserDefaults.standard
         
         enum WebDriverManager {
@@ -182,11 +183,20 @@ class Defaults {
 
         private func registerFactoryDefaults() {
                 var factoryDefaults: [String : Any] = [:]
-                if debug {
-                        factoryDefaults = [WebDriverManager.initialized.key: true, WebDriverManager.showRestartAlert.key: true, WebDriverManager.suppressVersion.key: "", WebDriverManager.disableUpdateAlerts.key: true, WebDriverManager.bootArgumentsIsVisible.key: true, WebDriverManager.cloverSettingsIsVisible.key: true, WebDriverManager.kernelExtensionsIsVisible.key: true, WebDriverManager.packageInstallerIsVisible.key: true, WebDriverManager.openInBrowserIsVisible.key: true, WebDriverManager.openInBrowserUrl.key: "https://vulgo.github.io/nvidia-drivers", WebDriverManager.openInBrowserDescription.key: "Nvidia Drivers", WebDriverManager.hoursAfterCheck.key: 6]
-                } else {
-                factoryDefaults = [WebDriverManager.initialized.key: true, WebDriverManager.showRestartAlert.key: true, WebDriverManager.suppressVersion.key: "", WebDriverManager.disableUpdateAlerts.key: true, WebDriverManager.bootArgumentsIsVisible.key: false, WebDriverManager.cloverSettingsIsVisible.key: false, WebDriverManager.kernelExtensionsIsVisible.key: false, WebDriverManager.packageInstallerIsVisible.key: true, WebDriverManager.openInBrowserIsVisible.key: true, WebDriverManager.openInBrowserUrl.key: "https://vulgo.github.io/nvidia-drivers", WebDriverManager.openInBrowserDescription.key: "Nvidia Drivers", WebDriverManager.hoursAfterCheck.key: 6]
-                }
+                factoryDefaults = [
+                        WebDriverManager.initialized.key: true,
+                        WebDriverManager.showRestartAlert.key: true,
+                        WebDriverManager.suppressVersion.key: "",
+                        WebDriverManager.disableUpdateAlerts.key: true,
+                        WebDriverManager.bootArgumentsIsVisible.key: true,
+                        WebDriverManager.cloverSettingsIsVisible.key: true,
+                        WebDriverManager.kernelExtensionsIsVisible.key: true,
+                        WebDriverManager.packageInstallerIsVisible.key: true,
+                        WebDriverManager.openInBrowserIsVisible.key: true,
+                        WebDriverManager.openInBrowserUrl.key: "https://vulgo.github.io/nvidia-drivers",
+                        WebDriverManager.openInBrowserDescription.key: "Nvidia Drivers",
+                        WebDriverManager.hoursAfterCheck.key: 6
+                ]
                 userDefaults.register(defaults: factoryDefaults)
         }
         

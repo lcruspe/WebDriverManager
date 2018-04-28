@@ -20,25 +20,22 @@
 import Cocoa
 
 class TextField: NSTextField {
-        
-        private let command: UInt = NSEvent.ModifierFlags.command.rawValue
-        private let commandShift: UInt = NSEvent.ModifierFlags.command.rawValue | NSEvent.ModifierFlags.shift.rawValue
-        
+
         override func performKeyEquivalent(with event: NSEvent) -> Bool {
                 if event.type == NSEvent.EventType.keyDown {
-                        let modifierFlags: UInt = event.modifierFlags.rawValue & NSEvent.ModifierFlags.deviceIndependentFlagsMask.rawValue
+                        let modifierFlags: UInt = event.modifierFlags.rawValue & ModifierKeys.mask
                         switch (modifierFlags, event.keyCode) {
-                        case (command, 0):
+                        case (ModifierKeys.command, 0):
                                 return NSApp.sendAction(#selector(NSResponder.selectAll(_:)), to: nil, from: self)
-                        case (command, 6):
+                        case (ModifierKeys.command, 6):
                                 return NSApp.sendAction(Selector(("undo:")), to: nil, from: self)
-                        case (command, 7):
+                        case (ModifierKeys.command, 7):
                                 return NSApp.sendAction(#selector(NSText.cut(_:)), to: nil, from: self)
-                        case (command, 8):
+                        case (ModifierKeys.command, 8):
                                 return NSApp.sendAction(#selector(NSText.copy(_:)), to: nil, from: self)
-                        case (command, 9):
+                        case (ModifierKeys.command, 9):
                                 return NSApp.sendAction(#selector(NSText.paste(_:)), to: nil, from: self)
-                        case (commandShift, 6):
+                        case (ModifierKeys.commandShift, 6):
                                 return NSApp.sendAction(Selector(("redo:")), to: nil, from: self)
                         default:
                                 break

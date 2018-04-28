@@ -26,8 +26,14 @@ let debug = false
 import Cocoa
 import os.log
 
+struct ModifierKeys {
+        static let command: UInt = NSEvent.ModifierFlags.command.rawValue
+        static let commandShift: UInt = NSEvent.ModifierFlags.command.rawValue | NSEvent.ModifierFlags.shift.rawValue
+        static let mask = NSEvent.ModifierFlags.deviceIndependentFlagsMask.rawValue
+}
+
 @NSApplicationMain class AppDelegate: NSObject, NSApplicationDelegate {
-        
+      
         @IBOutlet weak var statusMenu: NSMenu!
         
         func applicationDidFinishLaunching(_ aNotification: Notification) {
@@ -46,21 +52,17 @@ import os.log
         
         func keyEquivalent(with event: NSEvent) {
                 DispatchQueue.main.async {
-                        if event.type == NSEvent.EventType.keyDown {
-                                let modifierFlags: UInt = event.modifierFlags.rawValue & NSEvent.ModifierFlags.deviceIndependentFlagsMask.rawValue
-                                if modifierFlags == NSEvent.ModifierFlags.command.rawValue {
-                                        if let menuDelegate = self.statusMenu.delegate as? StatusMenuController {
-                                                switch event.keyCode {
-                                                case 18:
-                                                        menuDelegate.showPackageInstallerMenuItemClicked(_: self)
-                                                case 19:
-                                                        menuDelegate.openInBrowserMenuItemClicked(_: self)
-                                                case 43:
-                                                        menuDelegate.preferencesMenuItemClicked(_: self)
-                                                default:
-                                                        break
-                                                }
-                                        }
+                        if let menuDelegate = self.statusMenu.delegate as? StatusMenuController, event.type == NSEvent.EventType.keyDown {
+                                let modifierFlags: UInt = event.modifierFlags.rawValue & ModifierKeys.mask
+                                switch (modifierFlags, event.keyCode) {
+                                case (ModifierKeys.command,18):
+                                        menuDelegate.showPackageInstallerMenuItemClicked(_: self)
+                                case (ModifierKeys.command,19):
+                                        menuDelegate.openInBrowserMenuItemClicked(_: self)
+                                case (ModifierKeys.command,43):
+                                        menuDelegate.preferencesMenuItemClicked(_: self)
+                                default:
+                                        break
                                 }
                         }
                 }
