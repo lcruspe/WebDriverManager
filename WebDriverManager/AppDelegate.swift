@@ -35,6 +35,15 @@ import os.log
                 WebDriverNotifications.shared.beginUpdateCheck()
         }
         
+        func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
+                if Packager.shared.isProcessing {
+                        os_log("Terminate cancelled while Packager is processing")
+                        return .terminateCancel
+                }
+                os_log("Terminating")
+                return .terminateNow
+        }
+        
         func keyEquivalent(with event: NSEvent) {
                 DispatchQueue.main.async {
                         if event.type == NSEvent.EventType.keyDown {

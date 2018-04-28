@@ -127,7 +127,7 @@ class WebDriverNotifications: NSObject, NSUserNotificationCenterDelegate {
         
         func beginUpdateCheck(overrideDefaults: Bool = false, userCheck: Bool = false) {
                 updateCheckQueue.async {
-                        self.updateCheckDidFinish(result: self.checkForUpdates(overrideDefaults: true, userCheck: true))
+                        self.updateCheckDidFinish(result: self.checkForUpdates(overrideDefaults: true, userCheck: userCheck))
                 }
         }
         

@@ -23,23 +23,9 @@ import os.log
 class StatusMenuController: NSObject, NSMenuDelegate {
 
         let osLog = OSLog.init(subsystem: "org.vulgo.WebDriverManager", category: "StatusMenuController")
-        
-        var packager = Packager()
         var scripts = Scripts()
         let cloverSettings = NvidiaCloverSettings()
         let fileManager = FileManager()
-        
-        var packageUrl: URL? {
-                didSet {
-                        os_log("PackagerViewController: new url %{public}@", log: osLog, type: .info, packageUrl?.absoluteString ?? "nil")
-                        if let url: URL = packageUrl {
-                                packageInstallerMenuItem.isEnabled = false
-                                packager.processPackage(atUrl: url)
-                        }
-                        packageUrl = nil
-                }
-        }
-
         var csrActiveConfig: UInt32 = 0xFFFF
         let unsignedKexts: UInt32 = 1 << 0
         let unrestrictedFilesystem: UInt32 = 1 << 1
@@ -71,6 +57,10 @@ class StatusMenuController: NSObject, NSMenuDelegate {
         let restartAlertMessage = NSLocalizedString("Settings will be applied after you restart.", comment: "Restart alert: message")
         let restartAlertInformativeText = NSLocalizedString("Your bootloader may override the choice you make here.", comment: "Restart alert: informative text")
         let restartAlertButtonTitle = NSLocalizedString("Close", comment: "Restart alert: button title")
+        let scriptErrorAlertMessage = NSLocalizedString("Running a script caused an error", comment: "Script error alert message")
+        let scriptErrorInformativeText = NSLocalizedString("If you keep seeing this message you can report it here: https://github.com/vulgo/WebDriverManager", comment: "Script error informative script")
+        let restartAfterScriptAlertMessage = NSLocalizedString("Caches will be rebuilt", comment: "Reboot after script alert message")
+        let restartAfterScriptInformativeText = NSLocalizedString("Restart to update the boot volume and apply changes.", comment: "Reboot after script informative text")
 
         @IBOutlet weak var statusMenu: NSMenu!
         @IBOutlet weak var driverStatusMenuItem: NSMenuItem!
@@ -182,6 +172,20 @@ class StatusMenuController: NSObject, NSMenuDelegate {
                 }
         }
         
+        func showScriptErrorAlert() {
+                let alert = NSAlert()
+                alert.messageText = scriptErrorAlertMessage
+                alert.informativeText = scriptErrorInformativeText
+                alert.runModal()
+        }
+        
+        func showRestartAfterScriptAlert() {
+                let alert = NSAlert()
+                alert.messageText = restartAfterScriptAlertMessage
+                alert.informativeText = restartAfterScriptInformativeText
+                alert.runModal()
+        }
+        
         /* Menu actions */
         
         @IBAction func changeDriverMenuItemClicked(_ sender: NSMenuItem) {
@@ -291,30 +295,36 @@ class StatusMenuController: NSObject, NSMenuDelegate {
                 let result = scripts.unstage?.executeAndReturnError(&scripts.error)
                 if scripts.boolValue(result) {
                         os_log("Unstage script finished", log: osLog, type: .info)
+                        showRestartAfterScriptAlert()
                         return
                 }
                 NSSound.beep()
                 os_log("Error running unstage script", log: osLog, type: .default)
+                showScriptErrorAlert()
         }
         
         @IBAction func clearStagingMenuItemClicked(_ sender: NSMenuItem) {
                 let result = scripts.clearStaging?.executeAndReturnError(&scripts.error)
                 if scripts.boolValue(result) {
                         os_log("Clear staging script finished", log: osLog, type: .info)
+                        showRestartAfterScriptAlert()
                         return
                 }
                 NSSound.beep()
                 os_log("Error running clear staging script", log: osLog, type: .default)
+                showScriptErrorAlert()
         }
         
         @IBAction func touchExtensionsMenuItemClicked(_ sender: NSMenuItem) {
                 let result = scripts.touch?.executeAndReturnError(&scripts.error)
                 if scripts.boolValue(result) {
                         os_log("Touch script finished", log: osLog, type: .info)
+                        showRestartAfterScriptAlert()
                         return
                 }
                 NSSound.beep()
                 os_log("Error running touch script", log: osLog, type: .default)
+                showScriptErrorAlert()
         }
         
         @IBAction func preferencesMenuItemClicked(_ sender: Any) {
@@ -330,7 +340,9 @@ class StatusMenuController: NSObject, NSMenuDelegate {
         }
         
         @IBAction func quitMenuItemClicked(_ sender: NSMenuItem) {
-                os_log("Quit menu item clicked, exiting", log: osLog, type: .default)
-                exit(0)
+                os_log("Quit menu item clicked", log: osLog, type: .default)
+                DispatchQueue.main.async {
+                        NSApp.terminate(nil)
+                }
         }        
 }

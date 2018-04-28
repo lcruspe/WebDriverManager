@@ -75,9 +75,7 @@ class PackageDropView: NSVisualEffectView {
                 isActive = false
                 let pasteBoard = draggingInfo.draggingPasteboard()
                 if let fileUrl = NSURL.init(from: pasteBoard) {
-                        if let controller = (NSApplication.shared.delegate as? AppDelegate)?.statusMenu.delegate as? StatusMenuController {
-                                controller.packageUrl = fileUrl as URL
-                        }
+                        Packager.shared.packageUrl = fileUrl as URL
                         return true
                 }
                 return false

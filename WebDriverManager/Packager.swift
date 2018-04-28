@@ -22,11 +22,25 @@ import os.log
 
 class Packager: NSObject {
 
+        static let shared = Packager()
+        
         let osLog = OSLog.init(subsystem: "org.vulgo.WebDriverManager", category: "Packager")
+        var isProcessing: Bool = false
+        var temporaryDirectory: String = ""
         let fileManager = FileManager()
         let packagerQueue = DispatchQueue(label: "packager", attributes: .concurrent)
         var packagerWorkItem: DispatchWorkItem?
         let nvidiaIdentifier = "NVWebDrivers"
+        
+        var packageUrl: URL? {
+                didSet {
+                        os_log("New url: %{public}@", log: osLog, type: .info, packageUrl?.absoluteString ?? "nil")
+                        if let url: URL = packageUrl {
+                                processPackage(atUrl: url)
+                        }
+                        packageUrl = nil
+                }
+        }
         
         @discardableResult func list(archive: String) -> String? {
                 let task = Process()
@@ -99,22 +113,42 @@ class Packager: NSObject {
         }
         
         func processPackage(atUrl url: URL) {
+                DispatchQueue.main.async {
+                        if let controller = (NSApplication.shared.delegate as? AppDelegate)?.statusMenu.delegate as? StatusMenuController {
+                                controller.packageInstallerMenuItem.isEnabled = false
+                                controller.quitMenuItem.isEnabled = false
+                        }
+                }
                 packagerQueue.async {
-                        self.installPackageDidFinish(result: self.processPackage(url))
+                        self.processPackageDidFinish(result: self.processPackage(url))
                 }
         }
         
-        private func installPackageDidFinish(result: Bool) {
+        private func processPackageDidFinish(result: Bool) {
+                /* Close busy window if it is open */
+                DispatchQueue.main.async {
+                        for window in NSApplication.shared.windows {
+                                if let id = window.identifier?.rawValue, id == "busy" {
+                                        window.close()
+                                }
+                        }
+                }
+                /* Remove temporary directory */
+                try? self.fileManager.removeItem(at: URL.init(fileURLWithPath: temporaryDirectory))
+                /* Re-enable menu items */
                 DispatchQueue.main.async {
                         if let controller = (NSApplication.shared.delegate as? AppDelegate)?.statusMenu.delegate as? StatusMenuController {
                                 controller.packageInstallerMenuItem.isEnabled = true
+                                controller.quitMenuItem.isEnabled = true
                         }
                 }
-
+                /* Set isProcessing */
+                isProcessing = false
         }
         
         private func processPackage(_ url: URL) -> Bool {
                 os_log("Processing dropped package...", log: osLog, type: .info)
+                isProcessing = true
                 if !fileManager.fileExists(atPath: url.path) {
                         os_log("Package or other file type not found", log: osLog, type: .default)
                         return false
@@ -147,50 +181,27 @@ class Packager: NSObject {
                         }
                 }
                 
-                func closeBusyWindow() {
-                        DispatchQueue.main.async {
-                                for window in NSApplication.shared.windows {
-                                        if let id = window.identifier?.rawValue, id == "busy" {
-                                                window.close()
-                                        }
-                                }
-                        }
-                }
-                
-                let temporaryDirectory = "\(NSTemporaryDirectory())\(NSUUID().uuidString)"
-                let removeTemporaryDirectory = {
-                        do {
-                                try self.fileManager.removeItem(at: URL.init(fileURLWithPath: temporaryDirectory))
-                        } catch {
-                                os_log("Failed to remove temporary directory", log: self.osLog, type: .default)
-                        }
-                }
+                temporaryDirectory = "\(NSTemporaryDirectory())\(NSUUID().uuidString)"
+                try? self.fileManager.removeItem(at: URL.init(fileURLWithPath: temporaryDirectory))
                 
                 let extracted = "\(temporaryDirectory)/tmp"
-                removeTemporaryDirectory()
+
                 do {
                         try fileManager.createDirectory(atPath: extracted, withIntermediateDirectories: true, attributes: nil)
                 } catch {
                         os_log("Failed to create temporary directory", log: osLog, type: .default)
-                        removeTemporaryDirectory()
-                        closeBusyWindow()
                         return false
                 }
                 if debug {
                         os_log("Extracting to %{public}@", log: osLog, type: .info, extracted)
                 }
                 if extract(archive: url.path, destinationDirectory: extracted) != 0 {
-                        removeTemporaryDirectory()
                         os_log("Failed to extract package", log: osLog, type: .default)
-                        removeTemporaryDirectory()
-                        closeBusyWindow()
                         return false
                 }
                 let distribution = "\(extracted)/Distribution"
                 if !fileManager.fileExists(atPath: distribution) {
                         os_log("Distribution not found", log: osLog, type: .default)
-                        removeTemporaryDirectory()
-                        closeBusyWindow()
                         return false
                 }
                 let xml = Liberator(URL.init(fileURLWithPath: distribution))
@@ -201,36 +212,22 @@ class Packager: NSObject {
                         version = result.1
                 } else {
                         os_log("Failed to patch Distribution", log: osLog, type: .default)
-                        removeTemporaryDirectory()
-                        closeBusyWindow()
                         return false
                 }
                 
                 if let welcome = Bundle.main.url(forResource: "Welcome", withExtension: "rtf") {
                         let existing = URL.init(fileURLWithPath: "\(extracted)/Resources/en.lproj/Welcome.rtf")
                         if fileManager.fileExists(atPath: existing.path) {
-                                do {
-                                        try fileManager.removeItem(at: existing)
-                                } catch {
-                                }
-                                do {
-                                        try fileManager.copyItem(at: welcome, to: existing)
-                                } catch {
-                                }
+                                try? fileManager.removeItem(at: existing)
+                                try? fileManager.copyItem(at: welcome, to: existing)
                         }
                 }
                 
                 if let background = Bundle.main.url(forResource: "background", withExtension: "png") {
                         let existing = URL.init(fileURLWithPath: "\(extracted)/Resources/background.png")
                         if fileManager.fileExists(atPath: existing.path) {
-                                do {
-                                        try fileManager.removeItem(at: existing)
-                                } catch {
-                                }
-                                do {
-                                        try fileManager.copyItem(at: background, to: existing)
-                                } catch {
-                                }
+                                try? fileManager.removeItem(at: existing)
+                                try? fileManager.copyItem(at: background, to: existing)
                         }
                 }
                 
@@ -240,8 +237,6 @@ class Packager: NSObject {
                         os_log("New drivers component exists", log: osLog, type: .info)
                 } else {
                         os_log("New drivers component doesn't exist", log: osLog, type: .default)
-                        removeTemporaryDirectory()
-                        closeBusyWindow()
                         return false
                 }
                 
@@ -254,20 +249,12 @@ class Packager: NSObject {
                         os_log("New product package exists", log: osLog, type: .info)
                 } else {
                         os_log("New product package doesn't exist", log: osLog, type: .default)
-                        removeTemporaryDirectory()
-                        closeBusyWindow()
                         return false
                 }
                 var desktopPath: String = ""
                 if let desktop = fileManager.urls(for: .desktopDirectory, in: .userDomainMask).first?.appendingPathComponent(outputPackageName) {
                         desktopPath = desktop.path
-                        do {
-                                try fileManager.removeItem(at: desktop)
-                        } catch {
-                                if debug {
-                                        os_log("Nothing to remove", log: osLog, type: .info)
-                                }
-                        }
+                        try? fileManager.removeItem(at: desktop)
                         do {
                                 try fileManager.copyItem(at: URL.init(fileURLWithPath: outputPackagePath), to: desktop)
                         } catch {
@@ -287,8 +274,7 @@ class Packager: NSObject {
                         os_log("Open command completed with errors", log: osLog, type: .default)
                         result = false
                 }
-                removeTemporaryDirectory()
-                closeBusyWindow()
                 return result
         }
+
 }
