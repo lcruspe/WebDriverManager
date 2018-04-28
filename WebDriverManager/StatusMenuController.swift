@@ -23,7 +23,6 @@ import os.log
 class StatusMenuController: NSObject, NSMenuDelegate {
 
         let osLog = OSLog.init(subsystem: "org.vulgo.WebDriverManager", category: "StatusMenuController")
-        var scripts = Scripts()
         let cloverSettings = NvidiaCloverSettings()
         let fileManager = FileManager()
         var csrActiveConfig: UInt32 = 0xFFFF
@@ -31,6 +30,7 @@ class StatusMenuController: NSObject, NSMenuDelegate {
         let unrestrictedFilesystem: UInt32 = 1 << 1
         var fsAllowed: Bool = false
         var kextAllowed: Bool = false
+        var scriptError: NSDictionary?
 
         let statusItem = NSStatusBar.system.statusItem(withLength:NSStatusItem.variableLength)
         var storyboard: NSStoryboard?
@@ -193,8 +193,8 @@ class StatusMenuController: NSObject, NSMenuDelegate {
                         return
                 }
                 os_log("Setting nvda_drv nvram variable", log: osLog, type: .info)
-                let result = scripts.nvram?.executeAndReturnError(&scripts.error)
-                if scripts.boolValue(result) {
+                let result = Scripts.shared.nvram?.executeAndReturnError(&scriptError)
+                if Scripts.shared.boolValue(result) {
                         if Defaults.shared.showRestartAlert {
                                 let alert = NSAlert()
                                 alert.messageText = restartAlertMessage
@@ -292,8 +292,8 @@ class StatusMenuController: NSObject, NSMenuDelegate {
         }
         
         @IBAction func unstageGpuBundlesMenuItemClicked(_ sender: NSMenuItem) {
-                let result = scripts.unstage?.executeAndReturnError(&scripts.error)
-                if scripts.boolValue(result) {
+                let result = Scripts.shared.unstage?.executeAndReturnError(&scriptError)
+                if Scripts.shared.boolValue(result) {
                         os_log("Unstage script finished", log: osLog, type: .info)
                         showRestartAfterScriptAlert()
                         return
@@ -304,8 +304,8 @@ class StatusMenuController: NSObject, NSMenuDelegate {
         }
         
         @IBAction func clearStagingMenuItemClicked(_ sender: NSMenuItem) {
-                let result = scripts.clearStaging?.executeAndReturnError(&scripts.error)
-                if scripts.boolValue(result) {
+                let result = Scripts.shared.clearStaging?.executeAndReturnError(&scriptError)
+                if Scripts.shared.boolValue(result) {
                         os_log("Clear staging script finished", log: osLog, type: .info)
                         showRestartAfterScriptAlert()
                         return
@@ -316,8 +316,8 @@ class StatusMenuController: NSObject, NSMenuDelegate {
         }
         
         @IBAction func touchExtensionsMenuItemClicked(_ sender: NSMenuItem) {
-                let result = scripts.touch?.executeAndReturnError(&scripts.error)
-                if scripts.boolValue(result) {
+                let result = Scripts.shared.touch?.executeAndReturnError(&scriptError)
+                if Scripts.shared.boolValue(result) {
                         os_log("Touch script finished", log: osLog, type: .info)
                         showRestartAfterScriptAlert()
                         return

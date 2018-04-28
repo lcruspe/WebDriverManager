@@ -22,6 +22,8 @@ import os.log
 
 struct Scripts {
         
+        static let shared = Scripts()
+        
         let osLog = OSLog.init(subsystem: "org.vulgo.WebDriverManager", category: "Scripts")
         var error: NSDictionary?
         var nvram: NSAppleScript?
