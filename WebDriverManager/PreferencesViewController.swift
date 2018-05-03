@@ -55,31 +55,27 @@ class PreferencesViewController: NSViewController {
         }
         
         override func viewDidAppear() {
-                if Defaults.shared.bootArgumentsIsVisible {
-                        bootArgumentsVisibilityButton.state = .on
-                } else {
-                        bootArgumentsVisibilityButton.state = .off
+                
+                func setup(menuItemButton: NSButton, value: Bool) {
+                        if value {
+                                menuItemButton.state = .on
+                        } else {
+                                menuItemButton.state = .off
+                        }
                 }
-                if Defaults.shared.cloverSettingsIsVisible {
-                        cloverSettingsVisibilityButton.state = .on
+                
+                setup(menuItemButton: bootArgumentsVisibilityButton, value: Defaults.shared.bootArgumentsIsVisible)
+                setup(menuItemButton: cloverSettingsVisibilityButton, value: Defaults.shared.cloverSettingsIsVisible)
+                setup(menuItemButton: packageInstallerVisibilityButton, value: Defaults.shared.packageInstallerIsVisible)
+                setup(menuItemButton: openInBrowserVisibilityButton, value: Defaults.shared.openInBrowserIsVisible)
+                setup(menuItemButton: kernelExtensionsVisibilityButton, value: Defaults.shared.kernelExtensionsIsVisible)
+
+                if Defaults.shared.disableUpdateAlerts {
+                        toggleNotificationsPopupMenuButton.selectItem(at: 1)
                 } else {
-                        cloverSettingsVisibilityButton.state = .off
+                        toggleNotificationsPopupMenuButton.selectItem(at: 0)
                 }
-                if Defaults.shared.packageInstallerIsVisible {
-                        packageInstallerVisibilityButton.state = .on
-                } else {
-                        packageInstallerVisibilityButton.state = .off
-                }
-                if Defaults.shared.openInBrowserIsVisible {
-                        openInBrowserVisibilityButton.state = .on
-                } else {
-                        openInBrowserVisibilityButton.state = .off
-                }
-                if Defaults.shared.kernelExtensionsIsVisible {
-                        kernelExtensionsVisibilityButton.state = .on
-                } else {
-                        kernelExtensionsVisibilityButton.state = .off
-                }
+                
                 openInBrowserUrlTextField.stringValue = Defaults.shared.openInBrowserUrl
                 openInBrowserDescriptionTextField.stringValue = Defaults.shared.openInBrowserTitle
                 
@@ -91,7 +87,6 @@ class PreferencesViewController: NSViewController {
                 
                 super.viewDidAppear()
         }
-        
         
         @IBAction func hideBootArgumentsButtonPressed(_ sender: NSButton) {
                 if sender.state == .on {
@@ -133,7 +128,6 @@ class PreferencesViewController: NSViewController {
                         Defaults.shared.packageInstallerIsVisible = false
                 }
         }
-        
 
         @IBAction func openInBrowserUrlTextFieldDidEndEditing(_ sender: NSTextField) {
                 var string = openInBrowserUrlTextField.stringValue
