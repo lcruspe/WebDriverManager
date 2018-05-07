@@ -17,7 +17,7 @@
 
 - Displays web driver loaded status in the top of the menu
 - Enable NVIDIA drivers or use macOS default drivers
-- Enable notifications of NVIDA driver updates/releases
+- Enable notifications of NVIDIA driver updates/releases
 - Optional extras enabled in Preferences
 
 ## Extras
