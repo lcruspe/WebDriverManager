@@ -23,6 +23,7 @@ import os.log
 class StatusMenuController: NSObject, NSMenuDelegate {
 
         let osLog = OSLog.init(subsystem: "org.vulgo.WebDriverManager", category: "StatusMenuController")
+        
         let cloverSettings = NVCloverSettings()
         let fileManager = FileManager()
         var csrActiveConfig: UInt32 = 0xFFFF
@@ -31,7 +32,6 @@ class StatusMenuController: NSObject, NSMenuDelegate {
         var fsAllowed: Bool = false
         var kextAllowed: Bool = false
         var scriptError: NSDictionary?
-
         let statusItem = NSStatusBar.system.statusItem(withLength:NSStatusItem.variableLength)
         var storyboard: NSStoryboard?
         var aboutWindowController: NSWindowController?
@@ -81,6 +81,50 @@ class StatusMenuController: NSObject, NSMenuDelegate {
         @IBOutlet weak var unstageGpuBundlesMenuItem: NSMenuItem!
         @IBOutlet weak var clearStagingMenuItem: NSMenuItem!
         
+        private func disable(_ items: NSMenuItem ...) {
+                for item in items {
+                        item.isEnabled = false
+                }
+        }
+        
+        private func enable(_ items: NSMenuItem ...) {
+                for item in items {
+                        item.isEnabled = true
+                }
+        }
+        
+        private func hide(_ items: NSMenuItem ...) {
+                for item in items {
+                        item.isHidden = true
+                }
+        }
+        
+        private func show(_ items: NSMenuItem ...) {
+                for item in items {
+                        item.isHidden = false
+                }
+        }
+        
+        private func setVisibility(of items: NSMenuItem ..., accordingTo bool: Bool) {
+                for item in items {
+                        if bool == true {
+                                item.isHidden = false
+                        } else {
+                                item.isHidden = true
+                        }
+                }
+        }
+        
+        private func setState(of items: NSMenuItem ..., accordingTo bool: Bool) {
+                for item in items {
+                        if bool == true {
+                                item.state = .on
+                        } else {
+                                item.state = .off
+                        }
+                }
+        }
+        
         override func awakeFromNib() {
                 if let button = statusItem.button {
                         button.image = NSImage(named:NSImage.Name("NVMenuIcon"))
@@ -96,47 +140,37 @@ class StatusMenuController: NSObject, NSMenuDelegate {
                 editBootArgsController = storyboard?.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "editBootArgsWindowController")) as? NSWindowController
         }
         
+        func menuNeedsUpdate(_ menu: NSMenu) {
+                csrActiveConfigMenuItem.title = "CSR Active Config: \(String(format: "0x%X", csrActiveConfig))"
+        }
+        
         func menuWillOpen(_ menu: NSMenu) {
+                /* Driver Status and nvda_drv */
                 if fileManager.fileExists(atPath: "/Library/Extensions/NVDAStartupWeb.kext") {
                         if let bundleId: String = nvAccelerator.getStringValue(forProperty: "CFBundleIdentifier"), bundleId.uppercased().contains("WEB") {
                                 driverStatus = "\(bundleId)"
                         } else {
                                 driverStatus = driverNotInUseMenuItemTitle
                         }
-                        useNvidiaDriverMenuItem.isEnabled = true
-                        useDefaultDriverMenuItem.isEnabled = true
+                        enable(useNvidiaDriverMenuItem, useDefaultDriverMenuItem)
                         driverStatusMenuItem.title = driverStatus
                 } else {
-                        useNvidiaDriverMenuItem.isEnabled = false
-                        useDefaultDriverMenuItem.isEnabled = false
+                        disable(useNvidiaDriverMenuItem, useDefaultDriverMenuItem)
                         driverStatusMenuItem.title = driverNotInstalledMenuItemTitle
                 }
-                if Nvram.shared!.useNvidia {
-                        useNvidiaDriverMenuItem.state = .on
-                        useDefaultDriverMenuItem.state = .off
-                } else {
-                        useNvidiaDriverMenuItem.state = .off
-                        useDefaultDriverMenuItem.state = .on
+                if Nvram.shared != nil {
+                        setState(of: useNvidiaDriverMenuItem, accordingTo: Nvram.shared!.useNvidia)
+                        setState(of: useDefaultDriverMenuItem, accordingTo: !(Nvram.shared!.useNvidia))
                 }
-                if Defaults.shared.bootArgumentsIsVisible {
-                        bootArgumentsMenuItem.isHidden = false
-                } else {
-                        bootArgumentsMenuItem.isHidden = true
-                }
+
+                /* Clover Settings */
+                setVisibility(of: bootArgumentsMenuItem, accordingTo: Defaults.shared.bootArgumentsIsVisible)
                 if cloverSettings != nil && Defaults.shared.cloverSettingsIsVisible {
-                        cloverSubMenuItem.isHidden = false
-                        if cloverSettings!.nvidiaWebIsEnabled {
-                                nvidiaWebMenuItem.state = .on
-                        } else {
-                                nvidiaWebMenuItem.state = .off
-                        }
-                        if cloverSettings!.nvdaStartupPatchIsEnabled {
-                                nvdaStartupMenuItem.state = .on
-                        } else {
-                                nvdaStartupMenuItem.state = .off
-                        }
+                        show(cloverSubMenuItem)
+                        setState(of: nvidiaWebMenuItem, accordingTo: cloverSettings!.nvidiaWebIsEnabled)
+                        setState(of: nvdaStartupMenuItem, accordingTo: cloverSettings!.nvdaStartupPatchIsEnabled)
                 } else {
-                        cloverSubMenuItem.isHidden = true
+                        hide(cloverSubMenuItem)
                 }
                 if let url: URL = cloverSettings?.lastVolumeUrl {
                         if fileManager.mountedVolumeURLs(includingResourceValuesForKeys: nil, options: FileManager.VolumeEnumerationOptions())?.contains(url) ?? false {
@@ -145,31 +179,18 @@ class StatusMenuController: NSObject, NSMenuDelegate {
                                 cloverPartitionMenuItem.title = mountEFIItemTitle
                         }
                 }
-                if Defaults.shared.openInBrowserIsVisible {
-                        openInBrowserMenuItem.title = openInBrowserMenuItemTitle.replacingOccurrences(of: "%", with: Defaults.shared.openInBrowserTitle)
-                        openInBrowserMenuItem.isHidden = false
-                } else {
 
-                        openInBrowserMenuItem.isHidden = true
-                }
-                if Defaults.shared.kernelExtensionsIsVisible {
-                        kernelExtensionsMenuItem.isHidden = false
-                } else {
-                        kernelExtensionsMenuItem.isHidden = true
-                }
-                if Defaults.shared.packageInstallerIsVisible {
-                        packageInstallerMenuItem.isHidden = false
-                } else {
-                        packageInstallerMenuItem.isHidden = true
-                }
-                csrActiveConfigMenuItem.title = "CSR Active Config: \(String(format: "0x%X", csrActiveConfig))"
-                if fsAllowed {
-                        unstageGpuBundlesMenuItem.isHidden = false
-                        clearStagingMenuItem.isHidden = true
-                } else {
-                        unstageGpuBundlesMenuItem.isHidden = true
-                        clearStagingMenuItem.isHidden = false
-                }
+                /* Kernel Extensions */
+                setVisibility(of: unstageGpuBundlesMenuItem, accordingTo: fsAllowed)
+                setVisibility(of: clearStagingMenuItem, accordingTo: !fsAllowed)
+                setVisibility(of: kernelExtensionsMenuItem, accordingTo: Defaults.shared.kernelExtensionsIsVisible)
+
+                /* Package Installer */
+                setVisibility(of: packageInstallerMenuItem, accordingTo: Defaults.shared.packageInstallerIsVisible)
+                
+                /* Open In Browser */
+                openInBrowserMenuItem.title = openInBrowserMenuItemTitle.replacingOccurrences(of: "%", with: Defaults.shared.openInBrowserTitle)
+                setVisibility(of: openInBrowserMenuItem, accordingTo: Defaults.shared.openInBrowserIsVisible)
         }
         
         func showScriptErrorAlert() {
@@ -291,40 +312,30 @@ class StatusMenuController: NSObject, NSMenuDelegate {
                 }
         }
         
-        @IBAction func unstageGpuBundlesMenuItemClicked(_ sender: NSMenuItem) {
-                let result = Scripts.shared.unstage?.executeAndReturnError(&scriptError)
-                if Scripts.shared.boolValue(result) {
-                        os_log("Unstage script finished", log: osLog, type: .info)
-                        showRestartAfterScriptAlert()
-                        return
+        func execute(script: NSAppleScript?, withDebugDescription debugDescription: String) {
+                DispatchQueue.main.async {
+                        let result = script?.executeAndReturnError(&self.scriptError)
+                        if Scripts.shared.boolValue(result) {
+                                os_log("%{public}@ script finished", log: self.osLog, type: .info, debugDescription)
+                                self.showRestartAfterScriptAlert()
+                                return
+                        }
+                        NSSound.beep()
+                        os_log("Error running %{public}@ script", log: self.osLog, type: .default, debugDescription)
+                        self.showScriptErrorAlert()
                 }
-                NSSound.beep()
-                os_log("Error running unstage script", log: osLog, type: .default)
-                showScriptErrorAlert()
+        }
+        
+        @IBAction func unstageGpuBundlesMenuItemClicked(_ sender: NSMenuItem) {
+                execute(script: Scripts.shared.unstage, withDebugDescription: "unstage")
         }
         
         @IBAction func clearStagingMenuItemClicked(_ sender: NSMenuItem) {
-                let result = Scripts.shared.clearStaging?.executeAndReturnError(&scriptError)
-                if Scripts.shared.boolValue(result) {
-                        os_log("Clear staging script finished", log: osLog, type: .info)
-                        showRestartAfterScriptAlert()
-                        return
-                }
-                NSSound.beep()
-                os_log("Error running clear staging script", log: osLog, type: .default)
-                showScriptErrorAlert()
+                execute(script: Scripts.shared.clearStaging, withDebugDescription: "clear staging")
         }
         
         @IBAction func touchExtensionsMenuItemClicked(_ sender: NSMenuItem) {
-                let result = Scripts.shared.touch?.executeAndReturnError(&scriptError)
-                if Scripts.shared.boolValue(result) {
-                        os_log("Touch script finished", log: osLog, type: .info)
-                        showRestartAfterScriptAlert()
-                        return
-                }
-                NSSound.beep()
-                os_log("Error running touch script", log: osLog, type: .default)
-                showScriptErrorAlert()
+                execute(script: Scripts.shared.touch, withDebugDescription: "touch")
         }
         
         @IBAction func preferencesMenuItemClicked(_ sender: Any) {
