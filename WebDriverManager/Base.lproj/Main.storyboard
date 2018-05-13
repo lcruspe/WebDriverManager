@@ -324,6 +324,98 @@ DQ
             </objects>
             <point key="canvasLocation" x="952" y="-440"/>
         </scene>
+        <!--Window Controller-->
+        <scene sceneID="1tz-L9-SUd">
+            <objects>
+                <windowController id="5Xr-7a-FuN" sceneMemberID="viewController">
+                    <window key="window" title="NVIDIA Updater" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="piR-tA-N5k">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="294" y="314" width="480" height="270"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1058"/>
+                        <connections>
+                            <outlet property="delegate" destination="5Xr-7a-FuN" id="W5G-cH-LUW"/>
+                        </connections>
+                    </window>
+                    <connections>
+                        <segue destination="pKz-O4-JC1" kind="relationship" relationship="window.shadowedContentViewController" id="Vkn-7e-GSr"/>
+                    </connections>
+                </windowController>
+                <customObject id="AZc-Ia-OGO" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1547" y="-405"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="zsr-u6-cgS">
+            <objects>
+                <viewController id="pKz-O4-JC1" sceneMemberID="viewController">
+                    <view key="view" id="lK0-dc-QG6">
+                        <rect key="frame" x="0.0" y="0.0" width="602" height="371"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dLg-Ls-i59">
+                                <rect key="frame" x="415" y="13" width="173" height="32"/>
+                                <buttonCell key="cell" type="push" title="Install Selected Driver" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="zm2-Pn-r24">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ved-b9-JoH">
+                                <rect key="frame" x="8" y="13" width="210" height="32"/>
+                                <buttonCell key="cell" type="push" title="Uninstall NVIDIA Web Driver" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="wZN-mS-qOe">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="m4J-ia-0eN">
+                                <rect key="frame" x="369" y="53" width="80" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Running on:" id="5eu-Ob-Ra9">
+                                    <font key="font" metaFont="systemSemibold" size="13"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="UK9-cn-bnG">
+                                <rect key="frame" x="449" y="53" width="135" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="macOS 10.13.4 17E99" id="dPO-AE-Aax">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="eWX-sr-DFp">
+                                <rect key="frame" x="0.0" y="84" width="602" height="287"/>
+                            </customView>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5YQ-ZG-hkb">
+                                <rect key="frame" x="12" y="51" width="287" height="18"/>
+                                <buttonCell key="cell" type="check" title="Only show drivers for this version of macOS" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="DLu-dH-j3U">
+                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="5YQ-ZG-hkb" firstAttribute="bottom" secondItem="m4J-ia-0eN" secondAttribute="bottom" id="48e-fn-WRD"/>
+                            <constraint firstAttribute="bottom" secondItem="ved-b9-JoH" secondAttribute="bottom" constant="20" symbolic="YES" id="5YT-Eu-Sj4"/>
+                            <constraint firstItem="5YQ-ZG-hkb" firstAttribute="leading" secondItem="ved-b9-JoH" secondAttribute="leading" id="9LL-rt-5wf"/>
+                            <constraint firstItem="m4J-ia-0eN" firstAttribute="top" secondItem="eWX-sr-DFp" secondAttribute="bottom" constant="14" id="9eA-xx-GqB"/>
+                            <constraint firstItem="UK9-cn-bnG" firstAttribute="leading" secondItem="m4J-ia-0eN" secondAttribute="trailing" constant="4" id="DAQ-0B-ri0"/>
+                            <constraint firstAttribute="trailing" secondItem="eWX-sr-DFp" secondAttribute="trailing" id="G6c-8I-qGX"/>
+                            <constraint firstItem="eWX-sr-DFp" firstAttribute="top" secondItem="lK0-dc-QG6" secondAttribute="top" id="Hbj-gF-YAl"/>
+                            <constraint firstItem="ved-b9-JoH" firstAttribute="baseline" secondItem="dLg-Ls-i59" secondAttribute="baseline" id="Lml-zp-cLi"/>
+                            <constraint firstItem="m4J-ia-0eN" firstAttribute="leading" secondItem="5YQ-ZG-hkb" secondAttribute="trailing" constant="74" id="Zg4-95-UvK"/>
+                            <constraint firstItem="eWX-sr-DFp" firstAttribute="leading" secondItem="lK0-dc-QG6" secondAttribute="leading" id="at2-uK-3qn"/>
+                            <constraint firstItem="m4J-ia-0eN" firstAttribute="baseline" secondItem="UK9-cn-bnG" secondAttribute="baseline" id="bdZ-ch-2EF"/>
+                            <constraint firstAttribute="trailing" secondItem="UK9-cn-bnG" secondAttribute="trailing" constant="20" symbolic="YES" id="jNo-eA-SPu"/>
+                            <constraint firstItem="ved-b9-JoH" firstAttribute="top" secondItem="5YQ-ZG-hkb" secondAttribute="bottom" constant="12" id="l52-Od-cB8"/>
+                            <constraint firstItem="UK9-cn-bnG" firstAttribute="trailing" secondItem="dLg-Ls-i59" secondAttribute="trailing" id="pWN-iW-cxH"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <customObject id="fd0-4G-yKV" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2239" y="-409.5"/>
+        </scene>
         <!--Preferences View Controller-->
         <scene sceneID="Mwe-Fn-lUo">
             <objects>
