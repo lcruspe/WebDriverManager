@@ -20,11 +20,11 @@
 import Cocoa
 import os.log
 
-class WebDriverNotifications: NSObject, NSUserNotificationCenterDelegate {
+class WebDriverUpdates: NSObject, NSUserNotificationCenterDelegate {
         
         let osLog = OSLog.init(subsystem: "org.vulgo.WebDriverManager", category: "Notifications")
         
-        static let shared = WebDriverNotifications()
+        static let shared = WebDriverUpdates()
         
         let updateCheckQueue = DispatchQueue(label: "updateCheck", attributes: .concurrent)
         var updateCheckWorkItem: DispatchWorkItem?

@@ -12,7 +12,7 @@
 		4D163C51205A541500C82104 /* RegistryEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D163C4F205A541400C82104 /* RegistryEntry.swift */; };
 		4D163C57205A541F00C82104 /* CloverSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D163C55205A541F00C82104 /* CloverSettings.swift */; };
 		4D163C59205A8A9100C82104 /* NVCloverSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D163C58205A8A9100C82104 /* NVCloverSettings.swift */; };
-		4D17721C20453FE300C82104 /* WebDriverNotifications.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D17721B20453FE300C82104 /* WebDriverNotifications.swift */; };
+		4D17721C20453FE300C82104 /* WebDriverUpdates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D17721B20453FE300C82104 /* WebDriverUpdates.swift */; };
 		4D17721E204544E900C82104 /* sysctl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D17721D204544E900C82104 /* sysctl.swift */; };
 		4D1942A7208BA06900C82104 /* BusyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1942A6208BA06900C82104 /* BusyViewController.swift */; };
 		4D29BA30206BA21D00C82104 /* component.sh in Resources */ = {isa = PBXBuildFile; fileRef = 4D29BA2F206BA21C00C82104 /* component.sh */; };
@@ -62,7 +62,7 @@
 		4D163C4F205A541400C82104 /* RegistryEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistryEntry.swift; sourceTree = "<group>"; };
 		4D163C55205A541F00C82104 /* CloverSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloverSettings.swift; sourceTree = "<group>"; };
 		4D163C58205A8A9100C82104 /* NVCloverSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVCloverSettings.swift; sourceTree = "<group>"; };
-		4D17721B20453FE300C82104 /* WebDriverNotifications.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebDriverNotifications.swift; sourceTree = "<group>"; };
+		4D17721B20453FE300C82104 /* WebDriverUpdates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebDriverUpdates.swift; sourceTree = "<group>"; };
 		4D17721D204544E900C82104 /* sysctl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sysctl.swift; sourceTree = "<group>"; };
 		4D1942A6208BA06900C82104 /* BusyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusyViewController.swift; sourceTree = "<group>"; };
 		4D29BA2F206BA21C00C82104 /* component.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = component.sh; sourceTree = "<group>"; };
@@ -166,7 +166,7 @@
 				4DF216C0208E44C600C82104 /* TextField.swift */,
 				4D0959702094C8C400C82104 /* ViewWithPerformKeyEquivalent.swift */,
 				4D30442A204090C400C82104 /* Web_Driver_Manager.entitlements */,
-				4D17721B20453FE300C82104 /* WebDriverNotifications.swift */,
+				4D17721B20453FE300C82104 /* WebDriverUpdates.swift */,
 				4DA7AACE205E660200C82104 /* Welcome.rtf */,
 			);
 			path = WebDriverManager;
@@ -279,7 +279,7 @@
 				4D827091205C21BC00C82104 /* Liberator.swift in Sources */,
 				4D49F93F205D011300C82104 /* PreferencesViewController.swift in Sources */,
 				4D17721E204544E900C82104 /* sysctl.swift in Sources */,
-				4D17721C20453FE300C82104 /* WebDriverNotifications.swift in Sources */,
+				4D17721C20453FE300C82104 /* WebDriverUpdates.swift in Sources */,
 				4D8347AC204211D100C82104 /* nvram.applescript in Sources */,
 				4DA515A4205BB17D00C82104 /* PackageDropView.swift in Sources */,
 				4D0959712094C8C400C82104 /* ViewWithPerformKeyEquivalent.swift in Sources */,

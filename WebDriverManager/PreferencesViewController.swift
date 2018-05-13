@@ -79,7 +79,7 @@ class PreferencesViewController: NSViewController {
                 openInBrowserUrlTextField.stringValue = Defaults.shared.openInBrowserUrl
                 openInBrowserDescriptionTextField.stringValue = Defaults.shared.openInBrowserTitle
                 
-                if WebDriverNotifications.shared.checkInProgress {
+                if WebDriverUpdates.shared.checkInProgress {
                         disableUpdateCheckControls()
                 } else {
                         enableUpdateCheckControls()
@@ -155,7 +155,7 @@ class PreferencesViewController: NSViewController {
                         Defaults.shared.suppressUpdateAlerts = ""
                         os_log("Cancelling suppressUpdateAlerts", log: osLog, type: .info)
                 }
-                WebDriverNotifications.shared.beginUpdateCheck(overrideDefaults: true, userCheck: true)
+                WebDriverUpdates.shared.beginUpdateCheck(overrideDefaults: true, userCheck: true)
         }
         
         @IBAction func notificationsPopupMenuItemEnabledClicked(_ sender: NSMenuItem) {
@@ -166,7 +166,7 @@ class PreferencesViewController: NSViewController {
                         }
                         Defaults.shared.disableUpdateAlerts = false
                         os_log("Automatic update notifications enabled", log: osLog, type: .info)
-                        WebDriverNotifications.shared.beginUpdateCheck(overrideDefaults: true, userCheck: true)
+                        WebDriverUpdates.shared.beginUpdateCheck(overrideDefaults: true, userCheck: true)
                 }
         }
         
@@ -174,7 +174,7 @@ class PreferencesViewController: NSViewController {
                 if Defaults.shared.disableUpdateAlerts == false {
                         Defaults.shared.disableUpdateAlerts = true
                         os_log("Automatic update notifications disabled", log: osLog, type: .info)
-                        WebDriverNotifications.shared.updateCheckWorkItem?.cancel()
+                        WebDriverUpdates.shared.updateCheckWorkItem?.cancel()
                 }
         }
         

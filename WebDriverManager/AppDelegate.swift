@@ -37,8 +37,8 @@ struct ModifierKeys {
         @IBOutlet weak var statusMenu: NSMenu!
         
         func applicationDidFinishLaunching(_ aNotification: Notification) {
-                NSUserNotificationCenter.default.delegate = WebDriverNotifications.shared
-                WebDriverNotifications.shared.beginUpdateCheck()
+                NSUserNotificationCenter.default.delegate = WebDriverUpdates.shared
+                WebDriverUpdates.shared.beginUpdateCheck()
         }
         
         func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
