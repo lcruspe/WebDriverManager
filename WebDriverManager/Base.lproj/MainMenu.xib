@@ -34,6 +34,7 @@
                 <outlet property="quitMenuItem" destination="MAd-yk-Fz2" id="eMk-Hv-4nx"/>
                 <outlet property="statusMenu" destination="FVg-r4-d2m" id="Gvh-tB-VML"/>
                 <outlet property="unstageGpuBundlesMenuItem" destination="3dM-4y-E8V" id="aN7-3c-U6z"/>
+                <outlet property="updaterMenuItem" destination="B7E-4H-gDK" id="zTE-3Z-UPa"/>
                 <outlet property="useDefaultDriverMenuItem" destination="8n0-nR-8WC" id="gc9-i2-GFp"/>
                 <outlet property="useNvidiaDriverMenuItem" destination="lBp-Ry-pEh" id="qml-es-4rc"/>
             </connections>
@@ -41,6 +42,12 @@
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
         <menu autoenablesItems="NO" id="FVg-r4-d2m">
             <items>
+                <menuItem title="Update Drivers" keyEquivalent="u" id="B7E-4H-gDK">
+                    <connections>
+                        <action selector="updaterMenuItemClicked:" target="mMO-jR-0xx" id="sOC-ZW-esC"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="qfX-LY-vty"/>
                 <menuItem enabled="NO" id="d6q-bn-6in">
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>

@@ -1,5 +1,5 @@
 /*
- * File: ViewWithPerformKeyEquivalent.swift
+ * File: UpdaterViewController.swift
  *
  * WebDriverManager © vulgo 2018
  *
@@ -19,17 +19,11 @@
 
 import Cocoa
 
-class ViewWithPerformKeyEquivalent: NSView {
-        
-        override func performKeyEquivalent(with event: NSEvent) -> Bool {
-                if let appDelegate = NSApplication.shared.delegate as? AppDelegate {
-                        appDelegate.keyEquivalent(with: event)
-                }
-                return false
-        }
-        
-        override func draw(_ dirtyRect: NSRect) {
-                super.draw(dirtyRect)
-        }
-        
+class UpdaterViewController: NSViewController {
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do view setup here.
+    }
+    
 }

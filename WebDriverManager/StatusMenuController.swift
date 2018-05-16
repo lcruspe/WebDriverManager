@@ -34,6 +34,7 @@ class StatusMenuController: NSObject, NSMenuDelegate {
         var scriptError: NSDictionary?
         let statusItem = NSStatusBar.system.statusItem(withLength:NSStatusItem.variableLength)
         var storyboard: NSStoryboard?
+        var updaterWindowController: NSWindowController?
         var aboutWindowController: NSWindowController?
         var preferencesWindowController: NSWindowController?
         var packagerWindowController: NSWindowController?
@@ -63,6 +64,7 @@ class StatusMenuController: NSObject, NSMenuDelegate {
         let restartAfterScriptInformativeText = NSLocalizedString("Restart to update the boot volume and apply changes.", comment: "Reboot after script: informative text")
 
         @IBOutlet weak var statusMenu: NSMenu!
+        @IBOutlet weak var updaterMenuItem: NSMenuItem!
         @IBOutlet weak var driverStatusMenuItem: NSMenuItem!
         @IBOutlet weak var useNvidiaDriverMenuItem: NSMenuItem!
         @IBOutlet weak var useDefaultDriverMenuItem: NSMenuItem!
@@ -134,6 +136,7 @@ class StatusMenuController: NSObject, NSMenuDelegate {
                 statusItem.menu = statusMenu
                 statusMenu.delegate = self
                 storyboard = NSStoryboard(name: NSStoryboard.Name(rawValue: "Main"), bundle: nil)
+                updaterWindowController = storyboard?.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "updaterWindowController")) as? NSWindowController
                 aboutWindowController = storyboard?.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "aboutWindowController")) as? NSWindowController
                 packagerWindowController = storyboard?.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "packagerWindowController")) as? NSWindowController
                 preferencesWindowController = storyboard?.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "preferencesWindowController")) as? NSWindowController
@@ -208,6 +211,19 @@ class StatusMenuController: NSObject, NSMenuDelegate {
         }
         
         /* Menu actions */
+        
+        @IBAction func updaterMenuItemClicked(_ sender: Any) {
+                if let window = updaterWindowController?.window {
+                        if !window.isVisible {
+                                window.center()
+                        }
+                        window.level = .floating
+                        NSApp.activate(ignoringOtherApps: true)
+                        window.makeKeyAndOrderFront(self)
+                        window.level = .normal
+                }
+        }
+        
         
         @IBAction func changeDriverMenuItemClicked(_ sender: NSMenuItem) {
                 if sender.state == .on {

@@ -1,5 +1,5 @@
 /*
- * File: ViewWithPerformKeyEquivalent.swift
+ * File: UpdaterProgressViewController.swift
  *
  * WebDriverManager © vulgo 2018
  *
@@ -19,17 +19,22 @@
 
 import Cocoa
 
-class ViewWithPerformKeyEquivalent: NSView {
+class UpdaterProgressViewController: NSViewController {
         
-        override func performKeyEquivalent(with event: NSEvent) -> Bool {
-                if let appDelegate = NSApplication.shared.delegate as? AppDelegate {
-                        appDelegate.keyEquivalent(with: event)
-                }
-                return false
+        @IBOutlet weak var closeButton: NSButton!
+        @IBOutlet weak var progressIndicator: NSProgressIndicator!
+        @IBOutlet weak var progressMessage: NSTextField!
+        
+        override func viewDidLoad() {
+                super.viewDidLoad()
         }
         
-        override func draw(_ dirtyRect: NSRect) {
-                super.draw(dirtyRect)
+        override func viewDidAppear() {
+                view.window?.styleMask.remove(.resizable)
+        }
+        
+        @IBAction func closeButtonPressed(_ sender: Any) {
+                view.window?.close()
         }
         
 }

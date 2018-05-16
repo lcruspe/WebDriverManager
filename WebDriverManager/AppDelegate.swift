@@ -59,6 +59,8 @@ struct ModifierKeys {
                                         menuDelegate.showPackageInstallerMenuItemClicked(_: self)
                                 case (ModifierKeys.command,19):
                                         menuDelegate.openInBrowserMenuItemClicked(_: self)
+                                case (ModifierKeys.command,32):
+                                        menuDelegate.updaterMenuItemClicked(_: self)
                                 case (ModifierKeys.command,43):
                                         menuDelegate.preferencesMenuItemClicked(_: self)
                                 default:

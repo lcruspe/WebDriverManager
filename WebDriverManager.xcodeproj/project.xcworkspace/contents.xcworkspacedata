@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:/Users/Home/Documents/Xcode/Web Driver Manager/WebDriverManager.xcodeproj">
+      location = "group:/Users/Home/Documents/Xcode/WebDriverManager/WebDriverManager/UpdaterProgressViewController.swift">
+   </FileRef>
+   <FileRef
+      location = "self:">
    </FileRef>
 </Workspace>

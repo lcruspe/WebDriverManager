@@ -22,7 +22,9 @@
 		4D304425204090C400C82104 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D304424204090C400C82104 /* Assets.xcassets */; };
 		4D304428204090C400C82104 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4D304426204090C400C82104 /* MainMenu.xib */; };
 		4D304438204090F300C82104 /* Nvram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D304433204090F300C82104 /* Nvram.swift */; };
+		4D3345C920AC923E00C82104 /* UpdaterProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D3345C820AC923E00C82104 /* UpdaterProgressViewController.swift */; };
 		4D47D20C208B4B0200C82104 /* Scripts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D47D20B208B4B0200C82104 /* Scripts.swift */; };
+		4D49A38D20AC682500C82104 /* UpdaterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D49A38C20AC682500C82104 /* UpdaterViewController.swift */; };
 		4D49F93F205D011300C82104 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D49F93E205D011300C82104 /* PreferencesViewController.swift */; };
 		4D4D535520AC476400C82104 /* STPrivilegedTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D4D533C20AC476300C82104 /* STPrivilegedTask.m */; };
 		4D4D536420AC483500C82104 /* install.sh in Resources */ = {isa = PBXBuildFile; fileRef = 4D4D536320AC483500C82104 /* install.sh */; };
@@ -78,7 +80,9 @@
 		4D304429204090C400C82104 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4D30442A204090C400C82104 /* Web_Driver_Manager.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Web_Driver_Manager.entitlements; sourceTree = "<group>"; };
 		4D304433204090F300C82104 /* Nvram.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Nvram.swift; sourceTree = "<group>"; };
+		4D3345C820AC923E00C82104 /* UpdaterProgressViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdaterProgressViewController.swift; sourceTree = "<group>"; };
 		4D47D20B208B4B0200C82104 /* Scripts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scripts.swift; sourceTree = "<group>"; };
+		4D49A38C20AC682500C82104 /* UpdaterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdaterViewController.swift; sourceTree = "<group>"; };
 		4D49F93E205D011300C82104 /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
 		4D4D533C20AC476300C82104 /* STPrivilegedTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STPrivilegedTask.m; sourceTree = "<group>"; };
 		4D4D535020AC476300C82104 /* STPrivilegedTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STPrivilegedTask.h; sourceTree = "<group>"; };
@@ -173,6 +177,8 @@
 				4D8D81AF207A7D4400C82104 /* StatusMenuController.swift */,
 				4D17721D204544E900C82104 /* sysctl.swift */,
 				4DF216C0208E44C600C82104 /* TextField.swift */,
+				4D49A38C20AC682500C82104 /* UpdaterViewController.swift */,
+				4D3345C820AC923E00C82104 /* UpdaterProgressViewController.swift */,
 				4D0959702094C8C400C82104 /* ViewWithPerformKeyEquivalent.swift */,
 				4D30442A204090C400C82104 /* Web_Driver_Manager.entitlements */,
 				4D17721B20453FE300C82104 /* WebDriverUpdates.swift */,
@@ -311,6 +317,7 @@
 				4D17721E204544E900C82104 /* sysctl.swift in Sources */,
 				4D17721C20453FE300C82104 /* WebDriverUpdates.swift in Sources */,
 				4D8347AC204211D100C82104 /* nvram.applescript in Sources */,
+				4D49A38D20AC682500C82104 /* UpdaterViewController.swift in Sources */,
 				4DA515A4205BB17D00C82104 /* PackageDropView.swift in Sources */,
 				4D0959712094C8C400C82104 /* ViewWithPerformKeyEquivalent.swift in Sources */,
 				4D1942A7208BA06900C82104 /* BusyViewController.swift in Sources */,
@@ -321,6 +328,7 @@
 				4DD5F6BD206670D300C82104 /* touch.applescript in Sources */,
 				4DF216BF208DD44300C82104 /* BootArgsViewController.swift in Sources */,
 				4D47D20C208B4B0200C82104 /* Scripts.swift in Sources */,
+				4D3345C920AC923E00C82104 /* UpdaterProgressViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
