@@ -331,7 +331,7 @@ DQ
                     <window key="window" title="NVIDIA Updater" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="piR-tA-N5k">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-                        <rect key="contentRect" x="294" y="314" width="480" height="270"/>
+                        <rect key="contentRect" x="410" y="314" width="364" height="163"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1058"/>
                         <connections>
                             <outlet property="delegate" destination="5Xr-7a-FuN" id="W5G-cH-LUW"/>
@@ -343,7 +343,7 @@ DQ
                 </windowController>
                 <customObject id="AZc-Ia-OGO" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1547" y="-405"/>
+            <point key="canvasLocation" x="2161" y="-461"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="zsr-u6-cgS">
@@ -355,10 +355,13 @@ DQ
                         <subviews>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dLg-Ls-i59">
                                 <rect key="frame" x="415" y="13" width="173" height="32"/>
-                                <buttonCell key="cell" type="push" title="Install Selected Driver" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="zm2-Pn-r24">
+                                <buttonCell key="cell" type="push" title="Install Selected Driver" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="zm2-Pn-r24">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <segue destination="Wnh-jh-HKb" kind="sheet" id="xg5-UJ-9DR"/>
+                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ved-b9-JoH">
                                 <rect key="frame" x="8" y="13" width="210" height="32"/>
@@ -414,7 +417,48 @@ DQ
                 </viewController>
                 <customObject id="fd0-4G-yKV" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2239" y="-409.5"/>
+            <point key="canvasLocation" x="1630" y="-381"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="jaV-Ss-u5T">
+            <objects>
+                <viewController id="Wnh-jh-HKb" sceneMemberID="viewController">
+                    <view key="view" id="lJn-MS-KTK">
+                        <rect key="frame" x="0.0" y="0.0" width="530" height="98"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <progressIndicator wantsLayer="YES" fixedFrame="YES" maxValue="100" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="EtY-Lh-cuB">
+                                <rect key="frame" x="92" y="51" width="418" height="20"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            </progressIndicator>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3fk-Yr-FlZ">
+                                <rect key="frame" x="94" y="34" width="279" height="17"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Installation complete. You should reboot now." id="aLL-gm-5CD">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fEO-jB-kCd">
+                                <rect key="frame" x="20" y="20" width="64" height="64"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" image="Package" id="igN-gc-uRJ"/>
+                            </imageView>
+                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="n38-iV-Vf8">
+                                <rect key="frame" x="441" y="13" width="75" height="32"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <buttonCell key="cell" type="push" title="Close" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rA3-Gp-ZNv">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
+                        </subviews>
+                    </view>
+                </viewController>
+                <customObject id="lEq-xv-11d" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1630" y="9"/>
         </scene>
         <!--Preferences View Controller-->
         <scene sceneID="Mwe-Fn-lUo">
@@ -651,5 +695,6 @@ DQ
     </scenes>
     <resources>
         <image name="AboutImage" width="440" height="512"/>
+        <image name="Package" width="64" height="64"/>
     </resources>
 </document>
