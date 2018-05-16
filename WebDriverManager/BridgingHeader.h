@@ -3,6 +3,7 @@
 //
 
 #include <stdint.h>
+#import "STPrivilegedTask.h"
 
 int csr_check(uint32_t mask);
 int csr_get_active_config(uint32_t *config);

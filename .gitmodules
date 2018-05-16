@@ -4,3 +4,6 @@
 [submodule "registry-entry"]
 	path = registry-entry
 	url = https://github.com/vulgo/registry-entry.git
+[submodule "STPrivilegedTask"]
+	path = STPrivilegedTask
+	url = https://github.com/sveinbjornt/STPrivilegedTask.git
