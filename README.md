@@ -10,7 +10,6 @@
 ## Installing
 
 - Download the latest disk image from the Releases page
-- Recommended: uninstall the stock menu bar app and preference pane
 - You can add the app to your account's 'Startup Items' manually if you want it to start every boot
 
 ## Features
@@ -21,6 +20,8 @@
 - Optional extras enabled in Preferences
 
 ## Extras
+
+Recommended: uninstall the stock menu bar app and preference pane if you use the features from this list.
 
 - Drag and drop repackager to remove OS checks + non-essential software from NVIDIA's installer
 - Edit boot arguments NVRAM variable
