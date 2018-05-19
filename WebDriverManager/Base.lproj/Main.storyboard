@@ -322,7 +322,7 @@ DQ
                 </windowController>
                 <customObject id="mne-in-wVU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="823" y="81"/>
+            <point key="canvasLocation" x="829" y="62"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="1tz-L9-SUd">
@@ -331,7 +331,7 @@ DQ
                     <window key="window" title="NVIDIA Updater" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="piR-tA-N5k">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-                        <rect key="contentRect" x="348" y="291" width="426" height="186"/>
+                        <rect key="contentRect" x="348" y="291" width="426" height="111"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1058"/>
                         <connections>
                             <outlet property="delegate" destination="5Xr-7a-FuN" id="W5G-cH-LUW"/>
@@ -343,56 +343,30 @@ DQ
                 </windowController>
                 <customObject id="AZc-Ia-OGO" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="822" y="-221"/>
+            <point key="canvasLocation" x="828" y="-200"/>
         </scene>
         <!--Updater View Controller-->
         <scene sceneID="zsr-u6-cgS">
             <objects>
                 <viewController id="pKz-O4-JC1" customClass="UpdaterViewController" customModule="Web_Driver_Manager" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="lK0-dc-QG6" customClass="ViewWithPerformKeyEquivalent" customModule="Web_Driver_Manager" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="640" height="400"/>
+                        <rect key="frame" x="0.0" y="0.0" width="640" height="180"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dLg-Ls-i59">
-                                <rect key="frame" x="493" y="13" width="133" height="32"/>
-                                <buttonCell key="cell" type="push" title="Install Selected" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="zm2-Pn-r24">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <segue destination="Wnh-jh-HKb" kind="sheet" id="xg5-UJ-9DR"/>
-                                </connections>
-                            </button>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="m4J-ia-0eN">
-                                <rect key="frame" x="450" y="52" width="80" height="17"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Running on:" id="5eu-Ob-Ra9">
-                                    <font key="font" metaFont="systemSemibold" size="13"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="UK9-cn-bnG">
-                                <rect key="frame" x="534" y="52" width="88" height="17"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="10.13.4 17E99" id="dPO-AE-Aax">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
-                            <scrollView autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sAc-pO-jOa">
-                                <rect key="frame" x="0.0" y="83" width="640" height="317"/>
+                            <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sAc-pO-jOa">
+                                <rect key="frame" x="0.0" y="83" width="640" height="97"/>
                                 <clipView key="contentView" id="fz4-Qz-1Gj">
-                                    <rect key="frame" x="1" y="0.0" width="638" height="316"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="640" height="97"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" headerView="dBN-VK-YEf" viewBased="YES" id="GvH-il-DED">
-                                            <rect key="frame" x="0.0" y="0.0" width="638" height="293"/>
+                                        <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" id="GvH-il-DED">
+                                            <rect key="frame" x="0.0" y="0.0" width="640" height="97"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <size key="intercellSpacing" width="3" height="2"/>
                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                             <tableColumns>
-                                                <tableColumn identifier="" width="116" minWidth="40" maxWidth="1000" id="o6T-L3-1Aa">
+                                                <tableColumn identifier="" width="117" minWidth="40" maxWidth="1000" id="o6T-L3-1Aa">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
                                                         <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -406,7 +380,7 @@ DQ
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView id="GxW-eG-3L2">
-                                                            <rect key="frame" x="1" y="1" width="116" height="17"/>
+                                                            <rect key="frame" x="1" y="1" width="117" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="pXJ-t2-ec5">
@@ -429,7 +403,7 @@ DQ
                                                         </tableCellView>
                                                     </prototypeCellViews>
                                                 </tableColumn>
-                                                <tableColumn identifier="" width="516" minWidth="40" maxWidth="1000" id="6YC-1p-rfq">
+                                                <tableColumn identifier="" width="517" minWidth="40" maxWidth="1000" id="6YC-1p-rfq">
                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
                                                         <font key="font" metaFont="smallSystem"/>
                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -443,7 +417,7 @@ DQ
                                                     <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                                     <prototypeCellViews>
                                                         <tableCellView id="vAb-GQ-6tS">
-                                                            <rect key="frame" x="120" y="1" width="516" height="17"/>
+                                                            <rect key="frame" x="121" y="1" width="517" height="17"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                             <subviews>
                                                                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="PG6-4Y-ZLP">
@@ -474,15 +448,37 @@ DQ
                                     <rect key="frame" x="1" y="32" width="46" height="15"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
-                                <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="Uik-X2-9F4">
+                                <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="Uik-X2-9F4">
                                     <rect key="frame" x="224" y="17" width="15" height="102"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
-                                <tableHeaderView key="headerView" id="dBN-VK-YEf">
-                                    <rect key="frame" x="0.0" y="0.0" width="638" height="23"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableHeaderView>
                             </scrollView>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dLg-Ls-i59">
+                                <rect key="frame" x="493" y="13" width="133" height="32"/>
+                                <buttonCell key="cell" type="push" title="Install Selected" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="zm2-Pn-r24">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <segue destination="Wnh-jh-HKb" kind="sheet" id="xg5-UJ-9DR"/>
+                                </connections>
+                            </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="m4J-ia-0eN">
+                                <rect key="frame" x="450" y="52" width="80" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Running on:" id="5eu-Ob-Ra9">
+                                    <font key="font" metaFont="systemSemibold" size="13"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="UK9-cn-bnG">
+                                <rect key="frame" x="534" y="52" width="88" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="10.13.4 17E99" id="dPO-AE-Aax">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ved-b9-JoH">
                                 <rect key="frame" x="14" y="13" width="217" height="32"/>
                                 <buttonCell key="cell" type="push" title="Uninstall NVIDIA Web Drivers" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="wZN-mS-qOe">
@@ -497,11 +493,16 @@ DQ
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                             </button>
+                            <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="mAr-S8-Avd">
+                                <rect key="frame" x="0.0" y="80" width="640" height="5"/>
+                            </box>
                         </subviews>
                         <constraints>
                             <constraint firstItem="ved-b9-JoH" firstAttribute="top" secondItem="5YQ-ZG-hkb" secondAttribute="bottom" constant="12" id="1YT-df-r8O"/>
                             <constraint firstItem="m4J-ia-0eN" firstAttribute="top" secondItem="sAc-pO-jOa" secondAttribute="bottom" constant="14" id="4oA-ph-9IU"/>
                             <constraint firstItem="UK9-cn-bnG" firstAttribute="leading" secondItem="m4J-ia-0eN" secondAttribute="trailing" constant="8" id="5oN-Kd-z4C"/>
+                            <constraint firstItem="mAr-S8-Avd" firstAttribute="top" secondItem="GvH-il-DED" secondAttribute="bottom" id="6EM-oT-nyN"/>
+                            <constraint firstItem="mAr-S8-Avd" firstAttribute="trailing" secondItem="sAc-pO-jOa" secondAttribute="trailing" id="6V1-OY-ZdC"/>
                             <constraint firstItem="5YQ-ZG-hkb" firstAttribute="bottom" secondItem="m4J-ia-0eN" secondAttribute="bottom" constant="-1" id="8r1-Te-pns"/>
                             <constraint firstItem="dLg-Ls-i59" firstAttribute="top" secondItem="UK9-cn-bnG" secondAttribute="bottom" constant="11" id="DgD-zH-BoF"/>
                             <constraint firstItem="m4J-ia-0eN" firstAttribute="baseline" secondItem="UK9-cn-bnG" secondAttribute="baseline" id="Kh1-W4-9xw"/>
@@ -509,6 +510,7 @@ DQ
                             <constraint firstItem="ved-b9-JoH" firstAttribute="leading" secondItem="lK0-dc-QG6" secondAttribute="leading" constant="20" id="UwR-K6-f0d"/>
                             <constraint firstItem="5YQ-ZG-hkb" firstAttribute="leading" secondItem="ved-b9-JoH" secondAttribute="leading" id="aDw-hL-ioF"/>
                             <constraint firstAttribute="trailing" secondItem="sAc-pO-jOa" secondAttribute="trailing" id="dey-nF-hog"/>
+                            <constraint firstItem="mAr-S8-Avd" firstAttribute="leading" secondItem="sAc-pO-jOa" secondAttribute="leading" id="fBM-sQ-cEe"/>
                             <constraint firstAttribute="trailing" secondItem="dLg-Ls-i59" secondAttribute="trailing" constant="20" id="gtv-Ki-U98"/>
                             <constraint firstItem="sAc-pO-jOa" firstAttribute="leading" secondItem="lK0-dc-QG6" secondAttribute="leading" id="hPI-m1-PrI"/>
                             <constraint firstItem="5YQ-ZG-hkb" firstAttribute="leading" secondItem="lK0-dc-QG6" secondAttribute="leading" constant="20" id="nbN-kH-04x"/>
@@ -521,7 +523,7 @@ DQ
                 </viewController>
                 <customObject id="fd0-4G-yKV" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1516" y="-461"/>
+            <point key="canvasLocation" x="1521" y="-323"/>
         </scene>
         <!--Updater Progress View Controller-->
         <scene sceneID="jaV-Ss-u5T">
@@ -535,8 +537,8 @@ DQ
                                 <rect key="frame" x="92" y="51" width="428" height="20"/>
                             </progressIndicator>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3fk-Yr-FlZ">
-                                <rect key="frame" x="94" y="34" width="279" height="17"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Installation complete. You should reboot now." id="aLL-gm-5CD">
+                                <rect key="frame" x="94" y="34" width="164" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Waiting for authorization..." id="aLL-gm-5CD">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -548,7 +550,7 @@ DQ
                             </imageView>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="n38-iV-Vf8">
                                 <rect key="frame" x="451" y="13" width="75" height="32"/>
-                                <buttonCell key="cell" type="push" title="Close" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rA3-Gp-ZNv">
+                                <buttonCell key="cell" type="push" title="Close" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rA3-Gp-ZNv">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -577,7 +579,7 @@ DQ
                 </viewController>
                 <customObject id="lEq-xv-11d" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1516" y="-60"/>
+            <point key="canvasLocation" x="1471" y="-50"/>
         </scene>
         <!--Preferences View Controller-->
         <scene sceneID="Mwe-Fn-lUo">
@@ -754,8 +756,8 @@ DQ
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="idC-tu-pBt">
-                                <rect key="frame" x="131" y="242" width="103" height="17"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Update Drivers:" id="eZH-nU-SVX">
+                                <rect key="frame" x="133" y="242" width="101" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Updater Script:" id="eZH-nU-SVX">
                                     <font key="font" metaFont="systemSemibold" size="13"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -827,7 +829,7 @@ DQ
                 </viewController>
                 <customObject id="5JY-31-zfU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1499" y="277.5"/>
+            <point key="canvasLocation" x="1493" y="297"/>
         </scene>
     </scenes>
     <resources>

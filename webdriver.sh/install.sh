@@ -365,3 +365,4 @@ $SET_NVRAM
 silent /bin/rm -rf "$TMP_DIR"
 silent /bin/rm -f "$DRIVERS_PKG"
 printf '100:Installation complete. You should reboot now.\n'
+

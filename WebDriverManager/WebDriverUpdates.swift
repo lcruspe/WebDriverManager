@@ -22,7 +22,7 @@ import os.log
 
 class WebDriverUpdates: NSObject, NSUserNotificationCenterDelegate {
         
-        let osLog = OSLog.init(subsystem: "org.vulgo.WebDriverManager", category: "Notifications")
+        let osLog = OSLog.init(subsystem: "org.vulgo.WebDriverManager", category: "Updates")
         
         static let shared = WebDriverUpdates()
         
