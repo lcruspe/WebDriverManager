@@ -25,21 +25,109 @@ class DriversTableViewController: NSViewController, NSTableViewDelegate, NSTable
         var updaterViewController: UpdaterViewController!
         @IBOutlet var tableView: NSTableView!
         let updates: Array<AnyObject>? = WebDriverUpdates.shared.updates
-        var localVersion: String?
-        var localBuild: String?
+        var localVersion: String? = WebDriverUpdates.shared.localVersion
+        var localBuild: String? = WebDriverUpdates.shared.localBuild
+        var dataWantsFiltering: Bool = true
+        var tableData: Array<AnyObject>? = nil
         
+        var localVersionRequiredOS: String? {
+                let infoPlistUrl = URL.init(fileURLWithPath: "/Library/Extensions/NVDAStartupWeb.kext/Contents/Info.plist")
+                guard let info = NSDictionary.init(contentsOf: infoPlistUrl) else {
+                        return nil
+                }
+                guard let ioKitPersonalities = info["IOKitPersonalities"] as? NSDictionary else {
+                        return nil
+                }
+                guard let nvdaStartup = ioKitPersonalities["NVDAStartup"] as? NSDictionary else {
+                        return nil
+                }
+                guard let compatibleBuild = nvdaStartup["NVDARequiredOS"] as? String else {
+                        return nil
+                }
+                return compatibleBuild
+        }
+        
+        func isInstalled(version: String?) -> Bool {
+                if let version = version, version == localVersion {
+                        return true
+                } else {
+                        return false
+                }
+        }
+        
+        func isCompatible(build: String?) -> Bool {
+                if let build = build, build == localBuild {
+                        return true
+                } else {
+                        return false
+                }
+        }
+        
+        func addOtherInstalledVersionAndSort() {
+                var versions: [String] = Array()
+                for update in tableData! {
+                        if let version = update["version"] as? String {
+                                versions.append(version)
+                        }
+                }
+                if localVersion != nil, !versions.contains(localVersion!) {
+                        var installed: [String: Any] = Dictionary()
+                        installed["version"] = localVersion ?? "Unknown"
+                        installed["OS"] = localVersionRequiredOS ?? "Unknown"
+                        tableData?.append(installed as AnyObject)
+                }
+                tableData?.sort(by: { (dictOne, dictTwo) -> Bool in
+                        let buildOne = dictOne["version"] as! String
+                        let buildTwo = dictTwo["version"] as! String
+                        return buildOne > buildTwo
+                })
+                tableData?.sort(by: { (dictOne, dictTwo) -> Bool in
+                        let buildOne = dictOne["OS"] as! String
+                        let buildTwo = dictTwo["OS"] as! String
+                        return buildOne > buildTwo
+                })
+        }
+        
+        func updateTableData() {
+                guard updates != nil else {
+                        os_log("Updates is nil")
+                        tableData = nil
+                        return
+                }
+                if !dataWantsFiltering {
+                        tableData = updates
+                } else {
+                        var filteredData: Array<AnyObject> = Array()
+                        for update in updates! {
+                                if isInstalled(version: update["version"] as? String) {
+                                        os_log("Including installed version in filtered table data: %{public}@", update["version"] as? String ?? "nil")
+                                        filteredData.append(update)
+                                        continue
+                                }
+                                if isCompatible(build: update["OS"] as? String) {
+                                        os_log("Including compatible version in filtered table data: %{public}@", update["version"] as? String ?? "nil")
+                                        filteredData.append(update)
+                                        continue
+                                }
+                        }
+                        tableData = filteredData
+                }
+                addOtherInstalledVersionAndSort()
+        }
+
         override func viewDidLoad() {
                 super.viewDidLoad()
+                updateTableData()
                 updaterViewController = parent as? UpdaterViewController
                 tableView.delegate = self
                 tableView.dataSource = self
-                localVersion = WebDriverUpdates.shared.localVersion
-                localBuild = WebDriverUpdates.shared.build
         }
         
         override func viewDidAppear() {
                 //
         }
+        
+
         
         /* Table View Delegate */
         
@@ -59,12 +147,26 @@ class DriversTableViewController: NSViewController, NSTableViewDelegate, NSTable
         }
         
         func numberOfRows(in tableView: NSTableView) -> Int {
-                return updates?.count ?? 0
+                return tableData?.count ?? 0
+        }
+        
+        func tableViewSelectionDidChange(_ notification: Notification) {
+                guard let parent = parent as? UpdaterViewController else {
+                        return
+                }
+                let selectedIndex = tableView.selectedRow
+                guard let url = tableData?[selectedIndex]["downloadURL"] as? String, let checksum = tableData?[selectedIndex]["checksum"] as? String else {
+                        parent.installButton.isEnabled = false
+                        return
+                }
+                parent.url = url
+                parent.checksum = checksum
+                parent.installButton.isEnabled = true
         }
         
         func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
                 
-                guard let update = updates?[row] else {
+                guard let update = tableData?[row] else {
                         return nil
                 }
                 
@@ -87,23 +189,15 @@ class DriversTableViewController: NSViewController, NSTableViewDelegate, NSTable
                         }
                         
                 case id.column.info:
-                        var isInstalled: Bool = false
-                        var isAvailable: Bool = false
                         guard let cell = tableView.makeView(withIdentifier: id.cell.info, owner: nil) as? NSTableCellView else {
                                 return nil
                         }
-                        if let version = update["version"] as? String, version == localVersion {
-                                isInstalled = true
-                        }
-                        if let build = update["OS"] as? String, build == localBuild {
-                                isAvailable = true
-                        }
-                        switch (isAvailable, isInstalled) {
-                        case (true, false):
+                        switch (isInstalled(version: update["version"] as? String), isCompatible(build: update["OS"] as? String)) {
+                        case (false, true):
                                 cell.textField?.stringValue = "Update available"
                         case (true, true):
-                                cell.textField?.stringValue = "Already installed"
-                        case (false, true):
+                                cell.textField?.stringValue = "Installed"
+                        case (true, false):
                                 cell.textField?.stringValue = "Installed"
                         default:
                                 cell.textField?.stringValue = ""

@@ -64,8 +64,10 @@ class UpdaterProgressViewController: NSViewController {
                         return
                 }
                 
-                let url = parentViewController.url
-                let checksum = parentViewController.checksum
+                guard let url: String = parentViewController.url, let checksum: String = parentViewController.checksum else {
+                        view.window?.close()
+                        return
+                }
 
                 task.launchPath = "/bin/sh"
                 task.arguments = ["/git/webdriver.sh/WebDriverManager/install", url, checksum]

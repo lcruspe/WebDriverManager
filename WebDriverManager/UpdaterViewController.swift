@@ -22,12 +22,13 @@ import os.log
 
 class UpdaterViewController: NSViewController {
         
-        @IBOutlet var updatesTableContainerView: NSView!
+        @IBOutlet weak var updatesTableContainerView: NSView!
+        @IBOutlet weak var installButton: NSButton!
         let drivers = DriversTableViewController()
         
         let osLog = OSLog.init(subsystem: "org.vulgo.WebDriverManager", category: "UpdaterControllerMainWindow")
-        let url = "https://images.nvidia.com/mac/pkg/387/WebDriver-387.10.10.10.30.107.pkg"
-        let checksum = "c6e258a40f344a6594d2ea50722a6f7d90d93fcd001a9e458b04077612cef65050401b0435c392c550d40b95737791955ffef0e4b149b64ff2b9758592733b02"
+        var url: String?
+        var checksum: String?
         
         override func viewDidLoad() {
                 super.viewDidLoad()

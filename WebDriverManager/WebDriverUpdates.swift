@@ -54,12 +54,11 @@ class WebDriverUpdates: NSObject, NSUserNotificationCenterDelegate {
                 }
         }
         
-        var build: String? {
+        var localBuild: String? {
                 return sysctl(byName: "kern.osversion")
         }
         
         var localVersion: String? {
-                os_log("Updates URL: %{public}@", log: osLog, type: .default, updatesUrl?.absoluteString ?? "nil")
                 guard let info = NSDictionary.init(contentsOf: infoPlistUrl) else {
                         return nil
                 }
@@ -85,6 +84,11 @@ class WebDriverUpdates: NSObject, NSUserNotificationCenterDelegate {
                         return array as Array<AnyObject>
                 }
                 return nil
+        }
+        
+        override init() {
+                super.init()
+                os_log("Updates URL: %{public}@", log: osLog, type: .default, updatesUrl?.absoluteString ?? "nil")
         }
         
         func setup(notification: inout NSUserNotification, forVersion version: String) {
@@ -178,7 +182,7 @@ class WebDriverUpdates: NSObject, NSUserNotificationCenterDelegate {
                         guard let remoteBuild: String = update["OS"] as? String else {
                                 continue
                         }
-                        if remoteBuild != build {
+                        if remoteBuild != localBuild {
                                 continue
                         }
                         checksum = update["checksum"] as? String
@@ -189,7 +193,7 @@ class WebDriverUpdates: NSObject, NSUserNotificationCenterDelegate {
                         os_log("Remote version is nil")
                         if userCheck {
                                 var webDriverAlert = NSUserNotification()
-                                if let build = build?.uppercased() {
+                                if let build = localBuild?.uppercased() {
                                         setupNotAvailable(notification: &webDriverAlert, message: "No update available for \(build)")
                                 } else {
                                         setupNotAvailable(notification: &webDriverAlert, message: "No update available")

@@ -426,6 +426,7 @@ DQ
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="installButton" destination="dLg-Ls-i59" id="Xtv-uM-ucN"/>
                         <outlet property="updatesTableContainerView" destination="lIU-dU-iVO" id="Fa6-5s-G7g"/>
                     </connections>
                 </viewController>
