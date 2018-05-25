@@ -45,8 +45,8 @@ class UpdaterViewController: NSViewController {
         
         override func viewDidLoad() {
                 super.viewDidLoad()
-                filteredHeight = updatesTableContainerView.heightAnchor.constraint(equalToConstant: 80.0)
-                unfilteredHeight = updatesTableContainerView.heightAnchor.constraint(equalToConstant: 400.0)
+                filteredHeight = updatesTableContainerView.heightAnchor.constraint(equalToConstant: 52.0)
+                unfilteredHeight = updatesTableContainerView.heightAnchor.constraint(equalToConstant: 312.0)
         }
         
         override func viewDidAppear() {
