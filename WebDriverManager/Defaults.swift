@@ -38,6 +38,7 @@ class Defaults {
                 case openInBrowserUrl
                 case openInBrowserDescription
                 case hoursAfterCheck
+                case stageGPUBundles
                 var key: String {
                         switch self {
                         case .initialized:
@@ -64,6 +65,8 @@ class Defaults {
                                 return "openInBrowserDescription"
                         case .hoursAfterCheck:
                                 return "hoursAfterCheck"
+                        case .stageGPUBundles:
+                                return "stageGPUBundles"
                         }
                 }
         }
@@ -180,22 +183,31 @@ class Defaults {
                         return userDefaults.integer(forKey: WebDriverManager.hoursAfterCheck.key)
                 }
         }
+        
+        var stageGPUBundles: Bool {
+                get {
+                        return userDefaults.bool(forKey: WebDriverManager.stageGPUBundles.key)
+                }
+                set {
+                        userDefaults.set(newValue, forKey: WebDriverManager.stageGPUBundles.key)
+                }
+        }
 
         private func registerFactoryDefaults() {
-                var factoryDefaults: [String : Any] = [:]
-                factoryDefaults = [
+                let factoryDefaults: [String: Any] = [
                         WebDriverManager.initialized.key: true,
                         WebDriverManager.showRestartAlert.key: true,
                         WebDriverManager.suppressVersion.key: "",
                         WebDriverManager.disableUpdateAlerts.key: true,
-                        WebDriverManager.bootArgumentsIsVisible.key: true,
+                        WebDriverManager.bootArgumentsIsVisible.key: false,
                         WebDriverManager.cloverSettingsIsVisible.key: true,
-                        WebDriverManager.kernelExtensionsIsVisible.key: true,
+                        WebDriverManager.kernelExtensionsIsVisible.key: false,
                         WebDriverManager.packageInstallerIsVisible.key: true,
                         WebDriverManager.openInBrowserIsVisible.key: true,
                         WebDriverManager.openInBrowserUrl.key: "https://vulgo.github.io/nvidia-drivers",
                         WebDriverManager.openInBrowserDescription.key: "Nvidia Drivers",
-                        WebDriverManager.hoursAfterCheck.key: 6
+                        WebDriverManager.hoursAfterCheck.key: 6,
+                        WebDriverManager.stageGPUBundles.key: true
                 ]
                 userDefaults.register(defaults: factoryDefaults)
         }
@@ -213,6 +225,7 @@ class Defaults {
                 userDefaults.removeObject(forKey: WebDriverManager.openInBrowserUrl.key)
                 userDefaults.removeObject(forKey: WebDriverManager.openInBrowserDescription.key)
                 userDefaults.removeObject(forKey: WebDriverManager.hoursAfterCheck.key)
+                userDefaults.removeObject(forKey: WebDriverManager.stageGPUBundles.key)
                 registerFactoryDefaults()
         }
 }

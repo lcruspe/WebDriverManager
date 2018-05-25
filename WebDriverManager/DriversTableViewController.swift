@@ -22,11 +22,13 @@ import os.log
 
 class DriversTableViewController: NSViewController, NSTableViewDelegate, NSTableViewDataSource {
         
+        let osLog = OSLog.init(subsystem: "org.vulgo.WebDriverManager", category: "DriversTableViewController")
+        
         var updaterViewController: UpdaterViewController!
         @IBOutlet var tableView: NSTableView!
         let updates: Array<AnyObject>? = WebDriverUpdates.shared.updates
         var localVersion: String? = WebDriverUpdates.shared.localVersion
-        var localBuild: String? = WebDriverUpdates.shared.localBuild
+        let localBuild = WebDriverUpdates.shared.localBuild
         var dataWantsFiltering: Bool = true
         var tableData: Array<AnyObject>? = nil
         
@@ -76,21 +78,30 @@ class DriversTableViewController: NSViewController, NSTableViewDelegate, NSTable
                         installed["OS"] = localVersionRequiredOS ?? "Unknown"
                         tableData?.append(installed as AnyObject)
                 }
-                tableData?.sort(by: { (dictOne, dictTwo) -> Bool in
-                        let buildOne = dictOne["version"] as! String
-                        let buildTwo = dictTwo["version"] as! String
-                        return buildOne > buildTwo
-                })
-                tableData?.sort(by: { (dictOne, dictTwo) -> Bool in
-                        let buildOne = dictOne["OS"] as! String
-                        let buildTwo = dictTwo["OS"] as! String
-                        return buildOne > buildTwo
+                tableData?.sort(by: {
+                        (dictOne, dictTwo) -> Bool in
+                        guard let buildOne = dictOne["OS"] as? String, let buildTwo = dictTwo["OS"] as? String else {
+                                return false
+                        }
+                        if buildOne == buildTwo {
+                                guard let versionOne = dictOne["version"] as? String, let versionTwo = dictTwo["version"] as? String else {
+                                        return false
+                                }
+                                return versionOne > versionTwo
+                        } else {
+                                return buildOne > buildTwo
+                        }
                 })
         }
         
         func updateTableData() {
+                
+                /* To do: remove pre-10.13 drivers */
+                
+                os_log("Updating table data source", log: osLog, type: .default)
+                localVersion = WebDriverUpdates.shared.localVersion
                 guard updates != nil else {
-                        os_log("Updates is nil")
+                        os_log("Updates is nil", log: osLog, type: .default)
                         tableData = nil
                         return
                 }
@@ -100,12 +111,12 @@ class DriversTableViewController: NSViewController, NSTableViewDelegate, NSTable
                         var filteredData: Array<AnyObject> = Array()
                         for update in updates! {
                                 if isInstalled(version: update["version"] as? String) {
-                                        os_log("Including installed version in filtered table data: %{public}@", update["version"] as? String ?? "nil")
+                                        os_log("Including installed version in filtered table data: %{public}@", log: osLog, type: .default, update["version"] as? String ?? "nil")
                                         filteredData.append(update)
                                         continue
                                 }
                                 if isCompatible(build: update["OS"] as? String) {
-                                        os_log("Including compatible version in filtered table data: %{public}@", update["version"] as? String ?? "nil")
+                                        os_log("Including compatible version in filtered table data: %{public}@", log: osLog, type: .default, update["version"] as? String ?? "nil")
                                         filteredData.append(update)
                                         continue
                                 }
@@ -113,14 +124,15 @@ class DriversTableViewController: NSViewController, NSTableViewDelegate, NSTable
                         tableData = filteredData
                 }
                 addOtherInstalledVersionAndSort()
+                tableView.reloadData()
         }
 
         override func viewDidLoad() {
                 super.viewDidLoad()
-                updateTableData()
                 updaterViewController = parent as? UpdaterViewController
                 tableView.delegate = self
                 tableView.dataSource = self
+                updateTableData()
         }
         
         override func viewDidAppear() {
@@ -155,12 +167,13 @@ class DriversTableViewController: NSViewController, NSTableViewDelegate, NSTable
                         return
                 }
                 let selectedIndex = tableView.selectedRow
-                guard let url = tableData?[selectedIndex]["downloadURL"] as? String, let checksum = tableData?[selectedIndex]["checksum"] as? String else {
+                guard let url = tableData?[selectedIndex]["downloadURL"] as? String, let checksum = tableData?[selectedIndex]["checksum"] as? String, let version = tableData?[selectedIndex]["version"] as? String else {
                         parent.installButton.isEnabled = false
                         return
                 }
                 parent.url = url
                 parent.checksum = checksum
+                parent.version = version
                 parent.installButton.isEnabled = true
         }
         

@@ -328,13 +328,13 @@ DQ
         <scene sceneID="1tz-L9-SUd">
             <objects>
                 <windowController storyboardIdentifier="updaterWindowController" id="5Xr-7a-FuN" sceneMemberID="viewController">
-                    <window key="window" title="NVIDIA Updater" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="piR-tA-N5k">
-                        <windowStyleMask key="styleMask" titled="YES" closable="YES" resizable="YES"/>
-                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-                        <rect key="contentRect" x="348" y="291" width="550" height="170"/>
+                    <window key="window" title="NVIDIA Web Driver Updater" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="piR-tA-N5k">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
+                        <windowCollectionBehavior key="collectionBehavior" fullScreenNone="YES"/>
+                        <rect key="contentRect" x="733" y="515" width="550" height="170"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1058"/>
                         <value key="minSize" type="size" width="550" height="170"/>
-                        <value key="maxSize" type="size" width="800" height="500"/>
+                        <value key="maxSize" type="size" width="550" height="550"/>
                         <connections>
                             <outlet property="delegate" destination="5Xr-7a-FuN" id="W5G-cH-LUW"/>
                         </connections>
@@ -352,8 +352,8 @@ DQ
             <objects>
                 <viewController id="pKz-O4-JC1" customClass="UpdaterViewController" customModule="Web_Driver_Manager" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="lK0-dc-QG6" customClass="ViewWithPerformKeyEquivalent" customModule="Web_Driver_Manager" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="640" height="180"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <rect key="frame" x="0.0" y="0.0" width="640" height="182"/>
+                        <autoresizingMask key="autoresizingMask" heightSizable="YES"/>
                         <subviews>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dLg-Ls-i59">
                                 <rect key="frame" x="493" y="13" width="133" height="32"/>
@@ -362,11 +362,11 @@ DQ
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <connections>
-                                    <segue destination="Wnh-jh-HKb" kind="sheet" id="xg5-UJ-9DR"/>
+                                    <action selector="installButtonPressed:" target="pKz-O4-JC1" id="wn3-KT-R05"/>
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="m4J-ia-0eN">
-                                <rect key="frame" x="450" y="52" width="80" height="17"/>
+                                <rect key="frame" x="376" y="52" width="80" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Running on:" id="5eu-Ob-Ra9">
                                     <font key="font" metaFont="systemSemibold" size="13"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -374,19 +374,22 @@ DQ
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="UK9-cn-bnG">
-                                <rect key="frame" x="534" y="52" width="88" height="17"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="10.13.4 17E99" id="dPO-AE-Aax">
+                                <rect key="frame" x="460" y="52" width="162" height="17"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="macOSProductBuildString" id="dPO-AE-Aax">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ved-b9-JoH">
-                                <rect key="frame" x="14" y="13" width="217" height="32"/>
-                                <buttonCell key="cell" type="push" title="Uninstall NVIDIA Web Drivers" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="wZN-mS-qOe">
+                                <rect key="frame" x="14" y="13" width="170" height="32"/>
+                                <buttonCell key="cell" type="push" title="Uninstall Web Drivers" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="wZN-mS-qOe">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="uninstallButtonPressed:" target="pKz-O4-JC1" id="Yy3-db-dQM"/>
+                                </connections>
                             </button>
                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5YQ-ZG-hkb">
                                 <rect key="frame" x="18" y="51" width="166" height="18"/>
@@ -394,9 +397,12 @@ DQ
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="filterButtonPressed:" target="pKz-O4-JC1" id="Oo9-Hk-wIm"/>
+                                </connections>
                             </button>
-                            <containerView translatesAutoresizingMaskIntoConstraints="NO" id="lIU-dU-iVO">
-                                <rect key="frame" x="0.0" y="82" width="640" height="98"/>
+                            <containerView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="lIU-dU-iVO">
+                                <rect key="frame" x="0.0" y="82" width="640" height="100"/>
                             </containerView>
                             <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="Jc1-Z3-q5e">
                                 <rect key="frame" x="0.0" y="79" width="640" height="5"/>
@@ -426,7 +432,9 @@ DQ
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="filterButton" destination="5YQ-ZG-hkb" id="6hh-xV-3GA"/>
                         <outlet property="installButton" destination="dLg-Ls-i59" id="Xtv-uM-ucN"/>
+                        <outlet property="runningOnTextField" destination="UK9-cn-bnG" id="dCN-eR-veE"/>
                         <outlet property="updatesTableContainerView" destination="lIU-dU-iVO" id="Fa6-5s-G7g"/>
                     </connections>
                 </viewController>
@@ -437,7 +445,7 @@ DQ
         <!--Updater Progress View Controller-->
         <scene sceneID="jaV-Ss-u5T">
             <objects>
-                <viewController id="Wnh-jh-HKb" customClass="UpdaterProgressViewController" customModule="Web_Driver_Manager" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="updaterProgress" id="Wnh-jh-HKb" customClass="UpdaterProgressViewController" customModule="Web_Driver_Manager" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="lJn-MS-KTK">
                         <rect key="frame" x="0.0" y="0.0" width="540" height="100"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -488,7 +496,7 @@ DQ
                 </viewController>
                 <customObject id="lEq-xv-11d" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1541" y="-5"/>
+            <point key="canvasLocation" x="1528" y="-101"/>
         </scene>
         <!--Preferences View Controller-->
         <scene sceneID="Mwe-Fn-lUo">
@@ -678,6 +686,9 @@ DQ
                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
+                                <connections>
+                                    <action selector="stageGPUBundlesButtonPressed:" target="ujv-C2-0AP" id="lnM-sQ-xny"/>
+                                </connections>
                             </button>
                         </subviews>
                         <constraints>
@@ -732,6 +743,7 @@ DQ
                         <outlet property="openInBrowserUrlTextField" destination="zsE-36-6FA" id="wwv-7M-WPC"/>
                         <outlet property="openInBrowserVisibilityButton" destination="aqo-Xq-IF2" id="5fd-ZN-rTp"/>
                         <outlet property="packageInstallerVisibilityButton" destination="RE1-gB-hqt" id="4G3-fX-TFg"/>
+                        <outlet property="stageGPUBundlesButton" destination="Pcd-UY-VCv" id="LEj-Ot-5Ee"/>
                         <outlet property="toggleNotificationsPopupMenuButton" destination="9xy-kp-Aap" id="pHu-pt-oZn"/>
                         <outlet property="updateCheckProgressIndicator" destination="V1i-7w-xbZ" id="aHY-AC-fhn"/>
                     </connections>

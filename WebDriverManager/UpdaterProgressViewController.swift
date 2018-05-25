@@ -27,26 +27,34 @@ class UpdaterProgressViewController: NSViewController {
         @IBOutlet weak var progressMessage: NSTextField!
         
         let osLog = OSLog.init(subsystem: "org.vulgo.WebDriverManager", category: "UpdaterController")
-        let task = STPrivilegedTask()
         var parentWindow: NSWindow?
         var progressObserver : NSObjectProtocol!
         var terminationObserver: NSObjectProtocol!
         var stdout: FileHandle?
         
         override func viewDidLoad() {
-                
                 super.viewDidLoad()
-                closeButton.isEnabled = false
-                progressMessage.stringValue = "Waiting for authorization..."
-                os_log("Waiting for authorization", log: osLog, type: .default)
-                
+        }
+        
+        override func dismiss(_ sender: Any?) {
+                progressMessage.stringValue = ""
+                progressIndicator.doubleValue = 0.0
+                super.dismiss(sender)
         }
         
         override func viewDidAppear() {
-
-                view.window?.styleMask.remove(.resizable)
+                super.viewDidAppear()
+                DispatchQueue.main.async {
+                        self.closeButton.isEnabled = false
+                        self.progressMessage.stringValue = "Waiting for authorization..."
+                        self.progressIndicator.doubleValue = 0.0
+                        self.view.window?.styleMask.remove(.resizable)
+                }
                 
-                if let thisSheet = self.view.window {
+                let task = STPrivilegedTask()
+                
+                os_log("Waiting for authorization", log: osLog, type: .default)
+                if let thisSheet = view.window {
                         for window in NSApp.windows {
                                 if window.attachedSheet == thisSheet {
                                         parentWindow = window
@@ -55,107 +63,129 @@ class UpdaterProgressViewController: NSViewController {
                 }
                 
                 guard let parentViewController = parentWindow?.contentViewController as? UpdaterViewController else {
-                        self.progressIndicator.doubleValue = 100.0
-                        self.progressMessage.stringValue = "Error"
+                        DispatchQueue.main.async {
+                                self.progressIndicator.doubleValue = 100.0
+                                self.progressMessage.stringValue = "Error"
+                                self.closeButton.isEnabled = true
+                        }
                         os_log("Failed to get a reference to the parent window", log: osLog, type: .default)
                         NSApp.activate(ignoringOtherApps: true)
                         parentWindow?.makeKeyAndOrderFront(self)
-                        closeButton.isEnabled = true
+
                         return
                 }
                 
                 guard let url: String = parentViewController.url, let checksum: String = parentViewController.checksum else {
-                        view.window?.close()
+                        dismiss(self)
                         return
                 }
 
                 task.launchPath = "/bin/sh"
-                task.arguments = ["/git/webdriver.sh/WebDriverManager/install", url, checksum]
+                
+                guard let action = parentViewController.action else {
+                        NotificationCenter.default.removeObserver(self.progressObserver)
+                        dismiss(self)
+                        return
+                }
+                
+                switch action {
+                case .installSelected:
+                        let scriptUrl = Bundle.main.url(forResource: "install", withExtension: "sh")
+                        let stageGPUBundles: Int = Defaults.shared.stageGPUBundles ? 1 : 0
+                        task.arguments = [scriptUrl!.path, url, checksum, String(stageGPUBundles)]
+                case .uninstall:
+                        let scriptUrl = Bundle.main.url(forResource: "uninstall", withExtension: "sh")
+                        task.arguments = [scriptUrl!.path]
+                }
+                
+                parentViewController.action = nil
+
                 task.terminationHandler = {
                         (task) -> Void in
-                        sleep(1)
-                        if self.progressIndicator.doubleValue != 100.0 {
-                                self.progressIndicator.doubleValue = 100.0
-                                self.progressMessage.stringValue = "Error: Task terminated unexpectedly"
-                                os_log("Task terminated unexpectedly", log: self.osLog, type: .error)
-                        } else {
-                                os_log("STPrivilegedTask has terminated", log: self.osLog, type: .default)
-                        }
-                        NSApp.activate(ignoringOtherApps: true)
-                        self.parentWindow?.makeKeyAndOrderFront(self)
+                        os_log("STPrivilegedTask has terminated", log: self.osLog, type: .default)
                         self.closeButton.isEnabled = true
                 }
                 
                 progressObserver = NotificationCenter.default.addObserver(forName: .NSFileHandleDataAvailable, object: stdout, queue: nil) {
                         (notification) -> Void in
-                        if let data = self.stdout?.availableData {
-                                if data.count > 0 {
-                                        guard let output = String(data: data, encoding: .utf8)?.split(separator: ":") else {
-                                                return
-                                        }
-                                        guard output.count == 2 else {
-                                                return
-                                        }
-                                        let numberString = String(output[0])
-                                        let messageString = String(output[1])
-                                        if numberString.uppercased() == "ERROR" {
-                                                DispatchQueue.main.async {
-                                                        self.progressIndicator.doubleValue = 100.0
-                                                        self.progressMessage.stringValue = "Error: \(messageString)"
-                                                }
-                                                let logString = "webdriver.sh: \(messageString.replacingOccurrences(of: "...", with: ""))"
-                                                os_log("%{public}@", log: self.osLog, type: .error, logString)
-                                        } else {
-                                                let scanner = Scanner.init(string: numberString)
-                                                var number: Double = 0
-                                                scanner.scanDouble(&number)
-                                                DispatchQueue.main.async {
-                                                        self.progressIndicator.doubleValue = number
-                                                        self.progressMessage.stringValue = messageString
-                                                }
-                                                let logString = "webdriver.sh: \(messageString.replacingOccurrences(of: "...", with: ""))"
-                                                os_log("%{public}@", log: self.osLog, type: .default, logString)
-                                        }
-                                        self.stdout?.waitForDataInBackgroundAndNotify()
-                                        return
-                                }
-                                /* Notification with zero data length */
+                        guard let data = self.stdout?.availableData else {
+                                self.stdout?.waitForDataInBackgroundAndNotify()
+                                return
+                        }
+                        switch data.count {
+                        case 0:
                                 NotificationCenter.default.removeObserver(self.progressObserver)
                                 DispatchQueue.main.async {
                                         self.closeButton.isEnabled = true
                                 }
+                        default:
+                                guard let output = String(data: data, encoding: .utf8)?.split(separator: ":"), output.count == 2  else {
+                                        self.stdout?.waitForDataInBackgroundAndNotify()
+                                        return
+                                }
+                                let numberString = String(output[0])
+                                let messageString = String(output[1])
+                                if numberString.uppercased() == "ERROR" {
+                                        DispatchQueue.main.async {
+                                                self.progressIndicator.doubleValue = 100.0
+                                                self.progressMessage.stringValue = "Error: \(messageString)"
+                                        }
+                                        let logString = "webdriver.sh: \(messageString.replacingOccurrences(of: "...", with: ""))"
+                                        os_log("%{public}@", log: self.osLog, type: .error, logString)
+                                } else {
+                                        let scanner = Scanner.init(string: numberString)
+                                        var number: Double = 0
+                                        scanner.scanDouble(&number)
+                                        DispatchQueue.main.async {
+                                                self.progressIndicator.doubleValue = number
+                                                self.progressMessage.stringValue = messageString
+                                        }
+                                        let logString = "webdriver.sh: \(messageString.replacingOccurrences(of: "...", with: ""))"
+                                        os_log("%{public}@", log: self.osLog, type: .default, logString)
+                                }
+                                self.stdout?.waitForDataInBackgroundAndNotify()
                         }
                 }
                 
+
                 let error = task.launch()
-                
+
                 guard error == errAuthorizationSuccess else {
-                        self.progressIndicator.doubleValue = 100.0
                         NSApp.activate(ignoringOtherApps: true)
                         parentWindow?.makeKeyAndOrderFront(self)
-                        closeButton.isEnabled = true
+                        DispatchQueue.main.async {
+                                self.progressIndicator.doubleValue = 100.0
+                                self.closeButton.isEnabled = true
+                        }
                         switch error {
                         case errAuthorizationCanceled:
-                                self.progressMessage.stringValue = "Error: Authorization canceled"
+                                DispatchQueue.main.async {
+                                        self.progressMessage.stringValue = "Error: Authorization canceled"
+                                }
                                 os_log("User cancelled authorization", log: osLog, type: .default)
                                 return
                         default:
-                                self.progressMessage.stringValue = "Error: Authentication error"
+                                DispatchQueue.main.async {
+                                        self.progressMessage.stringValue = "Error: Authentication error"
+                                }
                                 os_log("Authorization error", log: osLog, type: .default)
                                 return
                         }
                 }
-                
+
+                DispatchQueue.main.async {
+                        self.progressMessage.stringValue = ""
+                }
                 os_log("Authorization sucess", log: osLog, type: .default)
                 NSApp.activate(ignoringOtherApps: true)
                 parentWindow?.makeKeyAndOrderFront(self)
                 stdout = task.outputFileHandle
-                stdout?.waitForDataInBackgroundAndNotify()
-                
+                stdout?.waitForDataInBackgroundAndNotify() 
         }
         
         @IBAction func closeButtonPressed(_ sender: Any) {
-                view.window?.close()
+                (parentWindow?.contentViewController as? UpdaterViewController)?.update()
+                dismiss(self)
         }
         
 }

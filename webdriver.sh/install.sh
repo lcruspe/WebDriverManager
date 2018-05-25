@@ -32,7 +32,7 @@ STAGE_BUNDLES="$3"
 
 # Variables
 
-EXTRACTED_DRIVERS_BUNDLE_MATCHES_STRING="NVWebDrivers.pkg"
+EXTRACTED_DRIVERS_BUNDLE_MATCHES_THIS_STRING="NVWebDrivers.pkg"
 STARTUP_KEXT="/Library/Extensions/NVDAStartupWeb.kext"
 GREP="/usr/bin/grep"
 UUIDGEN="/usr/bin/uuidgen"
@@ -155,7 +155,7 @@ printf '35:Extracting...\n'
 /usr/sbin/pkgutil --expand "$INSTALLER_PKG" "$EXTRACTED_PKG_DIR" \
 	|| error "Failed to extract package" $?
 
-DIRS=("$EXTRACTED_PKG_DIR"/*"$EXTRACTED_DRIVERS_BUNDLE_MATCHES_STRING")
+DIRS=("$EXTRACTED_PKG_DIR"/*"$EXTRACTED_DRIVERS_BUNDLE_MATCHES_THIS_STRING")
 
 if [[ ${#DIRS[@]} -eq 1 && -d ${DIRS[0]} ]]; then
 	
@@ -299,6 +299,12 @@ if ! $FS_ALLOWED; then
 	
 	silent /usr/sbin/installer -allowUntrusted -pkg "$DRIVERS_PKG" -target / \
 		|| error "installer error" $?
+
+        if (( STAGE_BUNDLES == 1 )); then
+
+                printf "Ignoring stage GPU bundles argument\n" 1>&2
+
+        fi
 	
 else
 	
@@ -307,8 +313,9 @@ else
 	/usr/bin/rsync -r "${DRIVERS_ROOT}"/* /
 	
 	if (( STAGE_BUNDLES == 1 )); then
-	
-		silent /bin/mkdir -p /Library/GPUBundles
+
+                printf "Staging GPU Bundles\n" 1>&2
+	        silent /bin/mkdir -p /Library/GPUBundles
 		silent /usr/bin/rsync -r /System/Library/Extensions/GeForce*Web*.bundle /Library/GPUBundles
 	
 	fi

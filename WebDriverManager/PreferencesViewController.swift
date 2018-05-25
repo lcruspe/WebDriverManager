@@ -24,6 +24,7 @@ class PreferencesViewController: NSViewController {
                 
         let osLog = OSLog.init(subsystem: "org.vulgo.WebDriverManager", category: "Preferences")
 
+        @IBOutlet weak var stageGPUBundlesButton: NSButton!
         @IBOutlet weak var bootArgumentsVisibilityButton: NSButton!
         @IBOutlet weak var cloverSettingsVisibilityButton: NSButton!
         @IBOutlet weak var openInBrowserVisibilityButton: NSButton!
@@ -64,6 +65,8 @@ class PreferencesViewController: NSViewController {
                         }
                 }
                 
+                setup(menuItemButton: stageGPUBundlesButton, value: Defaults.shared.stageGPUBundles)
+                
                 setup(menuItemButton: bootArgumentsVisibilityButton, value: Defaults.shared.bootArgumentsIsVisible)
                 setup(menuItemButton: cloverSettingsVisibilityButton, value: Defaults.shared.cloverSettingsIsVisible)
                 setup(menuItemButton: packageInstallerVisibilityButton, value: Defaults.shared.packageInstallerIsVisible)
@@ -86,6 +89,14 @@ class PreferencesViewController: NSViewController {
                 }
                 
                 super.viewDidAppear()
+        }
+        
+        @IBAction func stageGPUBundlesButtonPressed(_ sender: NSButton) {
+                if sender.state == .on {
+                        Defaults.shared.stageGPUBundles = true
+                } else {
+                        Defaults.shared.stageGPUBundles = false
+                }
         }
         
         @IBAction func hideBootArgumentsButtonPressed(_ sender: NSButton) {

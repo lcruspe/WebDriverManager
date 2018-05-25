@@ -42,7 +42,7 @@
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
         <menu autoenablesItems="NO" id="FVg-r4-d2m">
             <items>
-                <menuItem title="Show Updater" keyEquivalent="u" id="B7E-4H-gDK">
+                <menuItem title="Show Driver Updater" keyEquivalent="u" id="B7E-4H-gDK">
                     <connections>
                         <action selector="updaterMenuItemClicked:" target="mMO-jR-0xx" id="sOC-ZW-esC"/>
                     </connections>
