@@ -153,8 +153,6 @@ class UpdaterProgressViewController: NSViewController {
                 guard error == errAuthorizationSuccess else {
                         NSApp.activate(ignoringOtherApps: true)
                         parentWindow?.makeKeyAndOrderFront(self)
-                        DispatchQueue.main.async {
-                        }
                         switch error {
                         case errAuthorizationCanceled:
                                 os_log("User cancelled authorization", log: osLog, type: .default)
