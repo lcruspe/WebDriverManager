@@ -165,7 +165,7 @@ class DriversTableViewController: NSViewController, NSTableViewDelegate, NSTable
                         return
                 }
                 let selectedIndex = tableView.selectedRow
-                guard let url = tableData?[selectedIndex]["downloadURL"] as? String, let checksum = tableData?[selectedIndex]["checksum"] as? String, let version = tableData?[selectedIndex]["version"] as? String else {
+                guard selectedIndex != -1, let url = tableData?[selectedIndex]["downloadURL"] as? String, let checksum = tableData?[selectedIndex]["checksum"] as? String, let version = tableData?[selectedIndex]["version"] as? String else {
                         parent.installButton.isEnabled = false
                         return
                 }

@@ -124,14 +124,23 @@ class UpdaterViewController: NSViewController {
         
         @IBAction func refreshButtonPressed(_ sender: NSButton) {
                 sender.isEnabled = false
-                let refreshResult = WebDriverUpdates.shared.refresh()
-                if refreshResult {
-                        update()
-                        os_log("User refresh OK", log: osLog, type: .default)
-                } else {
-                        os_log("User refresh failed", log: osLog, type: .default)
-                }
-                sender.isEnabled = true
+                cacheTimeTextField.stringValue = "Downloading updates data from NVIDIA..."
+                let indexSet = IndexSet(integersIn: 0...driversTableViewController.tableView.numberOfRows - 1)
+                NSAnimationContext.runAnimationGroup({
+                        context in
+                        context.duration = 0.25
+                        driversTableViewController.tableView.removeRows(at: indexSet, withAnimation: .effectFade)
+                }, completionHandler: {
+                        let refreshResult = WebDriverUpdates.shared.refresh()
+                        if refreshResult {
+                                self.update()
+                                os_log("User refresh OK", log: self.osLog, type: .default)
+                        } else {
+                                os_log("User refresh failed", log: self.osLog, type: .default)
+                        }
+                        sender.isEnabled = true
+                })
+
         }
         
 }
