@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14109"/>
+        <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
         <capability name="system font weights other than Regular or Bold" minToolsVersion="7.0"/>
     </dependencies>
@@ -227,11 +228,14 @@ DQ
             <objects>
                 <viewController storyboardIdentifier="about" id="535-Ae-q8m" customClass="AboutViewController" customModule="Web_Driver_Manager" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="R2g-Mr-Nf2" customClass="ViewWithPerformKeyEquivalent" customModule="Web_Driver_Manager" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="355" height="168"/>
+                        <rect key="frame" x="0.0" y="0.0" width="387" height="191"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="JLz-Le-I8O">
-                                <rect key="frame" x="151" y="120" width="186" height="19"/>
+                                <rect key="frame" x="151" y="143" width="218" height="19"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="19" id="Ize-fB-FSc"/>
+                                </constraints>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Web Driver Manager" id="uzi-rI-dDH">
                                     <font key="font" metaFont="system" size="15"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -239,7 +243,7 @@ DQ
                                 </textFieldCell>
                             </textField>
                             <button focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cAE-Sn-mY4">
-                                <rect key="frame" x="244" y="13" width="97" height="32"/>
+                                <rect key="frame" x="261" y="13" width="112" height="32"/>
                                 <buttonCell key="cell" type="push" title="License" bezelStyle="rounded" alignment="center" borderStyle="border" focusRingType="none" imageScaling="proportionallyDown" inset="2" id="G1c-Er-742">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
@@ -249,9 +253,9 @@ DQ
                                 </connections>
                             </button>
                             <button focusRingType="none" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gJv-Ud-Jwu">
-                                <rect key="frame" x="147" y="13" width="97" height="32"/>
+                                <rect key="frame" x="147" y="13" width="112" height="32"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="85" id="6vF-M8-xaO"/>
+                                    <constraint firstAttribute="width" constant="100" id="TE1-Td-b6j"/>
                                 </constraints>
                                 <buttonCell key="cell" type="push" title="Source" bezelStyle="rounded" alignment="center" borderStyle="border" focusRingType="none" imageScaling="proportionallyDown" inset="2" id="mnS-o1-5Pr">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -262,7 +266,10 @@ DQ
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ddb-1w-WIE">
-                                <rect key="frame" x="151" y="101" width="186" height="14"/>
+                                <rect key="frame" x="151" y="124" width="218" height="14"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="14" id="H6h-3g-geH"/>
+                                </constraints>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" id="VOI-7i-c82">
                                     <font key="font" metaFont="smallSystem"/>
                                     <color key="textColor" name="disabledControlTextColor" catalog="System" colorSpace="catalog"/>
@@ -270,29 +277,42 @@ DQ
                                 </textFieldCell>
                             </textField>
                             <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zNJ-Br-Rn3">
-                                <rect key="frame" x="21" y="40" width="114" height="100"/>
+                                <rect key="frame" x="21" y="46" width="114" height="103"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="114" id="Acs-no-E2b"/>
+                                    <constraint firstAttribute="width" constant="114" id="h4j-7Y-p5i"/>
                                 </constraints>
                                 <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyUpOrDown" image="AboutImage" id="weL-0a-sZ6"/>
                             </imageView>
+                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="3K3-V4-MQ8">
+                                <rect key="frame" x="151" y="57" width="218" height="60"/>
+                                <textFieldCell key="cell" selectable="YES" sendsActionOnEndEditing="YES" allowsEditingTextAttributes="YES" id="JkD-Ci-HlO">
+                                    <font key="font" metaFont="miniSystem"/>
+                                    <string key="title">Credits: Sveinbjorn Thordarson for STPrivilegedTask https://github.com/sveinbjornt/STPrivilegedTask, Pavo-IM for NvidiaWebDriverRepackager https://github.com/Pavo-IM/NvidiaWebDriverRepackager</string>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="gJv-Ud-Jwu" secondAttribute="bottom" constant="20" symbolic="YES" id="2NP-nf-auD"/>
-                            <constraint firstAttribute="trailing" secondItem="JLz-Le-I8O" secondAttribute="trailing" constant="20" symbolic="YES" id="866-H6-Wfl"/>
-                            <constraint firstItem="cAE-Sn-mY4" firstAttribute="leading" secondItem="gJv-Ud-Jwu" secondAttribute="trailing" constant="12" symbolic="YES" id="8Ux-1W-YJV"/>
-                            <constraint firstAttribute="bottom" secondItem="zNJ-Br-Rn3" secondAttribute="bottom" constant="40" id="9hz-aX-Kzb"/>
-                            <constraint firstItem="gJv-Ud-Jwu" firstAttribute="top" secondItem="ddb-1w-WIE" secondAttribute="bottom" constant="60" id="AMS-sk-zlC"/>
-                            <constraint firstItem="zNJ-Br-Rn3" firstAttribute="leading" secondItem="R2g-Mr-Nf2" secondAttribute="leading" constant="21" id="Afb-6J-QuQ"/>
-                            <constraint firstItem="zNJ-Br-Rn3" firstAttribute="top" secondItem="R2g-Mr-Nf2" secondAttribute="top" constant="28" id="DIg-sk-sHP"/>
-                            <constraint firstItem="ddb-1w-WIE" firstAttribute="top" secondItem="JLz-Le-I8O" secondAttribute="bottom" constant="5" id="GoI-Wt-fIO"/>
-                            <constraint firstItem="JLz-Le-I8O" firstAttribute="top" secondItem="R2g-Mr-Nf2" secondAttribute="top" constant="29" id="JDA-Ph-FBS"/>
-                            <constraint firstItem="JLz-Le-I8O" firstAttribute="trailing" secondItem="ddb-1w-WIE" secondAttribute="trailing" id="JR8-Kp-BuM"/>
-                            <constraint firstItem="JLz-Le-I8O" firstAttribute="leading" secondItem="ddb-1w-WIE" secondAttribute="leading" id="OlM-qs-XMA"/>
-                            <constraint firstItem="ddb-1w-WIE" firstAttribute="trailing" secondItem="cAE-Sn-mY4" secondAttribute="trailing" id="oyu-mv-fcF"/>
-                            <constraint firstItem="JLz-Le-I8O" firstAttribute="leading" secondItem="zNJ-Br-Rn3" secondAttribute="trailing" constant="18" id="pmg-Kl-lwo"/>
-                            <constraint firstItem="gJv-Ud-Jwu" firstAttribute="baseline" secondItem="cAE-Sn-mY4" secondAttribute="baseline" id="tdg-St-1JO"/>
-                            <constraint firstItem="ddb-1w-WIE" firstAttribute="leading" secondItem="gJv-Ud-Jwu" secondAttribute="leading" id="yAZ-Kw-qRj"/>
+                            <constraint firstItem="ddb-1w-WIE" firstAttribute="leading" secondItem="3K3-V4-MQ8" secondAttribute="leading" id="0gZ-ei-oXe"/>
+                            <constraint firstAttribute="bottom" secondItem="zNJ-Br-Rn3" secondAttribute="bottom" constant="46" id="2Mb-IG-e8k"/>
+                            <constraint firstAttribute="trailing" secondItem="JLz-Le-I8O" secondAttribute="trailing" constant="20" symbolic="YES" id="3b2-pu-GdX"/>
+                            <constraint firstItem="JLz-Le-I8O" firstAttribute="trailing" secondItem="ddb-1w-WIE" secondAttribute="trailing" id="6P1-eh-4Ws"/>
+                            <constraint firstItem="ddb-1w-WIE" firstAttribute="top" secondItem="JLz-Le-I8O" secondAttribute="bottom" constant="5" id="Fp1-cs-THG"/>
+                            <constraint firstItem="3K3-V4-MQ8" firstAttribute="top" secondItem="ddb-1w-WIE" secondAttribute="bottom" constant="7" id="PG0-c7-5Mv"/>
+                            <constraint firstItem="ddb-1w-WIE" firstAttribute="trailing" secondItem="3K3-V4-MQ8" secondAttribute="trailing" id="UXC-Rm-doD"/>
+                            <constraint firstItem="gJv-Ud-Jwu" firstAttribute="top" secondItem="3K3-V4-MQ8" secondAttribute="bottom" constant="16" id="UiS-e9-wKw"/>
+                            <constraint firstItem="3K3-V4-MQ8" firstAttribute="trailing" secondItem="cAE-Sn-mY4" secondAttribute="trailing" id="V4G-pF-Scl"/>
+                            <constraint firstItem="gJv-Ud-Jwu" firstAttribute="baseline" secondItem="cAE-Sn-mY4" secondAttribute="baseline" id="VFi-3e-7cI"/>
+                            <constraint firstItem="zNJ-Br-Rn3" firstAttribute="leading" secondItem="R2g-Mr-Nf2" secondAttribute="leading" constant="21" id="X8v-l9-VOv"/>
+                            <constraint firstItem="zNJ-Br-Rn3" firstAttribute="top" secondItem="R2g-Mr-Nf2" secondAttribute="top" constant="42" id="Y8t-Br-BI1"/>
+                            <constraint firstItem="3K3-V4-MQ8" firstAttribute="leading" secondItem="gJv-Ud-Jwu" secondAttribute="leading" id="ZKk-em-V0a"/>
+                            <constraint firstItem="JLz-Le-I8O" firstAttribute="leading" secondItem="zNJ-Br-Rn3" secondAttribute="trailing" constant="18" id="e0B-Ur-RcQ"/>
+                            <constraint firstItem="JLz-Le-I8O" firstAttribute="top" secondItem="R2g-Mr-Nf2" secondAttribute="top" constant="29" id="fDy-sU-sVO"/>
+                            <constraint firstItem="cAE-Sn-mY4" firstAttribute="baseline" secondItem="gJv-Ud-Jwu" secondAttribute="firstBaseline" id="gxK-62-dai"/>
+                            <constraint firstAttribute="bottom" secondItem="gJv-Ud-Jwu" secondAttribute="bottom" constant="20" symbolic="YES" id="rGk-iB-fC2"/>
+                            <constraint firstItem="cAE-Sn-mY4" firstAttribute="leading" secondItem="gJv-Ud-Jwu" secondAttribute="trailing" constant="14" id="t8n-5E-bjb"/>
+                            <constraint firstItem="JLz-Le-I8O" firstAttribute="leading" secondItem="ddb-1w-WIE" secondAttribute="leading" id="ya4-46-RJG"/>
                         </constraints>
                     </view>
                     <connections>
@@ -301,7 +321,7 @@ DQ
                 </viewController>
                 <customObject id="hSr-iB-ZND" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="280" y="-60"/>
+            <point key="canvasLocation" x="295.5" y="-48.5"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="1Uw-uy-b2Z">
@@ -446,7 +466,7 @@ DQ
         <scene sceneID="jaV-Ss-u5T">
             <objects>
                 <viewController storyboardIdentifier="updaterProgress" id="Wnh-jh-HKb" customClass="UpdaterProgressViewController" customModule="Web_Driver_Manager" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" id="lJn-MS-KTK">
+                    <view key="view" id="lJn-MS-KTK" customClass="ViewWithPerformKeyEquivalent" customModule="Web_Driver_Manager" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="490" height="100"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
@@ -496,7 +516,7 @@ DQ
                 </viewController>
                 <customObject id="lEq-xv-11d" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1528" y="-101"/>
+            <point key="canvasLocation" x="1526" y="-84"/>
         </scene>
         <!--Preferences View Controller-->
         <scene sceneID="Mwe-Fn-lUo">
@@ -750,7 +770,7 @@ DQ
                 </viewController>
                 <customObject id="5JY-31-zfU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1493" y="297"/>
+            <point key="canvasLocation" x="1573" y="301"/>
         </scene>
     </scenes>
     <resources>

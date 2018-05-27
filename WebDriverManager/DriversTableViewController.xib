@@ -29,7 +29,7 @@
                                 <size key="intercellSpacing" width="3" height="2"/>
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <tableViewGridLines key="gridStyleMask" dashed="YES"/>
-                                <color key="gridColor" name="controlHighlightColor" catalog="System" colorSpace="catalog"/>
+                                <color key="gridColor" red="0.94637403773397688" green="0.95574407771154102" blue="0.95574407771154102" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <tableColumns>
                                     <tableColumn identifier="version" editable="NO" width="180" minWidth="180" maxWidth="1000" id="Bh8-GG-hhA">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Version">
