@@ -154,21 +154,21 @@ class UpdaterProgressViewController: NSViewController {
                         NSApp.activate(ignoringOtherApps: true)
                         parentWindow?.makeKeyAndOrderFront(self)
                         DispatchQueue.main.async {
-                                self.progressIndicator.doubleValue = 100.0
-                                self.closeButton.isEnabled = true
                         }
                         switch error {
                         case errAuthorizationCanceled:
-                                DispatchQueue.main.async {
-                                        self.progressMessage.stringValue = "Error: Authorization canceled"
-                                }
                                 os_log("User cancelled authorization", log: osLog, type: .default)
+                                DispatchQueue.main.async {
+                                        self.dismiss(self)
+                                }
                                 return
                         default:
                                 DispatchQueue.main.async {
+                                        self.progressIndicator.doubleValue = 100.0
+                                        self.closeButton.isEnabled = true
                                         self.progressMessage.stringValue = "Error: Authentication error"
                                 }
-                                os_log("Authorization error", log: osLog, type: .default)
+                                os_log("Authentication error", log: osLog, type: .default)
                                 return
                         }
                 }
