@@ -43,6 +43,20 @@ class UpdaterViewController: NSViewController {
         }
         var action: Action? = nil
         
+        func showReinstallAlert(version: String) -> Bool {
+                let alert = NSAlert()
+                alert.addButton(withTitle: "Reinstall")
+                alert.addButton(withTitle: "Cancel")
+                alert.messageText = "Installing \(version)"
+                alert.informativeText = "That version is already installed."
+                let response = alert.runModal()
+                if response == NSApplication.ModalResponse.alertFirstButtonReturn {
+                        return true
+                } else {
+                        return false
+                }
+        }
+        
         override func viewDidLoad() {
                 super.viewDidLoad()
                 filteredHeight = updatesTableContainerView.heightAnchor.constraint(equalToConstant: 78.0)
@@ -88,6 +102,11 @@ class UpdaterViewController: NSViewController {
         }
         
         @IBAction func installButtonPressed(_ button: NSButton) {
+                if WebDriverUpdates.shared.localVersion == version, let version = version {
+                        guard showReinstallAlert(version: version) else {
+                                return
+                        }
+                }
                 action = .installSelected
                 updaterProgressViewController = storyboard!.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "updaterProgress")) as? UpdaterProgressViewController
                 self.presentViewControllerAsSheet(self.updaterProgressViewController!)                
