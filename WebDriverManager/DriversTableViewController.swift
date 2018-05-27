@@ -26,6 +26,7 @@ class DriversTableViewController: NSViewController, NSTableViewDelegate, NSTable
         
         var updaterViewController: UpdaterViewController!
         @IBOutlet var tableView: NSTableView!
+        @IBOutlet var scrollView: NSScrollView!
         let updates: Array<AnyObject>? = WebDriverUpdates.shared.updates
         var localVersion: String? = WebDriverUpdates.shared.localVersion
         let localBuild = WebDriverUpdates.shared.localBuild
@@ -47,6 +48,16 @@ class DriversTableViewController: NSViewController, NSTableViewDelegate, NSTable
                         return nil
                 }
                 return compatibleBuild
+        }
+        
+        func hideScrollers() {
+                scrollView.hasVerticalScroller = false
+                scrollView.hasHorizontalScroller = false
+        }
+        
+        func unhideScrollers() {
+                scrollView.hasVerticalScroller = true
+                scrollView.hasHorizontalScroller = true
         }
         
         func isInstalled(version: String?) -> Bool {

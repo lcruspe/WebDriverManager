@@ -27,6 +27,7 @@ class UpdaterViewController: NSViewController {
         @IBOutlet weak var installButton: NSButton!
         @IBOutlet weak var filterButton: NSButton!
         @IBOutlet weak var runningOnTextField: NSTextField!
+        @IBOutlet weak var driversTableHeight: NSLayoutConstraint!
         
         var updaterProgressViewController: UpdaterProgressViewController?
         let driversTableViewController = DriversTableViewController()
@@ -36,8 +37,8 @@ class UpdaterViewController: NSViewController {
         var checksum: String?
         var version: String?
         let macOSProductBuildString = "\(sysctl(byName: "kern.osproductversion") ?? "??") \(WebDriverUpdates.shared.localBuild ?? "??")"
-        var filteredHeight: NSLayoutConstraint?
-        var unfilteredHeight: NSLayoutConstraint?
+        let filteredHeight: CGFloat = 78.0
+        let unfilteredHeight: CGFloat = 390.0
         
         enum Action {
                 case installSelected, uninstall
@@ -60,8 +61,6 @@ class UpdaterViewController: NSViewController {
         
         override func viewDidLoad() {
                 super.viewDidLoad()
-                filteredHeight = updatesTableContainerView.heightAnchor.constraint(equalToConstant: 78.0)
-                unfilteredHeight = updatesTableContainerView.heightAnchor.constraint(equalToConstant: 390.0)
         }
         
         override func viewDidAppear() {
@@ -73,12 +72,10 @@ class UpdaterViewController: NSViewController {
                 switch driversTableViewController.dataWantsFiltering {
                 case false:
                         filterButton.state = .off
-                        updatesTableContainerView.removeConstraint(filteredHeight!)
-                        updatesTableContainerView.addConstraint(unfilteredHeight!)
+                        driversTableHeight.constant = unfilteredHeight
                 default:
                         filterButton.state = .on
-                        updatesTableContainerView.removeConstraint(unfilteredHeight!)
-                        updatesTableContainerView.addConstraint(filteredHeight!)
+                        driversTableHeight.constant = filteredHeight
                 }
                 runningOnTextField.stringValue = macOSProductBuildString
         }
@@ -92,17 +89,29 @@ class UpdaterViewController: NSViewController {
         }
         
         @IBAction func filterButtonPressed(_ button: NSButton) {
+                driversTableViewController.hideScrollers()
                 switch button.state {
                 case .off:
                         driversTableViewController.dataWantsFiltering = false
-                        updatesTableContainerView.removeConstraint(filteredHeight!)
-                        updatesTableContainerView.addConstraint(unfilteredHeight!)
+                        NSAnimationContext.runAnimationGroup({
+                                context in
+                                context.duration = 0.25
+                                driversTableHeight.animator().constant = unfilteredHeight
+                        }, completionHandler: {
+                                self.update()
+                                self.driversTableViewController.unhideScrollers()
+                        })
                 default:
                         driversTableViewController.dataWantsFiltering = true
-                        updatesTableContainerView.removeConstraint(unfilteredHeight!)
-                        updatesTableContainerView.addConstraint(filteredHeight!)
+                        NSAnimationContext.runAnimationGroup({
+                                context in
+                                context.duration = 0.25
+                                driversTableHeight.animator().constant = filteredHeight
+                        }, completionHandler: {
+                                self.update()
+                                self.driversTableViewController.unhideScrollers()
+                        })
                 }
-                update()
         }
         
         @IBAction func installButtonPressed(_ button: NSButton) {
