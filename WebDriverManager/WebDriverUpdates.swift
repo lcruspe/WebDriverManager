@@ -73,7 +73,38 @@ class WebDriverUpdates: NSObject, NSUserNotificationCenterDelegate {
                 return components[2]
         }
         
+        private struct cache {
+                static var updates: Array<AnyObject>?
+                static var time: Date?
+                static let timeout: Double = 1800.0
+        }
+        
         var updates: Array<AnyObject>? {
+                if cache.updates != nil, cache.time != nil, cache.time! < cache.time!.addingTimeInterval(cache.timeout)  {
+                        return cache.updates
+                } else {
+                        let buffer: Array<AnyObject>? = sync()
+                        if buffer != nil {
+                                cache.updates = buffer
+                                cache.time = Date()
+                        }
+                        return cache.updates
+                }
+        }
+        
+        func refresh() -> Bool {
+                let buffer: Array<AnyObject>? = sync()
+                if buffer != nil {
+                        cache.updates = buffer
+                        cache.time = Date()
+                        return true
+                } else {
+                        return false
+                }
+        }
+        
+        private func sync() -> Array<AnyObject>? {
+                os_log("Downloading data from NVIDIA", log: osLog, type: .default)
                 if let url = updatesUrl {
                         guard let downloaded = NSDictionary.init(contentsOf: url) else {
                                 return nil
@@ -81,7 +112,22 @@ class WebDriverUpdates: NSObject, NSUserNotificationCenterDelegate {
                         guard let array = downloaded["updates"] as? NSArray else {
                                 return nil
                         }
-                        return array as Array<AnyObject>
+                        var updates = array as Array<AnyObject>
+                        updates = updates.filter {
+                                update in
+                                guard let dictionary = update as? [String: Any] else {
+                                        return false
+                                }
+                                guard let os = dictionary["OS"] as? String else {
+                                        return false
+                                }
+                                if let majorVersion = Int(String(os[..<os.index(os.startIndex, offsetBy: 2)])), majorVersion > 16 {
+                                        return true
+                                } else {
+                                        return false
+                                }
+                        }
+                        return updates
                 }
                 return nil
         }

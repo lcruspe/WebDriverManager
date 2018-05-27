@@ -96,8 +96,6 @@ class DriversTableViewController: NSViewController, NSTableViewDelegate, NSTable
         
         func updateTableData() {
                 
-                /* To do: remove pre-10.13 drivers */
-                
                 os_log("Updating table data source", log: osLog, type: .default)
                 localVersion = WebDriverUpdates.shared.localVersion
                 guard updates != nil else {
