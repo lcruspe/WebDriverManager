@@ -20,6 +20,8 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 
+printf '0:Uninstalling NVIDIA drivers...\n'
+
 FS_ALLOWED=false
 /usr/bin/touch /System \
         && FS_ALLOWED=true
