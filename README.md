@@ -14,14 +14,13 @@
 
 ## Features
 
-- Displays web driver loaded status in the top of the menu
-- Enable NVIDIA drivers or use macOS default drivers
+- Download/install/update to the latest available web drivers (or roll back to a previous version)
+- Observe driver status in the the menu
+- Disable NVIDIA drivers / use macOS default drivers
 - Enable notifications of NVIDIA driver updates/releases
-- Optional extras enabled in Preferences
+- Enable optional extras in the application preferences
 
 ## Extras
-
-Recommended: uninstall the stock menu bar app and preference pane if you use the features from this list.
 
 - Drag and drop repackager to remove OS checks + non-essential software from NVIDIA's installer
 - Edit boot arguments NVRAM variable
