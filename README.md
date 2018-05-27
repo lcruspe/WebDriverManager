@@ -16,7 +16,7 @@
 
 - Download/install/update to the latest available web drivers (or roll back to a previous version)
 - Observe driver status in the the menu
-- Disable NVIDIA drivers / use macOS default drivers
+- Disable NVIDIA drivers/use macOS default drivers
 - Enable notifications of NVIDIA driver updates/releases
 - Enable optional extras in the application preferences
 
