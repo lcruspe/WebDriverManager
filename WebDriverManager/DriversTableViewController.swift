@@ -130,7 +130,7 @@ class DriversTableViewController: NSViewController, NSTableViewDelegate, NSTable
                 updaterViewController = parent as? UpdaterViewController
                 tableView.delegate = self
                 tableView.dataSource = self
-                updateTableData()
+                updaterViewController.update()
         }
         
         override func viewDidAppear() {

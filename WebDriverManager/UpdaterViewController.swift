@@ -23,6 +23,7 @@ import os.log
 class UpdaterViewController: NSViewController {
         
         @IBOutlet weak var updatesTableContainerView: NSView!
+        @IBOutlet weak var cacheTimeTextField: NSTextField!
         @IBOutlet weak var installButton: NSButton!
         @IBOutlet weak var filterButton: NSButton!
         @IBOutlet weak var runningOnTextField: NSTextField!
@@ -85,6 +86,9 @@ class UpdaterViewController: NSViewController {
         func update() {
                 driversTableViewController.updateTableData()
                 driversTableViewController.tableView.reloadData()
+                let time = WebDriverUpdates.shared.cacheTime
+                let displayTime: String = time?.description(with: .current) ?? ""
+                cacheTimeTextField.stringValue = displayTime
         }
         
         @IBAction func filterButtonPressed(_ button: NSButton) {
@@ -121,17 +125,12 @@ class UpdaterViewController: NSViewController {
         @IBAction func refreshButtonPressed(_ sender: NSButton) {
                 sender.isEnabled = false
                 let refreshResult = WebDriverUpdates.shared.refresh()
-                let time = WebDriverUpdates.shared.cacheTime
-                let cacheTime: String = time?.description(with: .current) ?? "Never"
-                let alert = NSAlert()
                 if refreshResult {
                         update()
-                        alert.messageText = "OK"
+                        os_log("User refresh OK", log: osLog, type: .default)
                 } else {
-                        alert.messageText = "Refresh failed"
+                        os_log("User refresh failed", log: osLog, type: .default)
                 }
-                alert.informativeText = "Updates data last retrieved: \(cacheTime)"
-                alert.runModal()
                 sender.isEnabled = true
         }
         
