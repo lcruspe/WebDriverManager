@@ -92,7 +92,11 @@ class WebDriverUpdates: NSObject, NSUserNotificationCenterDelegate {
                 }
         }
         
-        func refresh() -> Bool {
+        var cacheTime: Date? {
+                return cache.time
+        }
+        
+        @discardableResult func refresh() -> Bool {
                 let buffer: Array<AnyObject>? = sync()
                 if buffer != nil {
                         cache.updates = buffer
@@ -221,7 +225,7 @@ class WebDriverUpdates: NSObject, NSUserNotificationCenterDelegate {
                         os_log("Overriding notifications disabled user default", log: osLog, type: .info)
                 }
                 guard updates != nil else {
-                        os_log("Couldn't get updates data from NVIDIA", log: osLog, type: .default)
+                        os_log("No updates data from NVIDIA is available", log: osLog, type: .default)
                         return false
                 }
                 for update in updates! {

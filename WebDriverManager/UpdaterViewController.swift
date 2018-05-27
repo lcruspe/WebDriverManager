@@ -118,4 +118,21 @@ class UpdaterViewController: NSViewController {
                 self.presentViewControllerAsSheet(self.updaterProgressViewController!)
         }
         
+        @IBAction func refreshButtonPressed(_ sender: NSButton) {
+                sender.isEnabled = false
+                let refreshResult = WebDriverUpdates.shared.refresh()
+                let time = WebDriverUpdates.shared.cacheTime
+                let cacheTime: String = time?.description(with: .current) ?? "Never"
+                let alert = NSAlert()
+                if refreshResult {
+                        update()
+                        alert.messageText = "OK"
+                } else {
+                        alert.messageText = "Refresh failed"
+                }
+                alert.informativeText = "Updates data last retrieved: \(cacheTime)"
+                alert.runModal()
+                sender.isEnabled = true
+        }
+        
 }

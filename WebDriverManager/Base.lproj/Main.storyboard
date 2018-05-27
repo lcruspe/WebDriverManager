@@ -386,7 +386,7 @@ DQ
                                 </connections>
                             </button>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="m4J-ia-0eN">
-                                <rect key="frame" x="256" y="52" width="80" height="17"/>
+                                <rect key="frame" x="234" y="52" width="80" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Running on:" id="5eu-Ob-Ra9">
                                     <font key="font" metaFont="systemSemibold" size="13"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -394,7 +394,7 @@ DQ
                                 </textFieldCell>
                             </textField>
                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="UK9-cn-bnG">
-                                <rect key="frame" x="340" y="52" width="162" height="17"/>
+                                <rect key="frame" x="318" y="52" width="162" height="17"/>
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="macOSProductBuildString" id="dPO-AE-Aax">
                                     <font key="font" metaFont="system"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -427,28 +427,39 @@ DQ
                             <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="Jc1-Z3-q5e">
                                 <rect key="frame" x="0.0" y="79" width="520" height="5"/>
                             </box>
+                            <button translatesAutoresizingMaskIntoConstraints="NO" id="Ovs-ZC-m2F">
+                                <rect key="frame" x="486" y="52" width="16" height="16"/>
+                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="NSRefreshTemplate" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="dC2-6q-xLd">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="refreshButtonPressed:" target="pKz-O4-JC1" id="nrf-Bf-Li2"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="ved-b9-JoH" firstAttribute="top" secondItem="5YQ-ZG-hkb" secondAttribute="bottom" constant="12" id="1YT-df-r8O"/>
+                            <constraint firstItem="ved-b9-JoH" firstAttribute="baseline" secondItem="dLg-Ls-i59" secondAttribute="baseline" id="1c5-c0-Iat"/>
                             <constraint firstItem="lIU-dU-iVO" firstAttribute="top" secondItem="lK0-dc-QG6" secondAttribute="top" id="2MP-cr-0bQ"/>
-                            <constraint firstItem="UK9-cn-bnG" firstAttribute="leading" secondItem="m4J-ia-0eN" secondAttribute="trailing" constant="8" id="5oN-Kd-z4C"/>
-                            <constraint firstItem="5YQ-ZG-hkb" firstAttribute="bottom" secondItem="m4J-ia-0eN" secondAttribute="bottom" constant="-1" id="8r1-Te-pns"/>
-                            <constraint firstItem="dLg-Ls-i59" firstAttribute="top" secondItem="UK9-cn-bnG" secondAttribute="bottom" constant="11" id="DgD-zH-BoF"/>
+                            <constraint firstItem="UK9-cn-bnG" firstAttribute="bottom" secondItem="Ovs-ZC-m2F" secondAttribute="bottom" id="Cuo-Gs-44k"/>
+                            <constraint firstAttribute="trailing" secondItem="Ovs-ZC-m2F" secondAttribute="trailing" constant="18" id="G7N-bj-fIg"/>
+                            <constraint firstItem="UK9-cn-bnG" firstAttribute="centerY" secondItem="Ovs-ZC-m2F" secondAttribute="centerY" id="Grw-JO-Kfh"/>
                             <constraint firstAttribute="trailing" secondItem="Jc1-Z3-q5e" secondAttribute="trailing" id="JRL-Cr-y3J"/>
-                            <constraint firstItem="m4J-ia-0eN" firstAttribute="baseline" secondItem="UK9-cn-bnG" secondAttribute="baseline" id="Kh1-W4-9xw"/>
-                            <constraint firstItem="ved-b9-JoH" firstAttribute="leading" secondItem="lK0-dc-QG6" secondAttribute="leading" constant="20" id="UwR-K6-f0d"/>
-                            <constraint firstItem="5YQ-ZG-hkb" firstAttribute="leading" secondItem="ved-b9-JoH" secondAttribute="leading" id="aDw-hL-ioF"/>
+                            <constraint firstItem="UK9-cn-bnG" firstAttribute="leading" secondItem="m4J-ia-0eN" secondAttribute="trailing" constant="8" symbolic="YES" id="O13-da-PvN"/>
+                            <constraint firstItem="5YQ-ZG-hkb" firstAttribute="leading" secondItem="ved-b9-JoH" secondAttribute="leading" id="PGo-V4-phb"/>
+                            <constraint firstItem="m4J-ia-0eN" firstAttribute="baseline" secondItem="UK9-cn-bnG" secondAttribute="baseline" id="RW0-gi-0jR"/>
+                            <constraint firstAttribute="bottom" secondItem="Ovs-ZC-m2F" secondAttribute="bottom" constant="52" id="XxF-rw-bEj"/>
+                            <constraint firstItem="Ovs-ZC-m2F" firstAttribute="leading" secondItem="UK9-cn-bnG" secondAttribute="trailing" constant="8" symbolic="YES" id="anv-2F-BBo"/>
+                            <constraint firstItem="5YQ-ZG-hkb" firstAttribute="leading" secondItem="lK0-dc-QG6" secondAttribute="leading" constant="20" symbolic="YES" id="cFL-te-sUd"/>
                             <constraint firstItem="lIU-dU-iVO" firstAttribute="trailing" secondItem="Jc1-Z3-q5e" secondAttribute="trailing" id="cVo-xX-YbK"/>
+                            <constraint firstItem="5YQ-ZG-hkb" firstAttribute="baseline" secondItem="m4J-ia-0eN" secondAttribute="baseline" id="dHf-Ba-Tz0"/>
                             <constraint firstAttribute="trailing" secondItem="dLg-Ls-i59" secondAttribute="trailing" constant="20" id="gtv-Ki-U98"/>
                             <constraint firstItem="Jc1-Z3-q5e" firstAttribute="leading" secondItem="lK0-dc-QG6" secondAttribute="leading" id="h2l-0Q-n7k"/>
                             <constraint firstAttribute="bottom" secondItem="lIU-dU-iVO" secondAttribute="bottom" constant="82" id="mR9-Kt-CTt"/>
                             <constraint firstItem="Jc1-Z3-q5e" firstAttribute="top" secondItem="lIU-dU-iVO" secondAttribute="bottom" id="nRy-Oh-LxD"/>
-                            <constraint firstItem="5YQ-ZG-hkb" firstAttribute="leading" secondItem="lK0-dc-QG6" secondAttribute="leading" constant="20" id="nbN-kH-04x"/>
                             <constraint firstAttribute="bottom" secondItem="dLg-Ls-i59" secondAttribute="bottom" constant="20" id="tbg-FZ-aYj"/>
-                            <constraint firstAttribute="bottom" secondItem="ved-b9-JoH" secondAttribute="bottom" constant="20" symbolic="YES" id="u4V-wL-I0O"/>
-                            <constraint firstItem="UK9-cn-bnG" firstAttribute="trailing" secondItem="dLg-Ls-i59" secondAttribute="trailing" id="vCg-Bn-aUO"/>
-                            <constraint firstAttribute="trailing" secondItem="UK9-cn-bnG" secondAttribute="trailing" constant="20" symbolic="YES" id="x2q-0z-Dpy"/>
                             <constraint firstItem="lIU-dU-iVO" firstAttribute="leading" secondItem="lK0-dc-QG6" secondAttribute="leading" id="xHk-s6-vwK"/>
+                            <constraint firstAttribute="trailing" secondItem="UK9-cn-bnG" secondAttribute="trailing" constant="42" id="zSJ-7z-YNU"/>
                         </constraints>
                     </view>
                     <connections>
@@ -775,6 +786,7 @@ DQ
     </scenes>
     <resources>
         <image name="AboutImage" width="440" height="512"/>
+        <image name="NSRefreshTemplate" width="11" height="15"/>
         <image name="Package" width="64" height="64"/>
     </resources>
 </document>
