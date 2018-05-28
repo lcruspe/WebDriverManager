@@ -37,6 +37,14 @@
 - Mount/unmount EFI partition
 - Observe booted CSR flags
 
+## Notes
+
+##### Forcing driver compatibility on Apple (Mac) hardware
+
+- Either way, SIP disabled e.g. recovery boot terminal ```sudo csrutil enable --without-kext --without-fs```
+- Use [NvidiaGraphicsFixup](https://github.com/lvs1974/NvidiaGraphicsFixup) for support of the ```ngfxcompat=1``` boot argument
+- Or [webdriver.sh](https://github.com/vulgo/webdriver.sh) for plist patching e.g. ```sudo webdriver -m```
+
 ## License
 
 Web Driver Manager is free software licensed under the terms of the GPL version 3 or later.
