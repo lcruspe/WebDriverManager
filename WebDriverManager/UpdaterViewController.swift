@@ -22,17 +22,18 @@ import os.log
 
 class UpdaterViewController: NSViewController {
         
+        let osLog = OSLog.init(subsystem: "org.vulgo.WebDriverManager", category: "UpdaterControllerMainWindow")
+        
         @IBOutlet weak var updatesTableContainerView: NSView!
         @IBOutlet weak var cacheTimeTextField: NSTextField!
         @IBOutlet weak var installButton: NSButton!
         @IBOutlet weak var filterButton: NSButton!
+        @IBOutlet weak var refreshButton: NSButton!
         @IBOutlet weak var runningOnTextField: NSTextField!
         @IBOutlet weak var driversTableHeight: NSLayoutConstraint!
         
         var updaterProgressViewController: UpdaterProgressViewController?
         let driversTableViewController = DriversTableViewController()
-        
-        let osLog = OSLog.init(subsystem: "org.vulgo.WebDriverManager", category: "UpdaterControllerMainWindow")
         var url: String?
         var checksum: String?
         var version: String?
@@ -46,11 +47,15 @@ class UpdaterViewController: NSViewController {
         var action: Action? = nil
         
         func showReinstallAlert(version: String) -> Bool {
+                let reinstallButtonTitle = NSLocalizedString("Reinstall", comment: "")
+                let cancelButtonTitle = NSLocalizedString("Cancel", comment: "")
+                let installingString = NSLocalizedString("Installing", comment: "")
+                let alreadyInstalledString = NSLocalizedString("That version is already installed", comment: "")
                 let alert = NSAlert()
-                alert.addButton(withTitle: "Reinstall")
-                alert.addButton(withTitle: "Cancel")
-                alert.messageText = "Installing \(version)"
-                alert.informativeText = "That version is already installed."
+                alert.addButton(withTitle: reinstallButtonTitle)
+                alert.addButton(withTitle: cancelButtonTitle)
+                alert.messageText = "\(installingString) \(version)"
+                alert.informativeText = alreadyInstalledString
                 let response = alert.runModal()
                 if response == NSApplication.ModalResponse.alertFirstButtonReturn {
                         return true
@@ -94,7 +99,7 @@ class UpdaterViewController: NSViewController {
                 case .off:
                         driversTableViewController.dataWantsFiltering = false
                         NSAnimationContext.runAnimationGroup({
-                                context in
+                                (context) in
                                 context.duration = 0.25
                                 driversTableHeight.animator().constant = unfilteredHeight
                         }, completionHandler: {
@@ -104,7 +109,7 @@ class UpdaterViewController: NSViewController {
                 default:
                         driversTableViewController.dataWantsFiltering = true
                         NSAnimationContext.runAnimationGroup({
-                                context in
+                                (context) in
                                 context.duration = 0.25
                                 driversTableHeight.animator().constant = filteredHeight
                         }, completionHandler: {
@@ -131,12 +136,14 @@ class UpdaterViewController: NSViewController {
                 self.presentViewControllerAsSheet(self.updaterProgressViewController!)
         }
         
-        @IBAction func refreshButtonPressed(_ sender: NSButton) {
-                sender.isEnabled = false
-                cacheTimeTextField.stringValue = "Downloading updates data from NVIDIA..."
+        @IBAction func refreshButtonPressed(_ sender: Any) {
+                os_log("Refresh button pressed", log: self.osLog, type: .default)
+                let downloadingDataString = NSLocalizedString("Downloading updates data from NVIDIA...", comment: "")
+                refreshButton.isEnabled = false
+                cacheTimeTextField.stringValue = downloadingDataString
                 let indexSet = IndexSet(integersIn: 0...driversTableViewController.tableView.numberOfRows - 1)
                 NSAnimationContext.runAnimationGroup({
-                        context in
+                        (context) in
                         context.duration = 0.25
                         driversTableViewController.tableView.removeRows(at: indexSet, withAnimation: .effectFade)
                 }, completionHandler: {
@@ -147,7 +154,7 @@ class UpdaterViewController: NSViewController {
                         } else {
                                 os_log("User refresh failed", log: self.osLog, type: .default)
                         }
-                        sender.isEnabled = true
+                        self.refreshButton.isEnabled = true
                 })
 
         }

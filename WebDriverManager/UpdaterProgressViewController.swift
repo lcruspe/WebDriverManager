@@ -22,11 +22,12 @@ import os.log
 
 class UpdaterProgressViewController: NSViewController {
         
+        let osLog = OSLog.init(subsystem: "org.vulgo.WebDriverManager", category: "UpdaterController")
+        
         @IBOutlet weak var closeButton: NSButton!
         @IBOutlet weak var progressIndicator: NSProgressIndicator!
         @IBOutlet weak var progressMessage: NSTextField!
         
-        let osLog = OSLog.init(subsystem: "org.vulgo.WebDriverManager", category: "UpdaterController")
         var parentWindow: NSWindow?
         var progressObserver : NSObjectProtocol!
         var terminationObserver: NSObjectProtocol!

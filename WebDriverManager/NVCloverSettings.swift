@@ -110,6 +110,7 @@ class NVCloverSettings: CloverSettings {
                                                 
 
                                         }
+                                        
                                         if write() {
                                                 os_log("Wrote NvidiaWeb=%{public}@", log: thisOsLog, type: .default, newValue.description)
                                                 _nvidiaWebIsEnabled = newValue
@@ -169,7 +170,8 @@ class NVCloverSettings: CloverSettings {
                                                 
                                                 /* Merge into existing array, removing duplicate patches */
                                                 
-                                                let existing: IndexSet? = kextsToPatch?.indexesOfObjects(options: [], passingTest: { (constraint, idx, stop) in
+                                                let existing: IndexSet? = kextsToPatch?.indexesOfObjects(options: [], passingTest: {
+                                                        (constraint, idx, stop) in
                                                         if let test = constraint as? NSDictionary {
                                                                 if (test[Keys.Comment.string] as? String ?? "")!.contains("webdriver.sh: ") {
                                                                         return true
@@ -226,7 +228,8 @@ class NVCloverSettings: CloverSettings {
                         var enabledPatchesIndicies = IndexSet()
                         if let kernelAndKextPatches = dictionary?[Keys.KernelAndKextPatches.string] as? NSDictionary {
                                 if let kextsToPatch = kernelAndKextPatches[Keys.KextsToPatch.string] as? NSArray {
-                                        enabledPatchesIndicies = kextsToPatch.indexesOfObjects(options: [], passingTest: { (constraint, idx, stop) in
+                                        enabledPatchesIndicies = kextsToPatch.indexesOfObjects(options: [], passingTest: {
+                                                (constraint, idx, stop) in
                                                 if let test = constraint as? NSDictionary {
                                                         let findMatch = test[Keys.Find.string] as? Data == startupWebPatch[Keys.Find.string] as? Data
                                                         let nameMatch = test[Keys.Name.string] as? String == startupWebPatch[Keys.Name.string] as? String

@@ -21,17 +21,24 @@ import Foundation
 import os.log
 
 func sysctl(byName string: String) -> String? {
+        
         let bufferSize = 256
         var buffer = Array<CChar>(repeating: 0, count: bufferSize)
         var size = size_t(buffer.count)
         let result: Int32 = sysctlbyname(string, &buffer, &size, nil, 0)
+        
         if result != 0 {
+                
                 os_log("sysctlbyname return value: %{public}@", log: .default, type: .default, String(result))
                 return nil
+                
         } else {
-                return buffer.withUnsafeBufferPointer { ptr -> String in
+                
+                return buffer.withUnsafeBufferPointer {
+                        (ptr) -> String in
                         let string = String(cString: ptr.baseAddress!)
                         return string
                 }
+                
         }
 }

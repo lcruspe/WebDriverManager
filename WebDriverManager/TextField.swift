@@ -22,7 +22,9 @@ import Cocoa
 class TextField: NSTextField {
 
         override func performKeyEquivalent(with event: NSEvent) -> Bool {
+                
                 if event.type == NSEvent.EventType.keyDown {
+                        
                         let modifierFlags: UInt = event.modifierFlags.rawValue & ModifierKeys.mask
                         switch (modifierFlags, event.keyCode) {
                         case (ModifierKeys.command, 0):
@@ -40,7 +42,9 @@ class TextField: NSTextField {
                         default:
                                 break
                         }
+                        
                 }
+                
                 return super.performKeyEquivalent(with: event)
         }
 }

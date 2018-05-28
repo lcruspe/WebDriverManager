@@ -23,9 +23,10 @@ import os.log
 class BootArgsViewController: NSViewController {
         
         let osLog = OSLog.init(subsystem: "org.vulgo.WebDriverManager", category: "BootArgsViewController")
-        var bootArgs: String?
         
         @IBOutlet weak var bootArgsTextField: NSTextField!
+        
+        var bootArgs: String?
         
         override func viewDidLoad() {
                 super.viewDidLoad()

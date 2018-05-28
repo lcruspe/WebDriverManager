@@ -24,9 +24,10 @@ class DriversTableViewController: NSViewController, NSTableViewDelegate, NSTable
         
         let osLog = OSLog.init(subsystem: "org.vulgo.WebDriverManager", category: "DriversTableViewController")
         
-        var updaterViewController: UpdaterViewController!
         @IBOutlet var tableView: NSTableView!
         @IBOutlet var scrollView: NSScrollView!
+        
+        var updaterViewController: UpdaterViewController!
         let updates: Array<AnyObject>? = WebDriverUpdates.shared.updates
         var localVersion: String? = WebDriverUpdates.shared.localVersion
         let localBuild = WebDriverUpdates.shared.localBuild
@@ -89,7 +90,7 @@ class DriversTableViewController: NSViewController, NSTableViewDelegate, NSTable
                         installed["OS"] = localVersionRequiredOS ?? "Unknown"
                         tableData?.append(installed as AnyObject)
                 }
-                tableData?.sort(by: {
+                tableData?.sort {
                         (dictOne, dictTwo) -> Bool in
                         guard let buildOne = dictOne["OS"] as? String, let buildTwo = dictTwo["OS"] as? String else {
                                 return false
@@ -102,7 +103,7 @@ class DriversTableViewController: NSViewController, NSTableViewDelegate, NSTable
                         } else {
                                 return buildOne > buildTwo
                         }
-                })
+                }
         }
         
         func updateTableData() {

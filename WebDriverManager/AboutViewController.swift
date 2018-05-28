@@ -29,7 +29,7 @@ class AboutViewController: NSViewController {
         
         override func viewDidLoad() {
                 super.viewDidLoad()
-                versionTextField.stringValue = String(format: "%@ %@", NSLocalizedString("Version", comment: "About dialog: Version"), versionString)
+                versionTextField.stringValue = String(format: "%@ %@", NSLocalizedString("Version", comment: ""), versionString)
                 view.wantsLayer = true
                 view.layer?.backgroundColor = CGColor.white
         }

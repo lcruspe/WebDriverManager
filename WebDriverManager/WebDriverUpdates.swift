@@ -118,7 +118,7 @@ class WebDriverUpdates: NSObject, NSUserNotificationCenterDelegate {
                         }
                         var updates = array as Array<AnyObject>
                         updates = updates.filter {
-                                update in
+                                (update) in
                                 guard let dictionary = update as? [String: Any] else {
                                         return false
                                 }

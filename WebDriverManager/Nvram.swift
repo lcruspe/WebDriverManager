@@ -23,10 +23,6 @@ class Nvram: RegistryEntry {
         
         static let shared = Nvram()
         
-        init?() {
-                super.init(fromPath: "IODeviceTree:/options")
-        }
-        
         var useNvidia: Bool {
                 get {
                         if let result: Data = getDataValue(forProperty: "nvda_drv") {
@@ -36,6 +32,10 @@ class Nvram: RegistryEntry {
                         }
                         return false
                 }
+        }
+        
+        init?() {
+                super.init(fromPath: "IODeviceTree:/options")
         }
 
 }

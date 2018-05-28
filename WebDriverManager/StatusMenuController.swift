@@ -24,45 +24,6 @@ class StatusMenuController: NSObject, NSMenuDelegate {
 
         let osLog = OSLog.init(subsystem: "org.vulgo.WebDriverManager", category: "StatusMenuController")
         
-        let cloverSettings = NVCloverSettings()
-        let fileManager = FileManager()
-        var csrActiveConfig: UInt32 = 0xFFFF
-        let unsignedKexts: UInt32 = 1 << 0
-        let unrestrictedFilesystem: UInt32 = 1 << 1
-        var fsAllowed: Bool = false
-        var kextAllowed: Bool = false
-        var scriptError: NSDictionary?
-        let statusItem = NSStatusBar.system.statusItem(withLength:NSStatusItem.variableLength)
-        var storyboard: NSStoryboard?
-        var updaterWindowController: NSWindowController?
-        var aboutWindowController: NSWindowController?
-        var preferencesWindowController: NSWindowController?
-        var packagerWindowController: NSWindowController?
-        var editBootArgsController: NSWindowController?
-        
-        override init() {
-                super.init()
-                let _ = csr_get_active_config(&csrActiveConfig)
-                kextAllowed = !(csr_check(unsignedKexts) != 0)
-                fsAllowed = !(csr_check(unrestrictedFilesystem) != 0)
-        }
-
-        let nvAccelerator = RegistryEntry.init(fromMatchingDictionary: IOServiceMatching("nvAccelerator"))
-        
-        var driverStatus = NSLocalizedString("Driver status unavailable", comment: "Main menu: Driver status unavailable")
-        let driverNotInstalledMenuItemTitle = NSLocalizedString("Web driver not installed", comment: "Main menu: Web driver not installed")
-        let driverNotInUseMenuItemTitle = NSLocalizedString("Web driver not in use", comment: "Main menu: Web driver not in use")
-        let mountEFIItemTitle = NSLocalizedString("Mount EFI Partition", comment: "Main menu: Mount Clover/EFI")
-        let unmountEFIItemTitle = NSLocalizedString("Unmount EFI Partition", comment: "Main menu: Unmount Clover/EFI")
-        let openInBrowserMenuItemTitle = NSLocalizedString("Open % in Browser", comment: "Main menu: Open in browser replacing % with title from defaults")
-        let restartAlertMessage = NSLocalizedString("Settings will be applied after you restart", comment: "Restart alert: message")
-        let restartAlertInformativeText = NSLocalizedString("Your bootloader may override the choice you make here.", comment: "Restart alert: informative text")
-        let restartAlertButtonTitle = NSLocalizedString("Close", comment: "Restart alert: button title")
-        let scriptErrorAlertMessage = NSLocalizedString("Failed to execute a script", comment: "Script error: alert message")
-        let scriptErrorInformativeText = NSLocalizedString("If you keep seeing this message you can report it here: https://github.com/vulgo/WebDriverManager", comment: "Script error: informative text")
-        let restartAfterScriptAlertMessage = NSLocalizedString("Caches will be rebuilt", comment: "Reboot after script: alert message")
-        let restartAfterScriptInformativeText = NSLocalizedString("Restart to update the boot volume and apply changes.", comment: "Reboot after script: informative text")
-
         @IBOutlet weak var statusMenu: NSMenu!
         @IBOutlet weak var updaterMenuItem: NSMenuItem!
         @IBOutlet weak var driverStatusMenuItem: NSMenuItem!
@@ -82,6 +43,32 @@ class StatusMenuController: NSObject, NSMenuDelegate {
         @IBOutlet weak var csrActiveConfigMenuItem: NSMenuItem!
         @IBOutlet weak var unstageGpuBundlesMenuItem: NSMenuItem!
         @IBOutlet weak var clearStagingMenuItem: NSMenuItem!
+        
+        let cloverSettings = NVCloverSettings()
+        let fileManager = FileManager()
+        var csrActiveConfig: UInt32 = 0xFFFF
+        let unsignedKexts: UInt32 = 1 << 0
+        let unrestrictedFilesystem: UInt32 = 1 << 1
+        var fsAllowed: Bool = false
+        var kextAllowed: Bool = false
+        var scriptError: NSDictionary?
+        let statusItem = NSStatusBar.system.statusItem(withLength:NSStatusItem.variableLength)
+        var storyboard: NSStoryboard?
+        var updaterWindowController: NSWindowController?
+        var aboutWindowController: NSWindowController?
+        var preferencesWindowController: NSWindowController?
+        var packagerWindowController: NSWindowController?
+        var editBootArgsController: NSWindowController?
+        
+        let nvAccelerator = RegistryEntry.init(fromMatchingDictionary: IOServiceMatching("nvAccelerator"))
+        
+        override init() {
+                super.init()
+                let _ = csr_get_active_config(&csrActiveConfig)
+                kextAllowed = !(csr_check(unsignedKexts) != 0)
+                fsAllowed = !(csr_check(unrestrictedFilesystem) != 0)
+        }
+
         
         private func disable(_ items: NSMenuItem ...) {
                 for item in items {
@@ -148,7 +135,12 @@ class StatusMenuController: NSObject, NSMenuDelegate {
         }
         
         func menuWillOpen(_ menu: NSMenu) {
+                
                 /* Driver Status and nvda_drv */
+                
+                var driverStatus = NSLocalizedString("Driver status unavailable", comment: "")
+                let driverNotInstalledMenuItemTitle = NSLocalizedString("Web driver not installed", comment: "")
+                let driverNotInUseMenuItemTitle = NSLocalizedString("Web driver not in use", comment: "")
                 if fileManager.fileExists(atPath: "/Library/Extensions/NVDAStartupWeb.kext") {
                         if let bundleId: String = nvAccelerator.getStringValue(forProperty: "CFBundleIdentifier"), bundleId.uppercased().contains("WEB") {
                                 driverStatus = "\(bundleId)"
@@ -167,6 +159,9 @@ class StatusMenuController: NSObject, NSMenuDelegate {
                 }
 
                 /* Clover Settings */
+                
+                let mountEFIItemTitle = NSLocalizedString("Mount EFI Partition", comment: "")
+                let unmountEFIItemTitle = NSLocalizedString("Unmount EFI Partition", comment: "")
                 setVisibility(of: bootArgumentsMenuItem, accordingTo: Defaults.shared.bootArgumentsIsVisible)
                 if cloverSettings != nil && Defaults.shared.cloverSettingsIsVisible {
                         show(cloverSubMenuItem)
@@ -184,19 +179,25 @@ class StatusMenuController: NSObject, NSMenuDelegate {
                 }
 
                 /* Kernel Extensions */
+                
                 setVisibility(of: unstageGpuBundlesMenuItem, accordingTo: fsAllowed)
                 setVisibility(of: clearStagingMenuItem, accordingTo: !fsAllowed)
                 setVisibility(of: kernelExtensionsMenuItem, accordingTo: Defaults.shared.kernelExtensionsIsVisible)
 
                 /* Package Installer */
+                
                 setVisibility(of: packageInstallerMenuItem, accordingTo: Defaults.shared.packageInstallerIsVisible)
                 
                 /* Open In Browser */
+                
+                let openInBrowserMenuItemTitle = NSLocalizedString("Open % in Browser", comment: "")
                 openInBrowserMenuItem.title = openInBrowserMenuItemTitle.replacingOccurrences(of: "%", with: Defaults.shared.openInBrowserTitle)
                 setVisibility(of: openInBrowserMenuItem, accordingTo: Defaults.shared.openInBrowserIsVisible)
         }
         
         func showScriptErrorAlert() {
+                let scriptErrorAlertMessage = NSLocalizedString("Failed to execute a script", comment: "")
+                let scriptErrorInformativeText = NSLocalizedString("If you keep seeing this message you can report it here: https://github.com/vulgo/WebDriverManager", comment: "")
                 let alert = NSAlert()
                 alert.messageText = scriptErrorAlertMessage
                 alert.informativeText = scriptErrorInformativeText
@@ -204,6 +205,8 @@ class StatusMenuController: NSObject, NSMenuDelegate {
         }
         
         func showRestartAfterScriptAlert() {
+                let restartAfterScriptAlertMessage = NSLocalizedString("Caches will be rebuilt", comment: "")
+                let restartAfterScriptInformativeText = NSLocalizedString("Restart to update the boot volume and apply changes.", comment: "")
                 let alert = NSAlert()
                 alert.messageText = restartAfterScriptAlertMessage
                 alert.informativeText = restartAfterScriptInformativeText
@@ -233,6 +236,9 @@ class StatusMenuController: NSObject, NSMenuDelegate {
                 let result = Scripts.shared.nvram?.executeAndReturnError(&scriptError)
                 if Scripts.shared.boolValue(result) {
                         if Defaults.shared.showRestartAlert {
+                                let restartAlertMessage = NSLocalizedString("Settings will be applied after you restart", comment: "")
+                                let restartAlertInformativeText = NSLocalizedString("Your bootloader may override the choice you make here.", comment: "")
+                                let restartAlertButtonTitle = NSLocalizedString("Close", comment: "")
                                 let alert = NSAlert()
                                 alert.messageText = restartAlertMessage
                                 alert.informativeText = restartAlertInformativeText
@@ -283,6 +289,7 @@ class StatusMenuController: NSObject, NSMenuDelegate {
         }
         
         @IBAction func cloverPartitionMenuItemClicked(_ sender: NSMenuItem) {
+                let mountEFIItemTitle = NSLocalizedString("Mount EFI Partition", comment: "")
                 if cloverPartitionMenuItem.title == mountEFIItemTitle {
                         cloverSettings?.mountEfi()
                 } else {

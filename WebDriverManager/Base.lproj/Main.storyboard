@@ -500,6 +500,7 @@ DQ
                         <outlet property="driversTableHeight" destination="gvK-sI-TjU" id="ZSu-tx-sFH"/>
                         <outlet property="filterButton" destination="5YQ-ZG-hkb" id="6hh-xV-3GA"/>
                         <outlet property="installButton" destination="dLg-Ls-i59" id="Xtv-uM-ucN"/>
+                        <outlet property="refreshButton" destination="Maw-H4-e49" id="6uR-lP-AXi"/>
                         <outlet property="runningOnTextField" destination="UK9-cn-bnG" id="dCN-eR-veE"/>
                         <outlet property="updatesTableContainerView" destination="lIU-dU-iVO" id="Fa6-5s-G7g"/>
                     </connections>
