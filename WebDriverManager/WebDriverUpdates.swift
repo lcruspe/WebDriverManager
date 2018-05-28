@@ -1,5 +1,5 @@
 /*
- * File: WebDriverNotifications.swift
+ * File: WebDriverUpdates.swift
  *
  * WebDriverManager © vulgo 2018
  *
@@ -43,12 +43,14 @@ class WebDriverUpdates: NSObject, NSUserNotificationCenterDelegate {
                 get {
                         let hoursAfterCheck = Defaults.shared.hoursAfterCheck
                         var seconds: Double
+                        
                         if Set(1...48).contains(hoursAfterCheck) {
                                 seconds = Double(hoursAfterCheck) * 3600.0
                         } else {
                                 os_log("Invalid value for hoursAfterCheck, using 6 hours", log: osLog, type: .default)
                                 seconds = 21600.0
                         }
+                        
                         os_log("Next check for updates after %{public}@ seconds", log: osLog, type: .info, seconds.description)
                         return seconds
                 }
@@ -59,18 +61,24 @@ class WebDriverUpdates: NSObject, NSUserNotificationCenterDelegate {
         }
         
         var localVersion: String? {
+                
                 guard let info = NSDictionary.init(contentsOf: infoPlistUrl) else {
                         return nil
                 }
+                
                 guard let infoString = info["CFBundleGetInfoString"] as? String else {
                         return nil
                 }
+                
                 let components = infoString.split(separator: " ").map(String.init)
+                
                 guard components.count == 3 else {
                         return nil
                 }
+                
                 os_log("Local version: %{public}@", log: osLog, type: .info, components[2])
                 return components[2]
+                
         }
         
         private struct cache {
@@ -80,16 +88,23 @@ class WebDriverUpdates: NSObject, NSUserNotificationCenterDelegate {
         }
         
         var updates: Array<AnyObject>? {
+                
                 if cache.updates != nil, cache.time != nil, cache.time! < cache.time!.addingTimeInterval(cache.timeout)  {
+                        
                         return cache.updates
+                        
                 } else {
+                        
                         let buffer: Array<AnyObject>? = sync()
+
                         if buffer != nil {
                                 cache.updates = buffer
                                 cache.time = Date()
                         }
+                        
                         return cache.updates
                 }
+                
         }
         
         var cacheTime: Date? {
@@ -97,7 +112,9 @@ class WebDriverUpdates: NSObject, NSUserNotificationCenterDelegate {
         }
         
         @discardableResult func refresh() -> Bool {
+                
                 let buffer: Array<AnyObject>? = sync()
+                
                 if buffer != nil {
                         cache.updates = buffer
                         cache.time = Date()
@@ -108,15 +125,21 @@ class WebDriverUpdates: NSObject, NSUserNotificationCenterDelegate {
         }
         
         private func sync() -> Array<AnyObject>? {
+                
                 os_log("Downloading data from NVIDIA", log: osLog, type: .default)
+                
                 if let url = updatesUrl {
+                        
                         guard let downloaded = NSDictionary.init(contentsOf: url) else {
                                 return nil
                         }
+                        
                         guard let array = downloaded["updates"] as? NSArray else {
                                 return nil
                         }
+                        
                         var updates = array as Array<AnyObject>
+                        
                         updates = updates.filter {
                                 (update) in
                                 guard let dictionary = update as? [String: Any] else {
@@ -131,8 +154,10 @@ class WebDriverUpdates: NSObject, NSUserNotificationCenterDelegate {
                                         return false
                                 }
                         }
+                        
                         return updates
                 }
+                
                 return nil
         }
         
@@ -141,24 +166,42 @@ class WebDriverUpdates: NSObject, NSUserNotificationCenterDelegate {
                 os_log("Updates URL: %{public}@", log: osLog, type: .default, updatesUrl?.absoluteString ?? "nil")
         }
         
-        func setup(notification: inout NSUserNotification, forVersion version: String) {
-                notification.deliveryDate = NSDate(timeIntervalSinceNow: 1) as Date
-                notification.title = NSLocalizedString("NVIDIA Web Driver", comment: "Update available notification title")
-                notification.informativeText = String(format: "%@ %@", version, NSLocalizedString("available", comment: "Notification message: ... available"))
-                notification.hasActionButton = true
-                notification.setValue(1, forKey: "_showsButtons")
-                notification.actionButtonTitle = NSLocalizedString("Don't Show Again", comment: "Notification action button")
-                notification.identifier = version
-                notification.soundName = NSUserNotificationDefaultSoundName
+        func newUserNotification(forVersion version: String) -> NSUserNotification {
+                
+                let n = NSUserNotification()
+                let updateAction = NSUserNotificationAction(identifier: "update", title: NSLocalizedString("Open updater...", comment: ""))
+                let suppressAction = NSUserNotificationAction(identifier: "suppress", title: NSLocalizedString("Suppress alerts for \(version)", comment: ""))
+                let additionalActions: [NSUserNotificationAction] = [updateAction, suppressAction]
+                
+                n.deliveryTimeZone = TimeZone.current
+                n.deliveryDate = NSDate(timeIntervalSinceNow: 1) as Date
+                n.title = NSLocalizedString("NVIDIA Web Driver", comment: "")
+                n.informativeText = String(format: "%@ %@", version, NSLocalizedString("available", comment: ""))
+                n.hasActionButton = true
+                n.otherButtonTitle = NSLocalizedString("Close", comment: "")
+                n.additionalActions = additionalActions
+                n.setValue(1, forKey: "_showsButtons")
+                n.setValue(1, forKey: "_alwaysShowAlternateActionMenu")
+                n.userInfo = ["version": version]
+                n.soundName = NSUserNotificationDefaultSoundName
+                
+                return n
         }
         
-        func setupNotAvailable(notification: inout NSUserNotification, message: String) {
-                notification.deliveryDate = NSDate(timeIntervalSinceNow: 1) as Date
-                notification.title = NSLocalizedString("Web Driver Manager", comment: "No update notification title")
-                notification.informativeText = message
-                notification.hasActionButton = false
-                notification.setValue(0, forKey: "_showsButtons")
-                notification.soundName = nil
+        func newUserNotification(withMessage message: String) -> NSUserNotification {
+                
+                let n = NSUserNotification()
+                
+                n.deliveryTimeZone = TimeZone.current
+                n.deliveryDate = NSDate(timeIntervalSinceNow: 1) as Date
+                n.title = NSLocalizedString("Web Driver Manager", comment: "")
+                n.informativeText = message
+                n.hasActionButton = false
+                n.setValue(0, forKey: "_showsButtons")
+                n.soundName = nil
+                
+                return n
+                
         }
         
         func userNotificationCenter(_ center: NSUserNotificationCenter, shouldPresent notification: NSUserNotification) -> Bool {
@@ -167,12 +210,19 @@ class WebDriverUpdates: NSObject, NSUserNotificationCenterDelegate {
         
         func userNotificationCenter(_ center: NSUserNotificationCenter, didActivate notification: NSUserNotification) {
                 switch (notification.activationType) {
-                case .actionButtonClicked:
-                        if let versionToSuppress = notification.identifier {
-                                os_log("Suppressing alerts for version: %{public}@", log: osLog, type: .default, versionToSuppress)
-                                Defaults.shared.suppressUpdateAlerts = versionToSuppress
-                        } else {
-                                os_log("Notification identifier was nil, unable to suppress alerts", log: osLog, type: .default)
+                case .additionalActionClicked:
+                        if notification.additionalActivationAction?.identifier == "update" {
+                                if let statusMenuController = (NSApplication.shared.delegate as? AppDelegate)?.statusMenu.delegate as? StatusMenuController {
+                                        statusMenuController.updaterMenuItemClicked(self)
+                                }
+                        }
+                        if notification.additionalActivationAction?.identifier == "suppress" {
+                                if let versionToSuppress = notification.userInfo?["version"] as? String {
+                                        os_log("Suppressing alerts for version: %{public}@", log: osLog, type: .default, versionToSuppress)
+                                        Defaults.shared.suppressUpdateAlerts = versionToSuppress
+                                } else {
+                                        os_log("Failed to read version to suppress from user notification user info", log: osLog, type: .default)
+                                }
                         }
                 default:
                         break;
@@ -181,7 +231,7 @@ class WebDriverUpdates: NSObject, NSUserNotificationCenterDelegate {
         
         func beginUpdateCheck(overrideDefaults: Bool = false, userCheck: Bool = false) {
                 updateCheckQueue.async {
-                        self.updateCheckDidFinish(result: self.checkForUpdates(overrideDefaults: true, userCheck: userCheck))
+                        self.updateCheckDidFinish(result: self.checkForUpdates(overrideDefaults: overrideDefaults, userCheck: userCheck))
                 }
         }
         
@@ -206,6 +256,7 @@ class WebDriverUpdates: NSObject, NSUserNotificationCenterDelegate {
         }
         
         private func checkForUpdates(overrideDefaults: Bool = false, userCheck: Bool = false) -> Bool {
+                
                 DispatchQueue.main.async {
                         for window in NSApplication.shared.windows {
                                 if let id = window.identifier?.rawValue, id == "preferences" {
@@ -215,63 +266,102 @@ class WebDriverUpdates: NSObject, NSUserNotificationCenterDelegate {
                                 }
                         }
                 }
+                
                 checkInProgress = true
                 updateCheckWorkItem?.cancel()
-                if userWantsAlerts == false && overrideDefaults == false {
+                
+                switch (userWantsAlerts, overrideDefaults) {
+                        
+                case (false, false):
                         os_log("Update notifications are disabled in user defaults", log: osLog, type: .info)
+                        
                         return false
+                        
+                case (false, true):
+                        os_log("Overriding 'notifications disabled' user default", log: osLog, type: .info)
+                        
+                        fallthrough
+                        
+                default:
+                        if userCheck {
+                                refresh()
+                        }
+                        
+                        if updates == nil {
+                                os_log("No updates data is available", log: osLog, type: .default)
+                                
+                                return false
+                        }
+                        
                 }
-                if userWantsAlerts == false && overrideDefaults == true {
-                        os_log("Overriding notifications disabled user default", log: osLog, type: .info)
-                }
-                guard updates != nil else {
-                        os_log("No updates data from NVIDIA is available", log: osLog, type: .default)
-                        return false
-                }
+                
                 for update in updates! {
+                        
                         guard let remoteBuild: String = update["OS"] as? String else {
                                 continue
                         }
+                        
                         if remoteBuild != localBuild {
                                 continue
                         }
+                        
                         checksum = update["checksum"] as? String
                         downloadUrl = update["downloadURL"] as? String
                         remoteVersion = update["version"] as? String
+                        
                 }
-                guard remoteVersion != nil else {
+                
+                if remoteVersion == nil {
+                        /* No update available */
                         os_log("Remote version is nil")
+                        
                         if userCheck {
-                                var webDriverAlert = NSUserNotification()
+                                /* Notify user if this check occurred due to user interaction */
+                                var noUpdateNotification: NSUserNotification
                                 if let build = localBuild?.uppercased() {
-                                        setupNotAvailable(notification: &webDriverAlert, message: "No update available for \(build)")
+                                        noUpdateNotification = newUserNotification(withMessage: "No update available for \(build)")
                                 } else {
-                                        setupNotAvailable(notification: &webDriverAlert, message: "No update available")
+                                        noUpdateNotification = newUserNotification(withMessage: "No update available")
                                 }
-                                os_log("Scheduling 'no update available' notification, delivery date: %{public}@", log: osLog, type: .default, webDriverAlert.deliveryDate?.description ?? "unknown")
-                                NSUserNotificationCenter.default.scheduleNotification(webDriverAlert)
+                                os_log("Scheduling 'no update available' notification, delivery date: %{public}@", log: osLog, type: .default, noUpdateNotification.deliveryDate?.description ?? "unknown")
+                                
+                                NSUserNotificationCenter.default.scheduleNotification(noUpdateNotification)
+                                
                         }
+                        
                         return false
                 }
-                guard remoteVersion != localVersion else {
+                
+                if remoteVersion == localVersion {
+                        /* Compatible remote version is already installed */
                         os_log("Remote version %{public}@ is already installed", log: osLog, type: .default, remoteVersion!)
+                        
                         if userCheck {
-                                var webDriverAlert = NSUserNotification()
-                                setupNotAvailable(notification: &webDriverAlert, message: "\(remoteVersion!) already installed")
-                                os_log("Scheduling 'already installed' notification, delivery date: %{public}@", log: osLog, type: .default, webDriverAlert.deliveryDate?.description ?? "unknown")
-                                NSUserNotificationCenter.default.scheduleNotification(webDriverAlert)
+                                /* Notify user if this check occurred due to user interaction */
+                                let alreadyInstalledNotification = newUserNotification(withMessage: "\(remoteVersion!) already installed")
+                                os_log("Scheduling 'already installed' notification, delivery date: %{public}@", log: osLog, type: .default, alreadyInstalledNotification.deliveryDate?.description ?? "unknown")
+                                
+                                NSUserNotificationCenter.default.scheduleNotification(alreadyInstalledNotification)
+                                
                         }
+                        
                         return false
                 }
+                
                 guard remoteVersion != Defaults.shared.suppressUpdateAlerts else {
+                        /* Update is available, user requested no notifications for this version */
                         os_log("Alerts for %{public}@ have been suppressed in user defaults", log: osLog, type: .default, remoteVersion!)
+                        
                         return false
                 }
+                
+                /* Update is available, notify user */
                 os_log("Remote version available: %{public}@", log: osLog, type: .default, remoteVersion!)
-                var webDriverAlert = NSUserNotification()
-                setup(notification: &webDriverAlert, forVersion: remoteVersion!)
-                os_log("Scheduling update notification, delivery date: %{public}@", log: osLog, type: .default, webDriverAlert.deliveryDate?.description ?? "unknown")
-                NSUserNotificationCenter.default.scheduleNotification(webDriverAlert)
+                let updateNotification = newUserNotification(forVersion: remoteVersion!)
+                os_log("Scheduling update notification, delivery date: %{public}@", log: osLog, type: .default, updateNotification.deliveryDate?.description ?? "unknown")
+                
+                NSUserNotificationCenter.default.scheduleNotification(updateNotification)
+                
                 return true
         }
 }
