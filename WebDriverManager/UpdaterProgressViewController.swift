@@ -32,6 +32,7 @@ class UpdaterProgressViewController: NSViewController {
         var progressObserver : NSObjectProtocol!
         var terminationObserver: NSObjectProtocol!
         var stdout: FileHandle?
+        var action: Action?
         
         override func viewDidLoad() {
                 super.viewDidLoad()
@@ -83,20 +84,20 @@ class UpdaterProgressViewController: NSViewController {
 
                 task.launchPath = "/bin/sh"
                 
-                guard let action = parentViewController.action else {
-                        NotificationCenter.default.removeObserver(self.progressObserver)
-                        dismiss(self)
-                        return
-                }
+                action = parentViewController.action
                 
                 switch action {
-                case .installSelected:
+                case .installSelected?:
                         let scriptUrl = Bundle.main.url(forResource: "install", withExtension: "sh")
                         let stageGPUBundles: Int = Defaults.shared.stageGPUBundles ? 1 : 0
                         task.arguments = [scriptUrl!.path, url, checksum, String(stageGPUBundles)]
-                case .uninstall:
+                case .uninstall?:
                         let scriptUrl = Bundle.main.url(forResource: "uninstall", withExtension: "sh")
                         task.arguments = [scriptUrl!.path]
+                default:
+                        NotificationCenter.default.removeObserver(self.progressObserver)
+                        dismiss(self)
+                        return
                 }
                 
                 parentViewController.action = nil

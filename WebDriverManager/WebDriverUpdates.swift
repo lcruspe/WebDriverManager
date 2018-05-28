@@ -81,6 +81,25 @@ class WebDriverUpdates: NSObject, NSUserNotificationCenterDelegate {
                 
         }
         
+        var localCompatibleOS: String? {
+                
+                let infoPlistUrl = URL.init(fileURLWithPath: "/Library/Extensions/NVDAStartupWeb.kext/Contents/Info.plist")
+                guard let info = NSDictionary.init(contentsOf: infoPlistUrl) else {
+                        return nil
+                }
+                guard let ioKitPersonalities = info["IOKitPersonalities"] as? NSDictionary else {
+                        return nil
+                }
+                guard let nvdaStartup = ioKitPersonalities["NVDAStartup"] as? NSDictionary else {
+                        return nil
+                }
+                guard let compatibleBuild = nvdaStartup["NVDARequiredOS"] as? String else {
+                        return nil
+                }
+                
+                return compatibleBuild
+        }
+        
         private struct cache {
                 static var updates: Array<AnyObject>?
                 static var time: Date?

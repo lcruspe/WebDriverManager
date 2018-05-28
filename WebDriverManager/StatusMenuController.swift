@@ -195,24 +195,6 @@ class StatusMenuController: NSObject, NSMenuDelegate {
                 setVisibility(of: openInBrowserMenuItem, accordingTo: Defaults.shared.openInBrowserIsVisible)
         }
         
-        func showScriptErrorAlert() {
-                let scriptErrorAlertMessage = NSLocalizedString("Failed to execute a script", comment: "")
-                let scriptErrorInformativeText = NSLocalizedString("If you keep seeing this message you can report it here: https://github.com/vulgo/WebDriverManager", comment: "")
-                let alert = NSAlert()
-                alert.messageText = scriptErrorAlertMessage
-                alert.informativeText = scriptErrorInformativeText
-                alert.runModal()
-        }
-        
-        func showRestartAfterScriptAlert() {
-                let restartAfterScriptAlertMessage = NSLocalizedString("Caches will be rebuilt", comment: "")
-                let restartAfterScriptInformativeText = NSLocalizedString("Restart to update the boot volume and apply changes.", comment: "")
-                let alert = NSAlert()
-                alert.messageText = restartAfterScriptAlertMessage
-                alert.informativeText = restartAfterScriptInformativeText
-                alert.runModal()
-        }
-        
         /* Menu actions */
         
         @IBAction func updaterMenuItemClicked(_ sender: Any) {
@@ -233,8 +215,8 @@ class StatusMenuController: NSObject, NSMenuDelegate {
                         return
                 }
                 os_log("Setting nvda_drv nvram variable", log: osLog, type: .info)
-                let result = Scripts.shared.nvram?.executeAndReturnError(&scriptError)
-                if Scripts.shared.boolValue(result) {
+                let result = Scripts.shared.nvram.executeReturningTerminationStatus()
+                if result == 0 {
                         if Defaults.shared.showRestartAlert {
                                 let restartAlertMessage = NSLocalizedString("Settings will be applied after you restart", comment: "")
                                 let restartAlertInformativeText = NSLocalizedString("Your bootloader may override the choice you make here.", comment: "")
@@ -334,31 +316,20 @@ class StatusMenuController: NSObject, NSMenuDelegate {
                         os_log("Failed to create URL for opening in browser", log: osLog, type: .default)
                 }
         }
-        
-        func execute(script: NSAppleScript?, withDebugDescription debugDescription: String) {
-                DispatchQueue.main.async {
-                        let result = script?.executeAndReturnError(&self.scriptError)
-                        if Scripts.shared.boolValue(result) {
-                                os_log("%{public}@ script finished", log: self.osLog, type: .info, debugDescription)
-                                self.showRestartAfterScriptAlert()
-                                return
-                        }
-                        NSSound.beep()
-                        os_log("Error running %{public}@ script", log: self.osLog, type: .default, debugDescription)
-                        self.showScriptErrorAlert()
-                }
-        }
-        
+
         @IBAction func unstageGpuBundlesMenuItemClicked(_ sender: NSMenuItem) {
-                execute(script: Scripts.shared.unstage, withDebugDescription: "unstage")
+                let result = Scripts.shared.unstage.executeReturningTerminationStatus()
+                processKextScriptResult(terminationStatus: result)
         }
         
         @IBAction func clearStagingMenuItemClicked(_ sender: NSMenuItem) {
-                execute(script: Scripts.shared.clearStaging, withDebugDescription: "clear staging")
+                let result = Scripts.shared.clearStaging.executeReturningTerminationStatus()
+                processKextScriptResult(terminationStatus: result)
         }
         
         @IBAction func touchExtensionsMenuItemClicked(_ sender: NSMenuItem) {
-                execute(script: Scripts.shared.touch, withDebugDescription: "touch")
+                let result = Scripts.shared.touch.executeReturningTerminationStatus()
+                processKextScriptResult(terminationStatus: result)
         }
         
         @IBAction func preferencesMenuItemClicked(_ sender: Any) {
@@ -378,5 +349,21 @@ class StatusMenuController: NSObject, NSMenuDelegate {
                 DispatchQueue.main.async {
                         NSApp.terminate(nil)
                 }
-        }        
+        }
+        
+        func processKextScriptResult(terminationStatus: Int32) {
+                var message: String = ""
+                var info: String = ""
+                if terminationStatus == 0 {
+                        message = NSLocalizedString("Caches will be rebuilt", comment: "")
+                        info = NSLocalizedString("Restart to update the boot volume and apply changes.", comment: "")
+                } else {
+                        message = NSLocalizedString("Failed to execute a script", comment: "")
+                        info = NSLocalizedString("If you keep seeing this message you can report it here: https://github.com/vulgo/WebDriverManager", comment: "")
+                }
+                let alert = NSAlert()
+                alert.messageText = message
+                alert.informativeText = info
+                alert.runModal()
+        }
 }

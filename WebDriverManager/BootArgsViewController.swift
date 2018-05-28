@@ -61,25 +61,16 @@ class BootArgsViewController: NSViewController {
         }
         
         @IBAction func saveButtonPressed(_ sender: NSButton) {
-                let arguments = bootArgsTextField.stringValue
-                var script = "try\n"
-                script += "\t" + "do shell script " + "\""
-                script += "nvram boot-args=" + "\""
-                script += " & quoted form of (\""
-                script += arguments
-                script += "\")"
-                script += " with administrator privileges" + "\n"
-                script += "on error errorNumber" + "\n"
-                script += "\t" + "return false" + "\n"
-                script += "end try" + "\n"
-                script += "return true" + "\n"
-                if debug {
-                        print(script)
+                
+                let bootArgs = bootArgsTextField.stringValue
+                var result: Int32
+                if bootArgs != "" {
+                        result = Scripts.shared.bootArgs.executeReturningTerminationStatus(arguments: [bootArgs as Any])
+                } else {
+                        result = Scripts.shared.deleteBootArgs.executeReturningTerminationStatus()
                 }
-                let appleScript = NSAppleScript(source: script)
-                var error: NSDictionary?
-                let eventDescriptor = appleScript?.executeAndReturnError(&error)
-                if let bool = eventDescriptor?.booleanValue, bool == true {
+                
+                if result == 0 {
                         os_log("Boot arguments were saved", log: osLog, type: .info)
                         view.window?.close()
                 } else {

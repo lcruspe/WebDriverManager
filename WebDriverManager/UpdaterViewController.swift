@@ -20,6 +20,10 @@
 import Cocoa
 import os.log
 
+enum Action {
+        case installSelected, uninstall
+}
+
 class UpdaterViewController: NSViewController {
         
         let osLog = OSLog.init(subsystem: "org.vulgo.WebDriverManager", category: "UpdaterControllerMainWindow")
@@ -37,13 +41,11 @@ class UpdaterViewController: NSViewController {
         var url: String?
         var checksum: String?
         var version: String?
+        var compatibleOS: String?
         let macOSProductBuildString = "\(sysctl(byName: "kern.osproductversion") ?? "??") \(WebDriverUpdates.shared.localBuild ?? "??")"
         let filteredHeight: CGFloat = 78.0
         let unfilteredHeight: CGFloat = 390.0
         
-        enum Action {
-                case installSelected, uninstall
-        }
         var action: Action? = nil
         
         func showReinstallAlert(version: String) -> Bool {

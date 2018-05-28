@@ -31,25 +31,9 @@ class DriversTableViewController: NSViewController, NSTableViewDelegate, NSTable
         let updates: Array<AnyObject>? = WebDriverUpdates.shared.updates
         var localVersion: String? = WebDriverUpdates.shared.localVersion
         let localBuild = WebDriverUpdates.shared.localBuild
+        var localCompatibleOS = WebDriverUpdates.shared.localCompatibleOS
         var dataWantsFiltering: Bool = true
         var tableData: Array<AnyObject>? = nil
-        
-        var localVersionRequiredOS: String? {
-                let infoPlistUrl = URL.init(fileURLWithPath: "/Library/Extensions/NVDAStartupWeb.kext/Contents/Info.plist")
-                guard let info = NSDictionary.init(contentsOf: infoPlistUrl) else {
-                        return nil
-                }
-                guard let ioKitPersonalities = info["IOKitPersonalities"] as? NSDictionary else {
-                        return nil
-                }
-                guard let nvdaStartup = ioKitPersonalities["NVDAStartup"] as? NSDictionary else {
-                        return nil
-                }
-                guard let compatibleBuild = nvdaStartup["NVDARequiredOS"] as? String else {
-                        return nil
-                }
-                return compatibleBuild
-        }
         
         func hideScrollers() {
                 scrollView.hasVerticalScroller = false
@@ -87,7 +71,7 @@ class DriversTableViewController: NSViewController, NSTableViewDelegate, NSTable
                 if localVersion != nil, !versions.contains(localVersion!) {
                         var installed: [String: Any] = Dictionary()
                         installed["version"] = localVersion ?? "Unknown"
-                        installed["OS"] = localVersionRequiredOS ?? "Unknown"
+                        installed["OS"] = localCompatibleOS ?? "Unknown"
                         tableData?.append(installed as AnyObject)
                 }
                 tableData?.sort {

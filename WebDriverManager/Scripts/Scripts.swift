@@ -20,44 +20,58 @@
 import Cocoa
 import os.log
 
+class ShellScript: NSObject {
+        
+        let osLog = OSLog.init(subsystem: "org.vulgo.WebDriverManager", category: "Scripts")
+        
+        var url: URL?
+        var path: String? {
+                get {
+                        return url?.path
+                }
+        }
+
+        init(fromResource name: String, withExtension ext: String) {
+                url = Bundle.main.url(forResource: name, withExtension: ext)
+        }
+        
+        func executeReturningTerminationStatus(arguments: [Any]? = nil) -> Int32 {
+                if let path = self.path {
+                        var args: [Any] = arguments ?? [Any]()
+                        args.insert(path as Any, at: 0)
+                        let task = STPrivilegedTask()
+                        task.arguments = args
+                        task.launchPath = "/bin/sh"
+                        let error = task.launch()
+                        guard error == errAuthorizationSuccess else {
+                                switch error {
+                                case errAuthorizationCanceled:
+                                        os_log("User cancelled authorization", log: osLog, type: .default)
+                                        return -1
+                                default:
+                                        os_log("Authentication error", log: osLog, type: .default)
+                                        return -1
+                                }
+                        }
+                        task.waitUntilExit()
+                        return task.terminationStatus
+                } else {
+                        return -1
+                }
+        }
+}
+
 struct Scripts {
         
         static let shared = Scripts()
         
-        let osLog = OSLog.init(subsystem: "org.vulgo.WebDriverManager", category: "Scripts")
-        var error: NSDictionary?
-        var nvram: NSAppleScript?
-        var unstage: NSAppleScript?
-        var touch: NSAppleScript?
-        var clearStaging: NSAppleScript?
-        
-        init() {
-                if let nvramScriptUrl = Bundle.main.url(forResource: "nvram", withExtension: "applescript") {
-                        nvram = NSAppleScript(contentsOf: nvramScriptUrl, error: &error)
-                } else {
-                        os_log("Failed to get resource url for nvram script", log: osLog, type: .default)
-                }
-                if let unstageScriptUrl = Bundle.main.url(forResource: "unstage", withExtension: "applescript") {
-                        unstage = NSAppleScript(contentsOf: unstageScriptUrl, error: &error)
-                } else {
-                        os_log("Failed to get resource url for unstage script", log: osLog, type: .default)
-                }
-                if let touchScriptUrl = Bundle.main.url(forResource: "touch", withExtension: "applescript") {
-                        touch = NSAppleScript(contentsOf: touchScriptUrl, error: &error)
-                } else {
-                        os_log("Failed to get resource url for touch script", log: osLog, type: .default)
-                }
-                if let clearStagingScriptUrl = Bundle.main.url(forResource: "clearStaging", withExtension: "applescript") {
-                        clearStaging = NSAppleScript(contentsOf: clearStagingScriptUrl, error: &error)
-                } else {
-                        os_log("Failed to get resource URL for clear staging script", log: osLog, type: .default)
-                }
-        }
-        
-        func boolValue(_ eventDescriptor: NSAppleEventDescriptor?) -> Bool {
-                if let bool = eventDescriptor?.booleanValue, bool == true {
-                        return true
-                }
-                return false
-        }
+        let bootArgs = ShellScript(fromResource: "bootArgs", withExtension: "sh")
+        let clearStaging = ShellScript(fromResource: "clearStaging", withExtension: "sh")
+        let component = ShellScript(fromResource: "component", withExtension: "sh")
+        let deleteBootArgs = ShellScript(fromResource: "deleteBootArgs", withExtension: "sh")
+        let nvram = ShellScript(fromResource: "nvram", withExtension: "sh")
+        let product = ShellScript(fromResource: "product", withExtension: "sh")
+        let touch = ShellScript(fromResource: "touch", withExtension: "sh")
+        let unstage = ShellScript(fromResource: "unstage", withExtension: "sh")
+
 }

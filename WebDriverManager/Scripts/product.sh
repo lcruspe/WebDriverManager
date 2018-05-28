@@ -4,4 +4,4 @@
 # $2: Output package file name
 
 cd "$1/.."
-productbuild --distribution "$1/Distribution" --resources "$1/Resources" "$2"
+/usr/bin/productbuild --distribution "$1/Distribution" --resources "$1/Resources" "$2"

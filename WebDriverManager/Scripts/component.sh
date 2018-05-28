@@ -7,22 +7,22 @@
 cd "$1/.."
 
 # Payload
-gunzip -dc < "$1/$2/Payload" > "$1/../payload.cpio"
-mkdir drivers-root
+/usr/bin/gunzip -dc < "$1/$2/Payload" > "$1/../payload.cpio"
+/bin/mkdir drivers-root
 ( cd drivers-root
-cpio -i < "$1/../payload.cpio" )
+/usr/bin/cpio -i < "$1/../payload.cpio" )
 
 # Scripts
-gunzip -dc < "$1/$2/Scripts" > "$1/../scripts.cpio"
-mkdir scripts
+/usr/bin/gunzip -dc < "$1/$2/Scripts" > "$1/../scripts.cpio"
+/bin/mkdir scripts
 ( cd scripts
-cpio -i < "$1/../scripts.cpio" )
+/usr/bin/cpio -i < "$1/../scripts.cpio" )
 
 # Build
-pkgbuild --root drivers-root --scripts scripts --identifier com.nvidia.web-driver "$3"
+/usr/bin/pkgbuild --root drivers-root --scripts scripts --identifier com.nvidia.web-driver "$3"
 
 # Clean up
-rm payload.cpio
-rm scripts.cpio
-rm -rf drivers-root
-rm -rf scripts
+/bin/rm payload.cpio
+/bin/rm scripts.cpio
+/bin/rm -rf drivers-root
+/bin/rm -rf scripts
