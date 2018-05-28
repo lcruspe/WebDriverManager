@@ -2,8 +2,8 @@
 
 <p align="center">
 <picture>
-<source srcset="https://github.com/vulgo/WebDriverManager/raw/master/Images/screenshot.png, https://github.com/vulgo/WebDriverManager/raw/master/Images/screenshot@2x.png 2x" />
-<img src="https://github.com/vulgo/WebDriverManager/raw/master/Images/screenshot@2x.png" alt="webdriver.sh screenshot" width="540" />
+<source srcset="https://github.com/vulgo/WebDriverManager/raw/master/Images/updater-min.png, https://github.com/vulgo/WebDriverManager/raw/master/Images/updater@2x-min.png 2x" />
+<img src="https://github.com/vulgo/WebDriverManager/raw/master/Images/updater@2x-min.png" alt="webdriver.sh screenshot" width="632" />
 </picture>
 </p>
 
@@ -20,9 +20,16 @@
 - Enable notifications of NVIDIA driver updates/releases
 - Enable optional extras in the application preferences
 
+<p align="center">
+<picture>
+<source srcset="https://github.com/vulgo/WebDriverManager/raw/master/Images/menu-min.png, https://github.com/vulgo/WebDriverManager/raw/master/Images/menu@2x-min.png 2x" />
+<img src="https://github.com/vulgo/WebDriverManager/raw/master/Images/menu@2x-min.png" alt="webdriver.sh screenshot" width="560" />
+</picture>
+</p>
+
 ## Extras
 
-- Drag and drop repackager to remove OS checks + non-essential software from NVIDIA's installer
+- Drag and drop repackager to remove OS checks + self-installing software from NVIDIA's installer
 - Edit boot arguments NVRAM variable
 - Disable NVIDIA required OS check and toggle NvidiaWeb setting in Clover's config.plist
 - One-click extensions/kernel cache troubleshooting options
