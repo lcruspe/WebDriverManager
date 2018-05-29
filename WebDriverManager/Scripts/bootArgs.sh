@@ -2,4 +2,4 @@
 
 # $1 boot-args
 
-/usr/sbin/nvram boot-args="$1" || exit -1
+/usr/sbin/nvram boot-args="$1" || exit 1
