@@ -30,6 +30,7 @@ class DriversTableViewController: NSViewController, NSTableViewDelegate, NSTable
         var updaterViewController: UpdaterViewController!
         let updates: Array<AnyObject>? = WebDriverUpdates.shared.updates
         var localVersion: String? = WebDriverUpdates.shared.localVersion
+        var lastLocalVersion: String?
         let localBuild = WebDriverUpdates.shared.localBuild
         var localCompatibleOS = WebDriverUpdates.shared.localCompatibleOS
         var dataWantsFiltering: Bool = true
@@ -94,6 +95,7 @@ class DriversTableViewController: NSViewController, NSTableViewDelegate, NSTable
                 
                 os_log("Updating table data source", log: osLog, type: .default)
                 localVersion = WebDriverUpdates.shared.localVersion
+                lastLocalVersion = localVersion
                 guard updates != nil else {
                         os_log("Updates is nil", log: osLog, type: .default)
                         tableData = nil
@@ -130,7 +132,11 @@ class DriversTableViewController: NSViewController, NSTableViewDelegate, NSTable
         }
         
         override func viewDidAppear() {
-                //
+                super.viewDidAppear()
+                localVersion = WebDriverUpdates.shared.localVersion
+                if localVersion != lastLocalVersion {
+                        updateTableData()
+                }
         }
         
 
