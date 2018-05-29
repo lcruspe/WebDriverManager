@@ -65,11 +65,11 @@ trap "/bin/rm -rf $TMP_DIR; /bin/rm -f $DRIVERS_PKG; exit" SIGINT SIGTERM SIGHUP
 
 # Functions
 
-function silent() {
+function toStdErr() {
 	
 	# $@: args... 
 	
-	"$@" > /dev/null
+	"$@" 1>&2
 	return $?
 	
 }
@@ -79,8 +79,8 @@ function error() {
 	
 	# $1: message, $2: exit_code
 	
-	silent /bin/rm -rf "$TMP_DIR"
-	silent /bin/rm -f "$DRIVERS_PKG"
+	toStdErr /bin/rm -rf "$TMP_DIR"
+	toStdErr /bin/rm -f "$DRIVERS_PKG"
 	
 	if [[ -z $2 ]]; then
 		
@@ -119,14 +119,14 @@ function error() {
 
 REMOTE_HOST=$(printf '%s' "$REMOTE_URL" | /usr/bin/awk -F/ '{print $3}')
 
-! silent /usr/bin/host "$REMOTE_HOST" \
+! toStdErr /usr/bin/host "$REMOTE_HOST" \
 	&& error "Unable to resolve host, check your URL"
 
 HEADERS=$(/usr/bin/curl -I "$REMOTE_URL" 2>&1) \
 	|| error "Failed to download HTTP headers"
 
 $GREP -qe "octet-stream" <<< "$HEADERS" \
-	|| printf "Unexpected HTTP content type" 1>&2
+	|| printf "Unexpected HTTP content type"
 
 
 
@@ -176,13 +176,13 @@ mkdir "$DRIVERS_ROOT"
 /usr/bin/gunzip -dc < "${DRIVERS_COMPONENT_DIR}/Payload" > "${DRIVERS_ROOT}/tmp.cpio" \
 	|| error "Failed to extract package" $?
 
-cd "$DRIVERS_ROOT" \
+toStdErr cd "$DRIVERS_ROOT" \
 	|| error "Failed to find drivers root directory" $?
 
 /usr/bin/cpio -i < "${DRIVERS_ROOT}/tmp.cpio" \
 	|| error "Failed to extract package" $?
 
-silent /bin/rm -f "${DRIVERS_ROOT}/tmp.cpio"
+toStdErr /bin/rm -f "${DRIVERS_ROOT}/tmp.cpio"
 
 [[ ! -d ${DRIVERS_ROOT}/Library/Extensions || ! -d ${DRIVERS_ROOT}/System/Library/Extensions ]] \
 	&& error "Unexpected directory structure after extraction"
@@ -277,10 +277,10 @@ else
 fi
 
 # shellcheck disable=SC2086
-silent /bin/rm -rf "${REMOVE_LIST[@]}"
+toStdErr /bin/rm -rf "${REMOVE_LIST[@]}"
 
-/usr/sbin/kextcache -clear-staging
-silent /usr/sbin/pkgutil --forget com.nvidia.web-driver
+toStdErr /usr/sbin/kextcache -clear-staging
+toStdErr /usr/sbin/pkgutil --forget com.nvidia.web-driver
 
 
 
@@ -289,20 +289,20 @@ silent /usr/sbin/pkgutil --forget com.nvidia.web-driver
 if ! $FS_ALLOWED; then
 	
 	WANTS_KEXTCACHE=false
-	silent /bin/rm -f "$DRIVERS_PKG"
-	silent /usr/bin/pkgbuild --identifier com.nvidia.web-driver --root "$DRIVERS_ROOT" "$DRIVERS_PKG"
+	toStdErr /bin/rm -f "$DRIVERS_PKG"
+	toStdErr /usr/bin/pkgbuild --identifier com.nvidia.web-driver --root "$DRIVERS_ROOT" "$DRIVERS_PKG"
 	
 	[[ ! $KEXT_ALLOWED && ! -z $UNAPPROVED_BUNDLES ]] \
-		&& printf "Don't restart until this process is complete."  1>&2
+		&& toStdErr printf "Don't restart until this process is complete."
 	
 	printf '50:Installing...\n'
 	
-	silent /usr/sbin/installer -allowUntrusted -pkg "$DRIVERS_PKG" -target / \
+	toStdErr /usr/sbin/installer -allowUntrusted -pkg "$DRIVERS_PKG" -target / \
 		|| error "installer error" $?
 
         if (( STAGE_BUNDLES == 1 )); then
 
-                printf "Ignoring stage GPU bundles argument\n" 1>&2
+                toStdErr printf "Ignoring stage GPU bundles argument\n"
 
         fi
 	
@@ -314,9 +314,9 @@ else
 	
 	if (( STAGE_BUNDLES == 1 )); then
 
-                printf "Staging GPU Bundles\n" 1>&2
-	        silent /bin/mkdir -p /Library/GPUBundles
-		silent /usr/bin/rsync -r /System/Library/Extensions/GeForce*Web*.bundle /Library/GPUBundles
+                toStdErr printf "Staging GPU Bundles\n"
+	        toStdErr /bin/mkdir -p /Library/GPUBundles
+		toStdErr /usr/bin/rsync -r /System/Library/Extensions/GeForce*Web*.bundle /Library/GPUBundles
 	
 	fi
 	
@@ -326,14 +326,14 @@ fi
 
 # Check extensions are loadable
 
-silent /sbin/kextload "$STARTUP_KEXT" # kextload returns 27 when a kext hasn't been approved yet
+toStdErr /sbin/kextload "$STARTUP_KEXT" # kextload returns 27 when a kext hasn't been approved yet
 
 if [[ $? -eq 27 ]]; then
 	
 	WANTS_KEXTCACHE=true
 	printf '70:Allow NVIDIA Corporation to continue...\n'
 	
-	while ! silent /usr/bin/kextutil -tn "$STARTUP_KEXT"; do
+	while ! toStdErr /usr/bin/kextutil -tn "$STARTUP_KEXT"; do
 		
 		sleep 5
 		
@@ -349,7 +349,7 @@ fi
 
 # Update caches and NVRAM
 
-silent /sbin/kextload \
+toStdErr /sbin/kextload \
 	/Library/Extensions/NVDA* \
 	/Library/Extensions/GeForce* \
 	/System/Library/Extensions/AppleHDA.kext
@@ -357,19 +357,19 @@ silent /sbin/kextload \
 if $WANTS_KEXTCACHE; then
 	
 	printf '80:Updating Caches...\n'
-	/usr/sbin/kextcache -i /
+	toStdErr /usr/sbin/kextcache -i /
 
 fi
 
-/usr/bin/touch /Library/Extensions
+toStdErr /usr/bin/touch /Library/Extensions
 
-$SET_NVRAM
+toStdErr $SET_NVRAM
 
 
 
 # Exit
 
-silent /bin/rm -rf "$TMP_DIR"
-silent /bin/rm -f "$DRIVERS_PKG"
+toStdErr /bin/rm -rf "$TMP_DIR"
+toStdErr /bin/rm -f "$DRIVERS_PKG"
 printf '100:Installation complete. You should reboot now.\n'
 

@@ -26,11 +26,11 @@ FS_ALLOWED=false
 /usr/bin/touch /System \
         && FS_ALLOWED=true
 
-function silent() {
+function toStdErr() {
 	
 	# $@: args... 
 	
-	"$@" > /dev/null
+	"$@" 1>&2
 	return $?
 	
 }
@@ -55,15 +55,15 @@ fi
 printf '10:Uninstalling NVIDIA drivers...\n'
 
 # shellcheck disable=SC2086
-silent /bin/rm -rf "${REMOVE_LIST[@]}"
-silent /usr/sbin/kextcache -clear-staging
-silent /usr/sbin/pkgutil --forget com.nvidia.web-driver
+toStdErr /bin/rm -rf "${REMOVE_LIST[@]}"
+toStdErr /usr/sbin/kextcache -clear-staging
+toStdErr /usr/sbin/pkgutil --forget com.nvidia.web-driver
 sleep 1
 
 printf '50:Updating caches...\n'
 
-silent /usr/sbin/kextcache -i /
-silent /usr/bin/touch /Library/Extensions
-silent /usr/sbin/nvram -d nvda_drv
+toStdErr /usr/sbin/kextcache -i /
+toStdErr /usr/bin/touch /Library/Extensions
+toStdErr /usr/sbin/nvram -d nvda_drv
 
 printf '100:Uninstall finished. You should reboot now.\n'
