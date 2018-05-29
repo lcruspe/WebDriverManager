@@ -53,7 +53,7 @@
         <!--Boot Args View Controller-->
         <scene sceneID="n8m-ZL-3kL">
             <objects>
-                <viewController id="glU-gv-Z5e" customClass="BootArgsViewController" customModule="Web_Driver_Manager" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController showSeguePresentationStyle="single" id="glU-gv-Z5e" customClass="BootArgsViewController" customModule="Web_Driver_Manager" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="ahs-bs-TyX" customClass="ViewWithPerformKeyEquivalent" customModule="Web_Driver_Manager" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="511" height="95"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -121,7 +121,7 @@ DQ
         <!--Busy View Controller-->
         <scene sceneID="PRW-uS-4zl">
             <objects>
-                <viewController id="N12-FC-O1g" customClass="BusyViewController" customModule="Web_Driver_Manager" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController showSeguePresentationStyle="single" id="N12-FC-O1g" customClass="BusyViewController" customModule="Web_Driver_Manager" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="UTB-nQ-rt6">
                         <rect key="frame" x="0.0" y="0.0" width="307" height="79"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -200,7 +200,7 @@ DQ
         <!--View Controller-->
         <scene sceneID="dYp-PH-BvA">
             <objects>
-                <viewController id="WGk-Wf-ZeV" sceneMemberID="viewController">
+                <viewController showSeguePresentationStyle="single" id="WGk-Wf-ZeV" sceneMemberID="viewController">
                     <view key="view" id="aJf-TJ-7UO" customClass="PackageDropView" customModule="Web_Driver_Manager" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -222,12 +222,12 @@ DQ
                 </viewController>
                 <customObject id="gqw-ch-2Ia" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="202" y="214"/>
+            <point key="canvasLocation" x="202" y="230"/>
         </scene>
         <!--About View Controller-->
         <scene sceneID="J20-Hh-6ZV">
             <objects>
-                <viewController storyboardIdentifier="about" id="535-Ae-q8m" customClass="AboutViewController" customModule="Web_Driver_Manager" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="about" showSeguePresentationStyle="single" id="535-Ae-q8m" customClass="AboutViewController" customModule="Web_Driver_Manager" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="R2g-Mr-Nf2" customClass="ViewWithPerformKeyEquivalent" customModule="Web_Driver_Manager" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="387" height="191"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -371,7 +371,7 @@ DQ
         <!--Updater View Controller-->
         <scene sceneID="zsr-u6-cgS">
             <objects>
-                <viewController id="pKz-O4-JC1" customClass="UpdaterViewController" customModule="Web_Driver_Manager" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController showSeguePresentationStyle="single" id="pKz-O4-JC1" customClass="UpdaterViewController" customModule="Web_Driver_Manager" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="lK0-dc-QG6" customClass="ViewWithPerformKeyEquivalent" customModule="Web_Driver_Manager" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="520" height="190"/>
                         <autoresizingMask key="autoresizingMask" heightSizable="YES"/>
@@ -512,7 +512,7 @@ DQ
         <!--Updater Progress View Controller-->
         <scene sceneID="jaV-Ss-u5T">
             <objects>
-                <viewController storyboardIdentifier="updaterProgress" id="Wnh-jh-HKb" customClass="UpdaterProgressViewController" customModule="Web_Driver_Manager" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="updaterProgress" showSeguePresentationStyle="single" id="Wnh-jh-HKb" customClass="UpdaterProgressViewController" customModule="Web_Driver_Manager" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="lJn-MS-KTK" customClass="ViewWithPerformKeyEquivalent" customModule="Web_Driver_Manager" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="490" height="100"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -568,7 +568,7 @@ DQ
         <!--Preferences View Controller-->
         <scene sceneID="Mwe-Fn-lUo">
             <objects>
-                <viewController id="ujv-C2-0AP" customClass="PreferencesViewController" customModule="Web_Driver_Manager" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController showSeguePresentationStyle="single" id="ujv-C2-0AP" customClass="PreferencesViewController" customModule="Web_Driver_Manager" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="iZR-Om-zLY" customClass="ViewWithPerformKeyEquivalent" customModule="Web_Driver_Manager" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="584" height="279"/>
                         <autoresizingMask key="autoresizingMask"/>

@@ -70,6 +70,7 @@ struct Scripts {
         let component = ShellScript(fromResource: "component", withExtension: "sh")
         let deleteBootArgs = ShellScript(fromResource: "deleteBootArgs", withExtension: "sh")
         let nvram = ShellScript(fromResource: "nvram", withExtension: "sh")
+        let patch = ShellScript(fromResource: "patch", withExtension: "sh")
         let product = ShellScript(fromResource: "product", withExtension: "sh")
         let touch = ShellScript(fromResource: "touch", withExtension: "sh")
         let unstage = ShellScript(fromResource: "unstage", withExtension: "sh")

@@ -129,6 +129,13 @@
                                     <action selector="touchExtensionsMenuItemClicked:" target="mMO-jR-0xx" id="cC8-JO-Pam"/>
                                 </connections>
                             </menuItem>
+                            <menuItem isSeparatorItem="YES" id="oye-Sj-QYM"/>
+                            <menuItem title="Patch Startup Personalities" id="Pdb-si-OCw">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="patchStartupPersonalitiesMenuItemClicked:" target="mMO-jR-0xx" id="AHx-t3-6kj"/>
+                                </connections>
+                            </menuItem>
                         </items>
                     </menu>
                 </menuItem>

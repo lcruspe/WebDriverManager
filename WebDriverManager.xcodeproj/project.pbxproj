@@ -12,6 +12,7 @@
 		4D163C51205A541500C82104 /* RegistryEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D163C4F205A541400C82104 /* RegistryEntry.swift */; };
 		4D163C57205A541F00C82104 /* CloverSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D163C55205A541F00C82104 /* CloverSettings.swift */; };
 		4D163C59205A8A9100C82104 /* NVCloverSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D163C58205A8A9100C82104 /* NVCloverSettings.swift */; };
+		4D168F0E20BD21D500C82104 /* patch.sh in Resources */ = {isa = PBXBuildFile; fileRef = 4D168F0D20BD21CA00C82104 /* patch.sh */; };
 		4D17721C20453FE300C82104 /* WebDriverUpdates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D17721B20453FE300C82104 /* WebDriverUpdates.swift */; };
 		4D17721E204544E900C82104 /* sysctl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D17721D204544E900C82104 /* sysctl.swift */; };
 		4D1942A7208BA06900C82104 /* BusyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1942A6208BA06900C82104 /* BusyViewController.swift */; };
@@ -67,6 +68,7 @@
 		4D163C4F205A541400C82104 /* RegistryEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegistryEntry.swift; sourceTree = "<group>"; };
 		4D163C55205A541F00C82104 /* CloverSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloverSettings.swift; sourceTree = "<group>"; };
 		4D163C58205A8A9100C82104 /* NVCloverSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NVCloverSettings.swift; sourceTree = "<group>"; };
+		4D168F0D20BD21CA00C82104 /* patch.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = patch.sh; sourceTree = "<group>"; };
 		4D17721B20453FE300C82104 /* WebDriverUpdates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebDriverUpdates.swift; sourceTree = "<group>"; };
 		4D17721D204544E900C82104 /* sysctl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sysctl.swift; sourceTree = "<group>"; };
 		4D1942A6208BA06900C82104 /* BusyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusyViewController.swift; sourceTree = "<group>"; };
@@ -219,6 +221,7 @@
 				4D29BA2F206BA21C00C82104 /* component.sh */,
 				4D8875D620BC416600C82104 /* deleteBootArgs.sh */,
 				4D350FAE20BC2BDF00C82104 /* nvram.sh */,
+				4D168F0D20BD21CA00C82104 /* patch.sh */,
 				4D29BA31206BA22700C82104 /* product.sh */,
 				4D47D20B208B4B0200C82104 /* Scripts.swift */,
 				4D350FB020BC2CFB00C82104 /* touch.sh */,
@@ -294,6 +297,7 @@
 				4D29BA30206BA21D00C82104 /* component.sh in Resources */,
 				4D4D536420AC483500C82104 /* install.sh in Resources */,
 				4D350FB420BC375800C82104 /* nvram.sh in Resources */,
+				4D168F0E20BD21D500C82104 /* patch.sh in Resources */,
 				4D29BA32206BA22700C82104 /* product.sh in Resources */,
 				4D350FB320BC375800C82104 /* touch.sh in Resources */,
 				4D4D536620AC483C00C82104 /* uninstall.sh in Resources */,

@@ -332,6 +332,11 @@ class StatusMenuController: NSObject, NSMenuDelegate {
                 processKextScriptResult(terminationStatus: result)
         }
         
+        @IBAction func patchStartupPersonalitiesMenuItemClicked(_ send: NSMenuItem) {
+                let result = Scripts.shared.patch.executeReturningTerminationStatus(arguments: [WebDriverUpdates.shared.localBuild as Any])
+                processKextScriptResult(terminationStatus: result)
+        }
+        
         @IBAction func preferencesMenuItemClicked(_ sender: Any) {
                 if let window = preferencesWindowController?.window {
                         if !window.isVisible {
@@ -352,12 +357,16 @@ class StatusMenuController: NSObject, NSMenuDelegate {
         }
         
         func processKextScriptResult(terminationStatus: Int32) {
+                print(terminationStatus)
                 var message: String = ""
                 var info: String = ""
                 if terminationStatus == 0 {
                         message = NSLocalizedString("Caches will be rebuilt", comment: "")
                         info = NSLocalizedString("Restart to update the boot volume and apply changes.", comment: "")
-                } else {
+                } else if terminationStatus == 248 {
+                        message = NSLocalizedString("No changes were made", comment: "")
+                        info = ""
+                } else {                       
                         message = NSLocalizedString("Failed to execute a script", comment: "")
                         info = NSLocalizedString("If you keep seeing this message you can report it here: https://github.com/vulgo/WebDriverManager", comment: "")
                 }
