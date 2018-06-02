@@ -62,6 +62,9 @@ class Packager: NSObject {
         @discardableResult func buildComponent(sourceDirectory: String, name: String) -> Int32 {
                 let task = Process()
                 task.launchPath = Bundle.main.url(forResource: "component", withExtension: "sh")?.path
+                if debug {
+                        os_log("Launch path: %{public}@", task.launchPath ?? "nil")
+                }
                 task.arguments = [sourceDirectory, name, name]
                 if !debug {
                         task.standardOutput = Pipe()
