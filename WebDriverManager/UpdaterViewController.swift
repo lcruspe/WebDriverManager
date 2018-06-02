@@ -143,7 +143,7 @@ class UpdaterViewController: NSViewController {
                 let downloadingDataString = NSLocalizedString("Downloading updates data from NVIDIA...", comment: "")
                 refreshButton.isEnabled = false
                 cacheTimeTextField.stringValue = downloadingDataString
-                if driversTableViewController.tableView.numberOfRows > 1 {
+                if driversTableViewController.tableView.numberOfRows > 0 {
                 let indexSet = IndexSet(integersIn: 0...driversTableViewController.tableView.numberOfRows - 1)
                         NSAnimationContext.runAnimationGroup({
                                 (context) in
