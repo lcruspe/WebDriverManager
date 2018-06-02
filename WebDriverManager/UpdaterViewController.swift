@@ -143,21 +143,36 @@ class UpdaterViewController: NSViewController {
                 let downloadingDataString = NSLocalizedString("Downloading updates data from NVIDIA...", comment: "")
                 refreshButton.isEnabled = false
                 cacheTimeTextField.stringValue = downloadingDataString
+                if driversTableViewController.tableView.numberOfRows > 1 {
                 let indexSet = IndexSet(integersIn: 0...driversTableViewController.tableView.numberOfRows - 1)
-                NSAnimationContext.runAnimationGroup({
-                        (context) in
-                        context.duration = 0.25
-                        driversTableViewController.tableView.removeRows(at: indexSet, withAnimation: .effectFade)
-                }, completionHandler: {
+                        NSAnimationContext.runAnimationGroup({
+                                (context) in
+                                context.duration = 0.25
+                                driversTableViewController.tableView.removeRows(at: indexSet, withAnimation: .effectFade)
+                        }, completionHandler: {
+                                let refreshResult = WebDriverUpdates.shared.refresh()
+                                if refreshResult {
+                                        self.update()
+                                        os_log("User refresh OK", log: self.osLog, type: .default)
+                                } else {
+                                        os_log("User refresh failed", log: self.osLog, type: .default)
+                                        let downloadingDataString = NSLocalizedString("Refresh failed", comment: "")
+                                        self.cacheTimeTextField.stringValue = downloadingDataString
+                                }
+                                self.refreshButton.isEnabled = true
+                        })
+                } else {
                         let refreshResult = WebDriverUpdates.shared.refresh()
                         if refreshResult {
                                 self.update()
                                 os_log("User refresh OK", log: self.osLog, type: .default)
                         } else {
                                 os_log("User refresh failed", log: self.osLog, type: .default)
+                                let downloadingDataString = NSLocalizedString("Refresh failed", comment: "")
+                                cacheTimeTextField.stringValue = downloadingDataString
                         }
                         self.refreshButton.isEnabled = true
-                })
+                }
 
         }
         

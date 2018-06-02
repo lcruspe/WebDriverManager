@@ -29,7 +29,18 @@ class WebDriverUpdates: NSObject, NSUserNotificationCenterDelegate {
         let updateCheckQueue = DispatchQueue(label: "updateCheck", attributes: .concurrent)
         var updateCheckWorkItem: DispatchWorkItem?
         var checkInProgress: Bool = false
-        let updatesUrl = URL.init(string: "https://gfestage.nvidia.com/mac-update")
+        
+        var updatesUrl: URL?
+        override init() {
+                super.init()
+                if debug {
+                        updatesUrl = URL.init(fileURLWithPath: "/Volumes/Macintosh HD/Users/Home/mac-update.txt")
+                } else {
+                        updatesUrl = URL.init(string: "https://gfestage.nvidia.com/mac-update")
+                }
+                os_log("Updates URL: %{public}@", log: osLog, type: .default, updatesUrl?.absoluteString ?? "nil")
+        }
+        
         let infoPlistUrl = URL.init(fileURLWithPath: "/Library/Extensions/GeForceWeb.kext/Contents/Info.plist")
         var checksum: String?
         var downloadUrl: String?
@@ -178,11 +189,6 @@ class WebDriverUpdates: NSObject, NSUserNotificationCenterDelegate {
                 }
                 
                 return nil
-        }
-        
-        override init() {
-                super.init()
-                os_log("Updates URL: %{public}@", log: osLog, type: .default, updatesUrl?.absoluteString ?? "nil")
         }
         
         func newUserNotification(forVersion version: String) -> NSUserNotification {

@@ -28,7 +28,6 @@ class DriversTableViewController: NSViewController, NSTableViewDelegate, NSTable
         @IBOutlet var scrollView: NSScrollView!
         
         var updaterViewController: UpdaterViewController!
-        let updates: Array<AnyObject>? = WebDriverUpdates.shared.updates
         var localVersion: String? = WebDriverUpdates.shared.localVersion
         var lastLocalVersion: String?
         let localBuild = WebDriverUpdates.shared.localBuild
@@ -96,16 +95,16 @@ class DriversTableViewController: NSViewController, NSTableViewDelegate, NSTable
                 os_log("Updating table data source", log: osLog, type: .default)
                 localVersion = WebDriverUpdates.shared.localVersion
                 lastLocalVersion = localVersion
-                guard updates != nil else {
+                guard WebDriverUpdates.shared.updates != nil else {
                         os_log("Updates is nil", log: osLog, type: .default)
                         tableData = nil
                         return
                 }
                 if !dataWantsFiltering {
-                        tableData = updates
+                        tableData = WebDriverUpdates.shared.updates
                 } else {
                         var filteredData: Array<AnyObject> = Array()
-                        for update in updates! {
+                        for update in WebDriverUpdates.shared.updates! {
                                 if isInstalled(version: update["version"] as? String) {
                                         os_log("Including installed version in filtered table data: %{public}@", log: osLog, type: .default, update["version"] as? String ?? "nil")
                                         filteredData.append(update)
