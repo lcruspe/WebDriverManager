@@ -357,17 +357,20 @@ class StatusMenuController: NSObject, NSMenuDelegate {
         }
         
         func processKextScriptResult(terminationStatus: Int32) {
-                print(terminationStatus)
                 var message: String = ""
                 var info: String = ""
-                if terminationStatus == 0 {
+                switch terminationStatus {
+                case 0:
                         message = NSLocalizedString("Caches will be rebuilt", comment: "")
                         info = NSLocalizedString("Restart to update the boot volume and apply changes.", comment: "")
-                } else if terminationStatus == 248 {
-                        message = NSLocalizedString("No changes were made", comment: "")
-                        info = ""
-                } else {                       
-                        message = NSLocalizedString("Failed to execute a script", comment: "")
+                case 64:
+                        /* User cancelled authorization */
+                        return
+                case 248:
+                        message = ""
+                        info = NSLocalizedString("A script ran, but no changes were made", comment: "")
+                default:
+                        message = NSLocalizedString("A script returned a non-zero exit code", comment: "")
                         info = NSLocalizedString("If you keep seeing this message you can report it here: https://github.com/vulgo/WebDriverManager", comment: "")
                 }
                 let alert = NSAlert()

@@ -47,7 +47,7 @@ class ShellScript: NSObject {
                                 switch error {
                                 case errAuthorizationCanceled:
                                         os_log("User cancelled authorization", log: osLog, type: .default)
-                                        return -1
+                                        return 63
                                 default:
                                         os_log("Authentication error", log: osLog, type: .default)
                                         return -1
