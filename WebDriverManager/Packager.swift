@@ -63,7 +63,7 @@ class Packager: NSObject {
                 let task = Process()
                 task.launchPath = Bundle.main.url(forResource: "component", withExtension: "sh")?.path
                 if debug {
-                        os_log("Launch path: %{public}@", task.launchPath ?? "nil")
+                        os_log("buildComponent task launch path: %{public}@", log: osLog, type: .default, task.launchPath ?? "nil")
                 }
                 task.arguments = [sourceDirectory, name, name]
                 if !debug {
@@ -78,6 +78,9 @@ class Packager: NSObject {
         @discardableResult func buildProduct(sourceDirectory: String, outputName: String) -> Int32 {
                 let task = Process()
                 task.launchPath = Bundle.main.url(forResource: "product", withExtension: "sh")?.path
+                if debug {
+                        os_log("buildProduct task launch path: %{public}@", log: osLog, type: .default, task.launchPath ?? "nil")
+                }
                 task.arguments = [sourceDirectory, outputName]
                 if !debug {
                         task.standardOutput = Pipe()
